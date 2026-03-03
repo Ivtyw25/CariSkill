@@ -15,4 +15,5 @@ __pycache__/
 .pytest_cache/ 
 amls-root/apps/api/data/combined_dataset.json 
 .env 
-.env.local 
+.env.local
+.agent
