@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Map, PlusCircle, Clock, ArrowRight, Loader2, BookOpen } from 'lucide-react';
+import { Map, PlusCircle, Clock, ArrowRight, Loader2, BookOpen, Users } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 
@@ -14,6 +14,7 @@ interface RoadmapRecord {
   topic: string;
   created_at: string;
   content: any;
+  isSaved?: boolean;
 }
 
 export default function RoadmapsPage() {
@@ -30,13 +31,42 @@ export default function RoadmapsPage() {
       if (!user) { router.push('/login'); return; }
       setUser(user);
 
-      const { data, error } = await supabase
+      // Fetch user's own generated roadmaps
+      const { data: ownData, error: ownError } = await supabase
         .from('roadmaps')
         .select('id, topic, created_at, content')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
-      if (!error && data) setRoadmaps(data);
+      // Fetch community roadmaps the user has saved
+      const { data: savedData } = await supabase
+        .from('saved_roadmaps')
+        .select('roadmap_id, created_at')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      const ownRoadmaps: RoadmapRecord[] = (!ownError && ownData) ? ownData.map(r => ({ ...r, isSaved: false })) : [];
+
+      let savedRoadmaps: RoadmapRecord[] = [];
+      if (savedData && savedData.length > 0) {
+        const savedIds = savedData.map(s => s.roadmap_id);
+        const { data: savedRoadmapData } = await supabase
+          .from('roadmaps')
+          .select('id, topic, created_at, content')
+          .in('id', savedIds);
+        if (savedRoadmapData) {
+          savedRoadmaps = savedRoadmapData.map(r => ({ ...r, isSaved: true }));
+        }
+      }
+
+      // Merge and deduplicate by id (in case user published their own, they shouldn't see it twice)
+      const ownIds = new Set(ownRoadmaps.map(r => r.id));
+      const dedupedSaved = savedRoadmaps.filter(r => !ownIds.has(r.id));
+      
+      const merged = [...ownRoadmaps, ...dedupedSaved];
+      merged.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+      setRoadmaps(merged);
       setLoading(false);
     };
     fetchRoadmaps();
@@ -71,7 +101,7 @@ export default function RoadmapsPage() {
               <Map className="text-yellow-500 w-8 h-8" />
               My Roadmaps
             </h1>
-            <p className="text-gray-500 mt-1">All your AI-generated learning roadmaps</p>
+            <p className="text-gray-500 mt-1">Your generated and saved learning roadmaps</p>
           </div>
           <Link
             href="/setup"
@@ -127,7 +157,11 @@ export default function RoadmapsPage() {
                     {/* Topic Badge */}
                     <div className="flex items-start justify-between mb-4">
                       <div className="w-12 h-12 bg-yellow-50 rounded-xl flex items-center justify-center border border-yellow-200 shrink-0">
-                        <Map className="w-6 h-6 text-yellow-600" />
+                        {rm.isSaved ? (
+                          <Users className="w-6 h-6 text-yellow-600" />
+                        ) : (
+                          <Map className="w-6 h-6 text-yellow-600" />
+                        )}
                       </div>
                       <ArrowRight
                         size={18}
@@ -144,6 +178,11 @@ export default function RoadmapsPage() {
                         <Clock size={12} />
                         {formatDate(rm.created_at)}
                       </span>
+                      {rm.isSaved && (
+                        <span className="bg-blue-50 border border-blue-200 text-blue-600 px-2 py-0.5 rounded-full font-medium">
+                          Saved from Community
+                        </span>
+                      )}
                       {phases > 0 && (
                         <span className="bg-yellow-50 border border-yellow-200 text-yellow-700 px-2 py-0.5 rounded-full font-medium">
                           {phases} phases
@@ -162,3 +201,4 @@ export default function RoadmapsPage() {
     </div>
   );
 }
+

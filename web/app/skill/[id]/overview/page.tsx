@@ -8,8 +8,10 @@ import { notFound, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
   Lock, Play, Rocket, Hand, Clock, Quote,
-  Footprints, Trophy, Loader2
+  Footprints, Trophy, Loader2, Share2, Check
 } from 'lucide-react';
+
+const isUUIDString = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(str);
 
 export default function SkillOverviewPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -17,6 +19,15 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
 
   const [data, setData] = useState<SkillTrack | null>(null);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
+  
+  // Publish state
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [isPublished, setIsPublished] = useState(false);
+  
+  // Community Navigation state
+  const [isCommunityRoadmap, setIsCommunityRoadmap] = useState(false);
+  const [isForking, setIsForking] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,9 +39,10 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
         const { createClient } = await import('@/utils/supabase/client');
         const supabase = createClient();
         const { data: { user } } = await supabase.auth.getUser();
-
+        
         if (user) {
-          const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id);
+          setUser(user);
+          const isUUID = isUUIDString(id);
 
           let query = supabase
             .from('roadmaps')
@@ -41,6 +53,16 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
 
           if (isUUID) {
             query = query.eq('id', id);
+            
+            // Check if already published
+            const { data: pubData } = await supabase
+              .from('community_roadmaps')
+              .select('id')
+              .eq('roadmap_id', id)
+              .limit(1);
+            if (pubData && pubData.length > 0) {
+              setIsPublished(true);
+            }
           } else {
             query = query.ilike('topic', `%${id.replace(/-/g, ' ')}%`);
           }
@@ -52,6 +74,24 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
             stringifiedRoadmap = typeof roadmaps[0].content === 'string'
               ? roadmaps[0].content
               : JSON.stringify(roadmaps[0].content);
+          } else if (isUUID) {
+             // Fallback: Check if it's a public community roadmap
+             try {
+                 const publicRes = await fetch(`/api/community/roadmap/${id}`);
+                 if (publicRes.ok) {
+                     const publicData = await publicRes.json();
+                     dbResolvedTopic = publicData.topic || "";
+                     stringifiedRoadmap = typeof publicData.content === 'string'
+                         ? publicData.content
+                         : JSON.stringify(publicData.content);
+                         
+                     if (user && publicData.user_id !== user.id) {
+                         setIsCommunityRoadmap(true);
+                     }
+                 }
+             } catch (e) {
+                 console.error("Public fetch failed", e);
+             }
           }
         }
       } catch (err) {
@@ -160,6 +200,92 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
 
     fetchData();
   }, [id]);
+
+  const handlePublish = async () => {
+    if (!user || !data) return;
+    if (!isUUIDString(id)) {
+      alert("Only personalized AI roadmaps can be published.");
+      return;
+    }
+    
+    setIsPublishing(true);
+    
+    try {
+      const { createClient } = await import('@/utils/supabase/client');
+      const supabase = createClient();
+      
+      // Auto-categorize via Gemini API
+      let category = 'Uncategorized';
+      let iconType = 'database';
+      
+      try {
+        const catRes = await fetch('/api/community/categorize', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: data.title, description: data.tagline })
+        });
+        
+        if (catRes.ok) {
+          const catData = await catRes.json();
+          if (catData.category) category = catData.category;
+          if (catData.icon_type) iconType = catData.icon_type;
+        }
+      } catch (catErr) {
+        console.error("Categorization failed, falling back to defaults", catErr);
+      }
+      
+      const { error } = await supabase.from('community_roadmaps').insert({
+        roadmap_id: id,
+        title: data.title,
+        description: data.tagline,
+        category: category, 
+        icon_type: iconType, 
+        creator_id: user.id,
+        creator_name: user.user_metadata?.full_name || 'Anonymous',
+        creator_avatar: user.user_metadata?.avatar_url || '',
+        creator_role: 'Contributor'
+      });
+
+      if (error) {
+        console.error("Error publishing roadmap:", error);
+        alert("Failed to publish. Please try again.");
+      } else {
+        setIsPublished(true);
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Failed to publish.");
+    } finally {
+      setIsPublishing(false);
+    }
+  };
+
+  const handleStartLearning = async () => {
+    if (isCommunityRoadmap) {
+      setIsForking(true);
+      try {
+        const res = await fetch('/api/community/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ roadmap_id: id })
+        });
+        
+        if (res.ok) {
+          const data = await res.json();
+          router.push(`/skill/${data.roadmap_id}`);
+        } else {
+          alert("Failed to save to your roadmaps.");
+          setIsForking(false);
+        }
+      } catch (e) {
+        console.error("Save failed:", e);
+        alert("An error occurred while saving the roadmap.");
+        setIsForking(false);
+      }
+    } else {
+      router.push(`/skill/${id}`);
+    }
+  };
 
   // Scroll Entrance Animation (Matched to Progress Page)
   const popNode = {
@@ -353,12 +479,46 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
                     </div>
                   </div>
                   <button
-                    onClick={() => router.push(`/skill/${id}`)}
-                    className="w-full bg-[#FFD700] hover:bg-[#E6C200] text-gray-900 font-bold text-lg py-4 rounded-xl shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 group"
+                    onClick={handleStartLearning}
+                    disabled={isForking}
+                    className="w-full bg-[#FFD700] hover:bg-[#E6C200] disabled:bg-[#FFD700]/50 disabled:cursor-not-allowed text-gray-900 font-bold text-lg py-4 rounded-xl shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 group"
                   >
-                    <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                    Start Learning
+                    {isForking ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                    )}
+                    {isForking ? "Saving..." : isCommunityRoadmap ? "Save & Start Learning" : "Start Learning"}
                   </button>
+                  
+                  {isUUIDString(id) && !isCommunityRoadmap && (
+                    <button
+                      onClick={handlePublish}
+                      disabled={isPublishing || isPublished}
+                      className={`w-full mt-4 border-2 font-bold text-base py-3 rounded-xl transition-all flex items-center justify-center gap-2 group ${
+                        isPublished 
+                          ? "bg-green-50 border-green-200 text-green-700 cursor-default" 
+                          : "bg-white border-gray-200 hover:border-gray-300 text-gray-700 active:scale-95"
+                      }`}
+                    >
+                      {isPublishing ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Publishing...
+                        </>
+                      ) : isPublished ? (
+                        <>
+                          <Check className="w-4 h-4" />
+                          Published to Community
+                        </>
+                      ) : (
+                        <>
+                          <Share2 className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                          Publish to Community
+                        </>
+                      )}
+                    </button>
+                  )}
                 </div>
                 <div className="bg-gray-50 px-8 py-4 border-t border-gray-100 flex justify-between items-center text-sm">
                   <span className="text-gray-500 font-medium">Estimated Time</span>
