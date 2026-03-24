@@ -95,6 +95,7 @@ export default function Navbar({ isLoggedIn }: NavbarProps) {
             { name: 'My Roadmaps', path: '/roadmaps' },
             { name: 'Explore', path: '/explore' },
             { name: 'Bookmark', path: '/bookmark' },
+            { name: 'Community', path: '/community' },
           ].map((link) => {
             const isActive = pathname === link.path;
             return (
