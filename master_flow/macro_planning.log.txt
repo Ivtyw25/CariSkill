@@ -148,3 +148,153 @@ Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step
   ]
 }
 ```"
+2026-03-24 18:08:35: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Origami Experience: Beginner Goal: Learn fundamentals Constraints/Worries: Video tutorials
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-24 18:08:53: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Origami Experience: Beginner Goal: Learn fundamentals Constraints/Worries: Video tutorials
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="```json
+{
+  "nodes": [
+    {
+      "node_id": "origami_fundamentals",
+      "title": "Origami Fundamentals: Your First Folds",
+      "rationale": "This module introduces the absolute basics of origami, ensuring a solid foundation for beginners. It covers the core folding techniques and builds confidence with simple, satisfying models.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Valley fold",
+        "Mountain fold",
+        "Aligning edges",
+        "Love Heart model",
+        "Paper types and tools"
+      ]
+    },
+    {
+      "node_id": "simple_models_practice",
+      "title": "Practice with Simple Origami Models",
+      "rationale": "Building on the fundamental folds, this module allows beginners to practice and reinforce their skills with slightly more complex, yet still manageable, designs. This helps in developing dexterity and understanding how basic folds combine.",
+      "prerequisites": [
+        "origami_fundamentals"
+      ],
+      "suggested_micro_topics": [
+        "Origami heart",
+        "Simple animal folds (e.g., dog, cat)",
+        "Basic geometric shapes",
+        "Following step-by-step diagrams",
+        "Troubleshooting common folding errors"
+      ]
+    },
+    {
+      "node_id": "modular_origami_introduction",
+      "title": "Introduction to Modular Origami",
+      "rationale": "This module introduces the concept of modular origami, where multiple identical units are folded and then assembled without glue. It's a natural progression for beginners looking to create more intricate structures and understand spatial reasoning in origami.",
+      "prerequisites": [
+        "simple_models_practice"
+      ],
+      "suggested_micro_topics": [
+        "What is modular origami?",
+        "Folding a single modular unit",
+        "Assembling basic modular forms (e.g., cube, pyramid)",
+        "Understanding interlocking mechanisms",
+        "Origami Rubik's Cube (static version)"
+      ]
+    }
+  ]
+}
+```"
+2026-03-24 18:29:58: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Origami Experience: Beginner Goal: Learn fundamentals Constraints/Worries: Video tutorials
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-24 18:30:24: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Origami Experience: Beginner Goal: Learn fundamentals Constraints/Worries: Video tutorials
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="```json
+{
+  "nodes": [
+    {
+      "node_id": "intro_origami_tools",
+      "title": "Introduction to Origami & Basic Tools",
+      "rationale": "To provide a foundational understanding of the art of origami, its history, and the minimal essential tools and materials required before attempting any folds. This sets the stage for practical learning.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "History and Philosophy of Origami",
+        "Types of Origami Paper (Washi, Kami, etc.)",
+        "Understanding Paper Grain and Texture",
+        "Basic Folding Terminology (Crease, Fold, Edge, Corner)",
+        "Setting Up a Comfortable Folding Workspace",
+        "Benefits of Practicing Origami"
+      ]
+    },
+    {
+      "node_id": "fundamental_folds",
+      "title": "Mastering Fundamental Folds & Creasing Techniques",
+      "rationale": "Developing proficiency in basic folds is the cornerstone of all origami. Precise creasing and understanding these core manipulations are essential for creating clean and accurate models.",
+      "prerequisites": [
+        "intro_origami_tools"
+      ],
+      "suggested_micro_topics": [
+        "Valley Fold (and how to make it crisp)",
+        "Mountain Fold (and its relationship to valley folds)",
+        "Squash Fold (introduction to 3D manipulation)",
+        "Petal Fold (a common intermediate fold for flowers)",
+        "Reverse Fold (Inside and Outside for shaping points)",
+        "Pleat Fold (for accordion-like structures)",
+        "Techniques for Sharp and Even Creases",
+        "Understanding and Correcting Misalignments"
+      ]
+    },
+    {
+      "node_id": "reading_diagrams_videos",
+      "title": "Interpreting Origami Diagrams & Following Video Tutorials",
+      "rationale": "To equip the learner with the ability to independently follow instructions, both static (diagrams) and dynamic (videos), which is crucial for continued learning and tackling new models. This directly addresses the user's constraint regarding video tutorials.",
+      "prerequisites": [
+        "fundamental_folds"
+      ],
+      "suggested_micro_topics": [
+        "Common Origami Diagram Symbols (Arrows, Dashed Lines)",
+        "Understanding Step-by-Step Visual Instructions",
+        "Strategies for Pacing and Pausing Video Tutorials",
+        "Troubleshooting Common Issues When Following Videos",
+        "Identifying Reputable Online Origami Video Channels",
+        "Using Slow Motion and Rewind Effectively in Videos"
+      ]
+    },
+    {
+      "node_id": "basic_bases",
+      "title": "Constructing Basic Origami Bases",
+      "rationale": "Many origami models begin with one of several common 'bases.' Learning to form these foundational structures efficiently will streamline the process of creating a wide variety of figures.",
+      "prerequisites": [
+        "fundamental_folds"
+      ],
+      "suggested_micro_topics": [
+        "The Square Base (foundation for many animals)",
+        "The Triangle Base (simple and versatile)",
+        "The Kite Base (often used for wings and tails)",
+        "The Fish Base (common for aquatic creatures)",
+        "The Bird Base (a classic for winged models)",
+        "The Waterbomb Base (for containers and modular origami)"
+      ]
+    },
+    {
+      "node_id": "simple_model_creation",
+      "title": "Creating First Simple Origami Models",
+      "rationale": "To apply all previously learned fundamental folds, bases, and instruction-following skills to successfully complete recognizable and satisfying origami figures, building confidence and practical experience.",
+      "prerequisites": [
+        "basic_bases",
+        "reading_diagrams_videos"
+      ],
+      "suggested_micro_topics": [
+        "Folding an Origami Boat (using a simple base)",
+        "Creating an Origami Coaster/Bookmark",
+        "Making an Origami Cup (practical application)",
+        "Constructing an Origami Fortune Teller",
+        "Folding an Origami Dog/Cat Face",
+        "Simplified Origami Crane (introduction to a classic)"
+      ]
+    }
+  ]
+}
+```"

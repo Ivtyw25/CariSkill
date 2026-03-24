@@ -1,0 +1,12 @@
+{
+  "name": "cariskill-root",
+  "version": "1.0.0",
+  "description": "Root workspace for CariSkill project",
+  "scripts": {
+    "dev:all": "python dev.py",
+    "dev:backend": "cd master_flow && venv\\Scripts\\python.exe -m uvicorn api.main:app --reload --port 8000",
+    "dev:frontend": "cd web && npm run dev"
+  },
+  "author": "Ivan",
+  "license": "ISC"
+}
