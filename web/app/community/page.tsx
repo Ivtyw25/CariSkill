@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Database, TrendingUp, List as ListIcon, ChevronUp, ChevronDown, Loader2 } from 'lucide-react';
+import { Database, TrendingUp, List as ListIcon, ChevronUp, ChevronDown, Loader2, Search } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 
@@ -36,6 +36,10 @@ export default function CommunityPage() {
   const [user, setUser] = useState<any>(null);
   const supabase = createClient();
   const router = useRouter();
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchResultsIdList, setSearchResultsIdList] = useState<string[] | null>(null);
 
   useEffect(() => {
     const fetchUserAndCourses = async () => {
@@ -115,15 +119,54 @@ export default function CommunityPage() {
     return votes.toString();
   };
 
+  const filteredCourses = useMemo(() => {
+    if (searchResultsIdList === null) return courses;
+    return courses.filter(c => searchResultsIdList.includes(c.id));
+  }, [courses, searchResultsIdList]);
+
   const groupedCourses = useMemo(() => {
     const groups: Record<string, CourseNode[]> = {};
-    courses.forEach(c => {
+    filteredCourses.forEach(c => {
       const cat = c.category || 'Uncategorized';
       if (!groups[cat]) groups[cat] = [];
       groups[cat].push(c);
     });
     return groups;
-  }, [courses]);
+  }, [filteredCourses]);
+
+  const handleSearch = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const trimmed = searchQuery.trim();
+    if (!trimmed) {
+      setSearchResultsIdList(null);
+      return;
+    }
+    
+    setIsSearching(true);
+    try {
+      const res = await fetch('/api/community/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: trimmed })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setSearchResultsIdList(data.ids || []);
+      } else {
+        setSearchResultsIdList(null);
+      }
+    } catch (err) {
+      console.error("Search failed:", err);
+      setSearchResultsIdList(null);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+    setSearchResultsIdList(null);
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FFFDF6] font-sans text-gray-900">
@@ -135,9 +178,36 @@ export default function CommunityPage() {
         <div className="w-full max-w-5xl z-10 mx-auto">
           <section className="w-full mb-12 text-center pt-8">
             <h1 className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-3 text-center">Community Hub</h1>
-            <p className="text-gray-500 font-medium pb-4 flex items-center justify-center gap-2">
+            <p className="text-gray-500 font-medium pb-8 flex items-center justify-center gap-2">
               Discover and share the best learning paths
             </p>
+
+            <form onSubmit={handleSearch} className="max-w-2xl mx-auto relative group">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-gray-400 group-focus-within:text-yellow-500 transition-colors" />
+              </div>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search anything..."
+                className="w-full pl-12 pr-28 py-4 rounded-full border-2 border-gray-100 bg-white placeholder-gray-400 text-gray-900 focus:outline-none focus:border-yellow-400 focus:ring-4 focus:ring-yellow-100/50 shadow-sm transition-all text-lg"
+              />
+              <div className="absolute inset-y-0 right-2 flex items-center gap-2">
+                {searchQuery && (
+                  <button type="button" onClick={clearSearch} className="text-sm font-medium text-gray-400 hover:text-gray-600 px-2 transition-colors">
+                     Clear
+                  </button>
+                )}
+                <button
+                  type="submit"
+                  disabled={isSearching || !searchQuery.trim()}
+                  className="bg-[#FFD700] hover:bg-[#E6C200] disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 px-6 rounded-full font-bold transition-transform active:scale-95 flex items-center justify-center gap-2 h-10 w-28"
+                >
+                  {isSearching ? <Loader2 className="w-4 h-4 animate-spin" /> : "Search"}
+                </button>
+              </div>
+            </form>
           </section>
 
           {loading ? (
@@ -149,7 +219,14 @@ export default function CommunityPage() {
                <p className="text-xl text-gray-400 font-medium">Currently there are no community roadmaps published.</p>
                <p className="text-gray-400 mt-2">Publish a roadmap to see it here!</p>
             </div>
-          ) : (
+          ) : Object.keys(groupedCourses).length === 0 && searchResultsIdList !== null ? (
+              <div className="text-center py-24">
+                 <p className="text-xl text-gray-400 font-medium">No roadmaps matched your search.</p>
+                 <button onClick={clearSearch} className="text-yellow-600 hover:text-yellow-700 font-bold mt-4">
+                   Clear search
+                 </button>
+              </div>
+            ) : (
             Object.entries(groupedCourses).map(([category, catCourses]) => (
               <section key={category} className="w-full mb-12">
                 <div className="flex items-center gap-4 mb-6">
@@ -224,8 +301,9 @@ export default function CommunityPage() {
                   </AnimatePresence>
                 </div>
               </section>
-            ))
-          )}
+            )))
+          }
+
 
         </div>
       </main>

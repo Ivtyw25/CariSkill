@@ -49,12 +49,13 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
           // 1. Check if it's in community_roadmaps (anyone can see this)
           const { data: pubData } = await supabase
             .from('community_roadmaps')
-            .select('roadmap_id, creator_id')
+            .select('roadmap_id, creator_id, title')
             .eq('roadmap_id', id)
             .limit(1);
           
           if (pubData && pubData.length > 0) {
             setIsPublished(true);
+            dbResolvedTopic = pubData[0].title || dbResolvedTopic;
             // If user is logged in and not the owner, it's a community roadmap for them
             if (authUser && pubData[0].creator_id !== authUser.id) {
               setIsCommunityRoadmap(true);
@@ -529,21 +530,15 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
                   </div>
                   <button
                     onClick={handleStartLearning}
-                    disabled={isForking || (isCommunityRoadmap && isSaved)}
-                    className={`w-full font-bold text-lg py-4 rounded-xl shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 group ${
-                      isCommunityRoadmap && isSaved
-                        ? 'bg-green-100 text-green-700 border-2 border-green-300 cursor-default'
-                        : 'bg-[#FFD700] hover:bg-[#E6C200] disabled:bg-[#FFD700]/50 disabled:cursor-not-allowed text-gray-900'
-                    }`}
+                    disabled={isForking}
+                    className="w-full font-bold text-lg py-4 rounded-xl shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 group bg-[#FFD700] hover:bg-[#E6C200] disabled:bg-[#FFD700]/50 disabled:cursor-not-allowed text-gray-900"
                   >
                     {isForking ? (
                       <Loader2 className="w-5 h-5 animate-spin" />
-                    ) : isCommunityRoadmap && isSaved ? (
-                      <Check className="w-5 h-5" />
                     ) : (
                       <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
                     )}
-                    {isForking ? "Saving..." : isCommunityRoadmap && isSaved ? "Saved to My Roadmaps" : isCommunityRoadmap ? "Save & Start Learning" : "Start Learning"}
+                    {isForking ? "Saving..." : (isCommunityRoadmap && !isSaved) ? "Save & Start Learning" : "Start Learning"}
                   </button>
                   
                   {isUUIDString(id) && !isCommunityRoadmap && (
