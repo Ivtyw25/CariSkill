@@ -463,7 +463,7 @@ uvicorn==0.41.0
     #   master-flow (pyproject.toml)
     #   chromadb
     #   mcp
-uvloop==0.22.1
+# uvloop==0.22.1
     # via uvicorn
 virtualenv==21.1.0
     # via pre-commit
