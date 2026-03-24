@@ -12,6 +12,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { createClient } from '@/utils/supabase/client';
 import BookmarkButton from '@/components/BookmarkButton';
+import VideoSummaryPlayer from '@/components/VideoSummaryPlayer';
 
 export default function SummaryPage({ params }: { params: Promise<{ id: string, moduleId: string }> }) {
   const { id, moduleId } = use(params);
@@ -164,7 +165,14 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
 
           {/* Main Content Card */}
           {currentTopic ? (
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden mb-10">
+            <>
+              {currentTopic.theory_explanation && (
+                <div data-html2canvas-ignore="true" className="mb-8">
+                  <VideoSummaryPlayer textContent={currentTopic.theory_explanation} />
+                </div>
+              )}
+              
+              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden mb-10">
               <div className="bg-[#F9FAFB] border-b border-gray-100 px-8 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-2 text-[#A16207] font-bold uppercase tracking-wide text-sm">
                   <Sparkles className="w-4 h-4" />
@@ -223,7 +231,7 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
                 )}
               </div>
             </div>
-          ) : (
+          </>) : (
             <div className="text-center py-16">
               <p className="text-gray-500">No topics found for this module.</p>
               <button onClick={() => router.push(`/skill/${id}`)} className="mt-4 px-6 py-2 bg-[#FFD700] rounded-xl font-bold">Return to Roadmap</button>
