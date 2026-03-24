@@ -38,26 +38,22 @@ export default function RoadmapsPage() {
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
-      // Fetch community roadmaps the user has saved
-      const { data: savedData } = await supabase
-        .from('saved_roadmaps')
-        .select('roadmap_id, created_at')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
 
       const ownRoadmaps: RoadmapRecord[] = (!ownError && ownData) ? ownData.map(r => ({ ...r, isSaved: false })) : [];
 
       let savedRoadmaps: RoadmapRecord[] = [];
-      if (savedData && savedData.length > 0) {
-        const savedIds = savedData.map(s => s.roadmap_id);
-        const { data: savedRoadmapData } = await supabase
-          .from('roadmaps')
-          .select('id, topic, created_at, content')
-          .in('id', savedIds);
-        if (savedRoadmapData) {
-          savedRoadmaps = savedRoadmapData.map(r => ({ ...r, isSaved: true }));
+      try {
+        const savedRes = await fetch('/api/community/saved-roadmaps', { credentials: 'include' });
+        if (savedRes.ok) {
+          const { roadmaps: savedData } = await savedRes.json();
+          if (savedData && savedData.length > 0) {
+            savedRoadmaps = savedData.map((r: any) => ({ ...r, isSaved: true }));
+          }
         }
+      } catch (e) {
+        console.error('Failed to fetch saved roadmaps:', e);
       }
+
 
       // Merge and deduplicate by id (in case user published their own, they shouldn't see it twice)
       const ownIds = new Set(ownRoadmaps.map(r => r.id));

@@ -10,6 +10,7 @@ import {
   Lock, Play, Rocket, Hand, Clock, Quote,
   Footprints, Trophy, Loader2, Share2, Check
 } from 'lucide-react';
+import DiscussionRoom from '@/components/DiscussionRoom';
 
 const isUUIDString = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(str);
 
@@ -28,70 +29,115 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
   // Community Navigation state
   const [isCommunityRoadmap, setIsCommunityRoadmap] = useState(false);
   const [isForking, setIsForking] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       let stringifiedRoadmap = localStorage.getItem(`roadmap_${id}`);
       let dbResolvedTopic = "";
 
-      // Try fetching from Supabase if logged in.
+      // Try fetching from Supabase
       try {
         const { createClient } = await import('@/utils/supabase/client');
         const supabase = createClient();
-        const { data: { user } } = await supabase.auth.getUser();
-        
-        if (user) {
-          setUser(user);
-          const isUUID = isUUIDString(id);
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+        if (authUser) setUser(authUser);
 
-          let query = supabase
-            .from('roadmaps')
-            .select('topic, content')
-            .eq('user_id', user.id)
-            .order('created_at', { ascending: false })
+        const isUUID = isUUIDString(id);
+
+        if (isUUID) {
+          // 1. Check if it's in community_roadmaps (anyone can see this)
+          const { data: pubData } = await supabase
+            .from('community_roadmaps')
+            .select('roadmap_id, creator_id')
+            .eq('roadmap_id', id)
             .limit(1);
-
-          if (isUUID) {
-            query = query.eq('id', id);
-            
-            // Check if already published
-            const { data: pubData } = await supabase
-              .from('community_roadmaps')
-              .select('id')
-              .eq('roadmap_id', id)
-              .limit(1);
-            if (pubData && pubData.length > 0) {
-              setIsPublished(true);
+          
+          if (pubData && pubData.length > 0) {
+            setIsPublished(true);
+            // If user is logged in and not the owner, it's a community roadmap for them
+            if (authUser && pubData[0].creator_id !== authUser.id) {
+              setIsCommunityRoadmap(true);
             }
-          } else {
-            query = query.ilike('topic', `%${id.replace(/-/g, ' ')}%`);
+            // If logged out, it's also treated as community roadmap (visible discussion)
+            if (!authUser) {
+              setIsCommunityRoadmap(true);
+            }
           }
 
-          const { data: roadmaps, error } = await query;
+          // 2. Fetch the actual content
+          // If logged in, prioritize 'roadmaps' (maybe user's own version with progress notes later?)
+          if (authUser) {
+            const { data: ownRoadmaps } = await supabase
+              .from('roadmaps')
+              .select('id, topic, content')
+              .eq('user_id', authUser.id)
+              .eq('id', id)
+              .limit(1);
 
-          if (roadmaps && roadmaps.length > 0) {
-            dbResolvedTopic = roadmaps[0].topic || "";
-            stringifiedRoadmap = typeof roadmaps[0].content === 'string'
-              ? roadmaps[0].content
-              : JSON.stringify(roadmaps[0].content);
-          } else if (isUUID) {
-             // Fallback: Check if it's a public community roadmap
-             try {
-                 const publicRes = await fetch(`/api/community/roadmap/${id}`);
-                 if (publicRes.ok) {
-                     const publicData = await publicRes.json();
-                     dbResolvedTopic = publicData.topic || "";
-                     stringifiedRoadmap = typeof publicData.content === 'string'
-                         ? publicData.content
-                         : JSON.stringify(publicData.content);
-                         
-                     if (user && publicData.user_id !== user.id) {
-                         setIsCommunityRoadmap(true);
-                     }
-                 }
-             } catch (e) {
-                 console.error("Public fetch failed", e);
-             }
+            if (ownRoadmaps && ownRoadmaps.length > 0) {
+              dbResolvedTopic = ownRoadmaps[0].topic || "";
+              stringifiedRoadmap = typeof ownRoadmaps[0].content === 'string'
+                ? ownRoadmaps[0].content
+                : JSON.stringify(ownRoadmaps[0].content);
+              
+              // If it's the owner's roadmap, check if they have already saved it from community
+              // (Wait, owners don't "save" their own, but if they saved someone else's...)
+              // We already set isCommunityRoadmap above if they are NOT the creator.
+            }
+          }
+
+          // 3. Fallback to public API if not found in user's own roadmaps
+          if (!stringifiedRoadmap) {
+            try {
+              const publicRes = await fetch(`/api/community/roadmap/${id}`, { credentials: 'include' });
+              if (publicRes.ok) {
+                const publicData = await publicRes.json();
+                dbResolvedTopic = publicData.topic || "";
+                stringifiedRoadmap = typeof publicData.content === 'string'
+                  ? publicData.content
+                  : JSON.stringify(publicData.content);
+                
+                // If it's a community roadmap and we still don't have isCommunityRoadmap set
+                if (authUser && publicData.user_id !== authUser.id) {
+                    setIsCommunityRoadmap(true);
+                } else if (!authUser) {
+                    setIsCommunityRoadmap(true);
+                }
+              }
+            } catch (e) {
+              console.error("Public fetch failed", e);
+            }
+          }
+
+          // 4. Check "Saved" status if it's a community roadmap
+          if (authUser && (isCommunityRoadmap || (dbResolvedTopic && !stringifiedRoadmap))) {
+            try {
+               const savedRes = await fetch(`/api/community/saved-roadmaps`, { credentials: 'include' });
+               if (savedRes.ok) {
+                 const { roadmaps: savedList } = await savedRes.json();
+                 const alreadySaved = (savedList || []).some((r: any) => r.id === id);
+                 setIsSaved(alreadySaved);
+               }
+             } catch {}
+          }
+        } else {
+          // Not a UUID - search by topic in user's own roadmaps
+          if (authUser) {
+            const { data: roadmaps } = await supabase
+              .from('roadmaps')
+              .select('id, topic, content')
+              .eq('user_id', authUser.id)
+              .ilike('topic', `%${id.replace(/-/g, ' ')}%`)
+              .order('created_at', { ascending: false })
+              .limit(1);
+            
+            if (roadmaps && roadmaps.length > 0) {
+              dbResolvedTopic = roadmaps[0].topic || "";
+              stringifiedRoadmap = typeof roadmaps[0].content === 'string'
+                ? roadmaps[0].content
+                : JSON.stringify(roadmaps[0].content);
+            }
           }
         }
       } catch (err) {
@@ -272,6 +318,9 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
         
         if (res.ok) {
           const data = await res.json();
+          setIsSaved(true);
+          setIsForking(false);
+          // Navigate to the skill page to start learning
           router.push(`/skill/${data.roadmap_id}`);
         } else {
           alert("Failed to save to your roadmaps.");
@@ -480,15 +529,21 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
                   </div>
                   <button
                     onClick={handleStartLearning}
-                    disabled={isForking}
-                    className="w-full bg-[#FFD700] hover:bg-[#E6C200] disabled:bg-[#FFD700]/50 disabled:cursor-not-allowed text-gray-900 font-bold text-lg py-4 rounded-xl shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 group"
+                    disabled={isForking || (isCommunityRoadmap && isSaved)}
+                    className={`w-full font-bold text-lg py-4 rounded-xl shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 group ${
+                      isCommunityRoadmap && isSaved
+                        ? 'bg-green-100 text-green-700 border-2 border-green-300 cursor-default'
+                        : 'bg-[#FFD700] hover:bg-[#E6C200] disabled:bg-[#FFD700]/50 disabled:cursor-not-allowed text-gray-900'
+                    }`}
                   >
                     {isForking ? (
                       <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : isCommunityRoadmap && isSaved ? (
+                      <Check className="w-5 h-5" />
                     ) : (
                       <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
                     )}
-                    {isForking ? "Saving..." : isCommunityRoadmap ? "Save & Start Learning" : "Start Learning"}
+                    {isForking ? "Saving..." : isCommunityRoadmap && isSaved ? "Saved to My Roadmaps" : isCommunityRoadmap ? "Save & Start Learning" : "Start Learning"}
                   </button>
                   
                   {isUUIDString(id) && !isCommunityRoadmap && (
@@ -528,8 +583,15 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
                 </div>
               </motion.div>
 
+              {/* Discussion Room — shown for community/published roadmaps only */}
+              {(isCommunityRoadmap || isPublished) && isUUIDString(id) && (
+                <DiscussionRoom roadmapId={id} />
+              )}
             </div>
           </div>
+
+
+
         </div>
       </main>
       <Footer />

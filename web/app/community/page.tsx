@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 
 interface CourseNode {
   id: string;
+  roadmap_id: string;
   category: string;
   icon_type: string;
   upvotes: number;

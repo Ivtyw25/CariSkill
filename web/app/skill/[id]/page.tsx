@@ -65,10 +65,10 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
             roadmapIdTemp = nodeData[0].roadmap_id;
             pageTitleTemp = nodeData[0].title;
           } else {
-            // 2. Fallback: Try to find the ROADMAP (if user manually typed /skill/NextJS)
+            // 2. Try to find own ROADMAP directly
             let query = supabase
               .from('roadmaps')
-              .select('id, topic')
+              .select('id, topic, content')
               .eq('user_id', user.id)
               .order('created_at', { ascending: false })
               .limit(1);
@@ -77,56 +77,154 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
             else query = query.ilike('topic', `%${id.replace(/-/g, ' ')}%`);
 
             const { data: roadmaps } = await query;
+            let ownerRoadmapContent: any = null;
             if (roadmaps && roadmaps.length > 0) {
               roadmapIdTemp = roadmaps[0].id;
               pageTitleTemp = roadmaps[0].topic;
+              ownerRoadmapContent = roadmaps[0].content;
             }
-          }
 
-          // 3. Fetch all modules, progress and edges for the resolved Roadmap ID
-          if (roadmapIdTemp) {
-            const [nodesRes, progressRes, edgesRes] = await Promise.all([
-              supabase.from('roadmap_nodes').select('*').eq('roadmap_id', roadmapIdTemp).order('depth_level', { ascending: true }),
-              supabase.from('node_progress').select('node_id').eq('user_id', user.id).eq('roadmap_id', roadmapIdTemp).eq('is_completed', true),
-              supabase.from('roadmap_edges').select('source_node_id, target_node_id').eq('roadmap_id', roadmapIdTemp),
-            ]);
+            // Helper to extract modules from roadmaps.content JSON
+            const buildModulesFromContent = (rawContent: any): SkillModule[] => {
+              try {
+                const parsed = typeof rawContent === 'string' ? JSON.parse(rawContent) : rawContent;
+                let items: any[] = [];
+                if (Array.isArray(parsed)) items = parsed;
+                else if (parsed?.phases) items = parsed.phases;
+                else if (parsed?.roadmap?.phases) items = parsed.roadmap.phases;
+                else if (parsed?.learning_path) items = parsed.learning_path;
+                else if (parsed?.roadmap?.learning_path) items = parsed.roadmap.learning_path;
+                else if (parsed?.modules) items = parsed.modules;
+                else {
+                  const findArr = (obj: any): any[] | null => {
+                    if (!obj || typeof obj !== 'object') return null;
+                    for (const key of Object.keys(obj)) {
+                      if (Array.isArray(obj[key]) && obj[key].length > 0) return obj[key];
+                      const nested = findArr(obj[key]);
+                      if (nested) return nested;
+                    }
+                    return null;
+                  };
+                  items = findArr(parsed) || [];
+                }
+                return items.map((step: any, idx: number) => ({
+                  id: step?.node_id || step?.id || `m${idx + 1}`,
+                  title: step?.title || step?.skill || `Phase ${idx + 1}`,
+                  description: step?.rationale || step?.obj || step?.description || step?.content || "Learn the concepts to master this step.",
+                  isLocked: false,
+                  isCompleted: false,
+                  level: idx + 1,
+                }));
+              } catch {
+                return [];
+              }
+            };
 
-            const nodes = nodesRes.data;
-            const completedNodeIds = new Set((progressRes.data || []).map((p: any) => p.node_id));
-            const edges = edgesRes.data || [];
+            // 3. If still not found and it's a UUID, use admin API for saved community roadmaps
+            if (!roadmapIdTemp && isUUID) {
+              try {
+                const res = await fetch(`/api/community/skill-nodes/${id}`, { credentials: 'include' });
+                if (res.ok) {
+                  const communityData = await res.json();
+                  const { topic, nodes, edges, completedNodeIds: completed, content } = communityData;
 
-            // Build prerequisite map: nodeId -> [prerequisite node_ids]
-            const prereqMap = new Map<string, string[]>();
-            edges.forEach((e: any) => {
-              if (!prereqMap.has(e.target_node_id)) prereqMap.set(e.target_node_id, []);
-              prereqMap.get(e.target_node_id)!.push(e.source_node_id);
-            });
+                  let finalNodes = nodes && nodes.length > 0 ? nodes : null;
+                  let finalModules: SkillModule[] = [];
 
-            if (nodes && nodes.length > 0) {
-              const mappedModules: SkillModule[] = nodes.map((n) => {
-                const isCompleted = completedNodeIds.has(n.node_id);
-                // A node is unlocked if it has no prerequisites OR all prerequisites are completed
-                const prereqs = prereqMap.get(n.node_id) || [];
-                const isLocked = prereqs.length > 0 && !prereqs.every(pid => completedNodeIds.has(pid));
+                  if (finalNodes && finalNodes.length > 0) {
+                    const completedSet = new Set<string>(completed);
+                    const prereqMap = new Map<string, string[]>();
+                    (edges || []).forEach((e: any) => {
+                      if (!prereqMap.has(e.target_node_id)) prereqMap.set(e.target_node_id, []);
+                      prereqMap.get(e.target_node_id)!.push(e.source_node_id);
+                    });
+                    finalModules = finalNodes.map((n: any) => {
+                      const isCompleted = completedSet.has(n.node_id);
+                      const prereqs = prereqMap.get(n.node_id) || [];
+                      const isLocked = prereqs.length > 0 && !prereqs.every((pid: string) => completedSet.has(pid));
+                      return {
+                        id: n.node_id,
+                        title: n.title,
+                        description: n.rationale || "Learn the concepts to master this module.",
+                        isLocked,
+                        isCompleted,
+                        level: n.depth_level,
+                      };
+                    });
+                  } else if (content) {
+                    // Fallback: parse roadmaps.content JSON (roadmap was published before nodes were saved)
+                    finalModules = buildModulesFromContent(content);
+                  }
 
-                return {
-                  id: n.node_id,
-                  title: n.title,
-                  description: n.rationale || "Learn the concepts to master this module.",
-                  isLocked: isLocked,
-                  isCompleted: isCompleted,
-                  level: n.depth_level,
-                };
+                  if (finalModules.length > 0) {
+                    setData({ id, title: topic || "Skill Overview", userCount: "", modules: finalModules });
+                    setLoading(false);
+                    return;
+                  }
+                }
+              } catch (e) {
+                console.error("Community skill-nodes API failed:", e);
+              }
+            }
+
+            // 4. Fetch all modules, progress and edges for the resolved Roadmap ID (own roadmaps)
+            if (roadmapIdTemp) {
+              const [nodesRes, progressRes, edgesRes] = await Promise.all([
+                supabase.from('roadmap_nodes').select('*').eq('roadmap_id', roadmapIdTemp).order('depth_level', { ascending: true }),
+                supabase.from('node_progress').select('node_id').eq('user_id', user.id).eq('roadmap_id', roadmapIdTemp).eq('is_completed', true),
+                supabase.from('roadmap_edges').select('source_node_id, target_node_id').eq('roadmap_id', roadmapIdTemp),
+              ]);
+
+              const nodes = nodesRes.data;
+              const completedNodeIds = new Set((progressRes.data || []).map((p: any) => p.node_id));
+              const edges = edgesRes.data || [];
+
+              // Build prerequisite map: nodeId -> [prerequisite node_ids]
+              const prereqMap = new Map<string, string[]>();
+              edges.forEach((e: any) => {
+                if (!prereqMap.has(e.target_node_id)) prereqMap.set(e.target_node_id, []);
+                prereqMap.get(e.target_node_id)!.push(e.source_node_id);
               });
 
-              setData({
-                id: roadmapIdTemp,
-                title: pageTitleTemp || "Skill Overview",
-                userCount: "",
-                modules: mappedModules
-              });
-              setLoading(false);
-              return;
+              if (nodes && nodes.length > 0) {
+                const mappedModules: SkillModule[] = nodes.map((n) => {
+                  const isCompleted = completedNodeIds.has(n.node_id);
+                  // A node is unlocked if it has no prerequisites OR all prerequisites are completed
+                  const prereqs = prereqMap.get(n.node_id) || [];
+                  const isLocked = prereqs.length > 0 && !prereqs.every(pid => completedNodeIds.has(pid));
+
+                  return {
+                    id: n.node_id,
+                    title: n.title,
+                    description: n.rationale || "Learn the concepts to master this module.",
+                    isLocked: isLocked,
+                    isCompleted: isCompleted,
+                    level: n.depth_level,
+                  };
+                });
+
+                setData({
+                  id: roadmapIdTemp,
+                  title: pageTitleTemp || "Skill Overview",
+                  userCount: "",
+                  modules: mappedModules
+                });
+                setLoading(false);
+                return;
+              } else if (ownerRoadmapContent) {
+                // Fallback for personal roadmap if nodes are missing
+                const mappedModules = buildModulesFromContent(ownerRoadmapContent);
+                if (mappedModules.length > 0) {
+                  setData({
+                    id: roadmapIdTemp,
+                    title: pageTitleTemp || "Skill Overview",
+                    userCount: "",
+                    modules: mappedModules
+                  });
+                  setLoading(false);
+                  return;
+                }
+              }
             }
           }
         }
