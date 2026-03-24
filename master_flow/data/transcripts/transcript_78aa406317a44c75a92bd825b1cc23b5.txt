@@ -1,0 +1,42 @@
+(scratchpad)
+The user wants a TTS-optimized podcast conversation discussing the provided input content about Computer Science. I need to follow all the specified guidelines, including:
+- Engaging, fast-paced, enthusiastic dialogue.
+- TTS-optimized markup (pitch, rate, volume, etc.).
+- Person1 and Person2 roles: Person1 as main summarizer, Person2 as questioner/clarifier.
+- Focus exclusively on the input content.
+- Start with "Welcome to PODCASTIFY - Your Personal Generative AI Podcast."
+- End with Person1 saying goodbye.
+- Short, overlapping sentences emulating natural conversation.
+- No self-introductions or "summarizing" statements.
+- Avoid specific TTS tags like `` or ``.
+- No Amazon/Alexa specific TTS markup.
+- Incorporate rhetorical questions, anecdotes, respectful challenges.
+- Natural traits like filler words and occasional stuttering.
+- Maximize output tokens for a long conversation, but short turns.
+Input Content Analysis:
+The input defines Computer Science as:
+1.  The study of algorithmic processes, computational machines, and computation itself.
+2.  A discipline spanning theoretical studies (algorithms, computation, information) to practical issues (implementing computing systems in hardware and software).
+Key Points to Discuss:
+-   What is Computer Science at its core?
+-   The three pillars: algorithms, computational machines, computation.
+-   The broad spectrum: theoretical vs. practical.
+-   Examples of theoretical aspects.
+-   Examples of practical aspects.
+-   The interconnectedness of these aspects.
+-   Why this broad definition is important.
+Conversation Flow Plan:
+1.  Introduction: Welcome, introduce the topic (Computer Science definition).
+2.  Core Definition: Break down "algorithmic processes, computational machines, and computation."
+3.  Theoretical Side: Dive into algorithms, computation, information theory.
+4.  Practical Side: Discuss hardware and software implementation.
+5.  Interplay/Spectrum: How theoretical informs practical, and vice-versa.
+6.  Enthusiastic Conclusion: Reiterate the scope and importance.
+TTS Markup Strategy:
+-   Use `` as a baseline.
+-   Vary `rate`, `pitch`, `volume` for emphasis, excitement, or thoughtful pauses.
+-   Strategic use of punctuation (`!`, `?`, `...`) for intonation.
+-   Short sentences for natural flow.
+-   Filler words (`um`, `uh`, `you know`).
+-   Simulate overlapping speech by keeping turns short and responsive.
+Let's start crafting the dialogue.

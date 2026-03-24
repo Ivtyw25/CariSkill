@@ -1,0 +1,150 @@
+2026-03-23 22:50:23: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Physics Engine with C++ Experience: Beginner (new to C++ and physics concepts) Goal: Understand fundamental concepts of how a physics engine works Constraints/Worries: Prefers video tutorials
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-24 01:00:45: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Physics Engine Development Experience: C++: Beginner, Physics Concepts: Advanced Goal: Deeply understand underlying physics engine concepts Constraints/Worries: None
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-24 01:01:12: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Physics Engine Development Experience: C++: Beginner, Physics Concepts: Advanced Goal: Deeply understand underlying physics engine concepts Constraints/Worries: None
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="```json
+{
+  "nodes": [
+    {
+      "node_id": "math_foundations",
+      "title": "Mathematical Foundations for Physics Engines",
+      "rationale": "A strong grasp of vector calculus and linear algebra is essential for understanding and implementing any physics engine, as these are the mathematical languages used to describe motion, forces, and collisions.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Vector Algebra (dot product, cross product)",
+        "Matrix Operations (multiplication, inversion)",
+        "Differential Calculus (derivatives, rates of change)",
+        "Integral Calculus (accumulation, work)",
+        "Coordinate Systems and Transformations"
+      ]
+    },
+    {
+      "node_id": "laws_of_motion",
+      "title": "Fundamental Laws of Motion",
+      "rationale": "Deeply understanding Newton's laws of motion is the bedrock of any physics simulation. This module focuses on how these laws are translated into computational models for particles and rigid bodies.",
+      "prerequisites": [
+        "math_foundations"
+      ],
+      "suggested_micro_topics": [
+        "Newton's First Law (Inertia)",
+        "Newton's Second Law (F=ma)",
+        "Newton's Third Law (Action-Reaction)",
+        "Momentum and Impulse",
+        "Force Equations (Gravity, Friction, Springs)"
+      ]
+    },
+    {
+      "node_id": "integrators",
+      "title": "Numerical Integration Techniques",
+      "rationale": "Physics engines simulate continuous motion in discrete time steps. This module covers the various numerical integration methods used to update the state of objects over time, which is crucial for stable and accurate simulations.",
+      "prerequisites": [
+        "laws_of_motion"
+      ],
+      "suggested_micro_topics": [
+        "Euler Integration (Forward, Backward)",
+        "Verlet Integration",
+        "Runge-Kutta Methods",
+        "Stability and Accuracy of Integrators",
+        "Time Step Management"
+      ]
+    },
+    {
+      "node_id": "particle_physics",
+      "title": "Particle Physics Simulation",
+      "rationale": "Starting with particle physics provides a simplified yet fundamental understanding of how forces and motion are simulated before moving to more complex rigid body dynamics. It's a stepping stone to more advanced concepts.",
+      "prerequisites": [
+        "integrators"
+      ],
+      "suggested_micro_topics": [
+        "Particle Representation (position, velocity, acceleration, mass)",
+        "Applying Forces to Particles",
+        "Particle-Particle Interactions",
+        "Particle-Environment Interactions",
+        "Simple Particle Systems"
+      ]
+    },
+    {
+      "node_id": "rigid_body_basics",
+      "title": "Rigid Body Dynamics: Foundations",
+      "rationale": "Most physics engines deal with rigid bodies. This module introduces the core concepts necessary to simulate objects that do not deform, including their rotational motion and the forces acting upon them.",
+      "prerequisites": [
+        "particle_physics"
+      ],
+      "suggested_micro_topics": [
+        "Rigid Body State (position, orientation, linear/angular velocity)",
+        "Mass and Inertia Tensor",
+        "Torque and Angular Momentum",
+        "Applying Forces and Torques to Rigid Bodies",
+        "Quaternions for Rotation Representation"
+      ]
+    },
+    {
+      "node_id": "collision_detection",
+      "title": "Collision Detection Algorithms",
+      "rationale": "Detecting when objects intersect is a critical component of any physics engine. This module explores various algorithms used to identify potential collisions efficiently.",
+      "prerequisites": [
+        "rigid_body_basics"
+      ],
+      "suggested_micro_topics": [
+        "Bounding Volume Hierarchies (AABB, OBB, Spheres)",
+        "Separating Axis Theorem (SAT)",
+        "GJK Algorithm",
+        "Contact Manifold Generation",
+        "Broad-Phase vs. Narrow-Phase Detection"
+      ]
+    },
+    {
+      "node_id": "collision_response",
+      "title": "Collision Response and Resolution",
+      "rationale": "Once a collision is detected, the engine must react appropriately. This module covers the methods for calculating and applying impulses to resolve collisions, ensuring realistic bouncing and sliding behaviors.",
+      "prerequisites": [
+        "collision_detection"
+      ],
+      "suggested_micro_topics": [
+        "Impulse-Based Collision Resolution",
+        "Coefficient of Restitution",
+        "Coefficient of Friction",
+        "Contact Constraints (Penetration Resolution)",
+        "Sequential Impulses"
+      ]
+    },
+    {
+      "node_id": "constraints_and_joints",
+      "title": "Constraints and Joints",
+      "rationale": "To simulate articulated bodies (like ragdolls or hinged doors), physics engines require mechanisms to enforce relationships between rigid bodies. This module delves into various constraint types and their implementation.",
+      "prerequisites": [
+        "collision_response"
+      ],
+      "suggested_micro_topics": [
+        "Joint Types (Hinge, Ball-and-Socket, Slider)",
+        "Constraint Solvers (Iterative, Direct)",
+        "Lagrangian Multipliers",
+        "Soft Constraints",
+        "Motor and Limit Constraints"
+      ]
+    },
+    {
+      "node_id": "optimization_and_performance",
+      "title": "Physics Engine Optimization and Performance",
+      "rationale": "Real-time physics simulations demand high performance. This module focuses on techniques to optimize the physics engine for speed and stability, crucial for practical applications.",
+      "prerequisites": [
+        "constraints_and_joints"
+      ],
+      "suggested_micro_topics": [
+        "Spatial Partitioning (Grids, Octrees, BSP Trees)",
+        "Sleeping Bodies",
+        "Multi-Threading and Parallel Processing",
+        "Fixed Time Steps vs. Variable Time Steps",
+        "Profiling and Debugging Physics Engines"
+      ]
+    }
+  ]
+}
+```"

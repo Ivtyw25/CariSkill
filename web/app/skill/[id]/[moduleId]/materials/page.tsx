@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Bookmark, Flag, Play, Volume2, Maximize2, ChevronLeft, ChevronRight, Loader2, CheckCircle } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import BookmarkButton from '@/components/BookmarkButton';
+import PodcastPlayer from '@/components/PodcastPlayer';
 
 export default function MaterialsPage({ params }: { params: Promise<{ id: string, moduleId: string }> }) {
   const { id, moduleId } = use(params);
@@ -212,7 +213,12 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
         </div>
 
         <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8 z-10">
-          <aside className="lg:col-span-3 hidden lg:block">
+          <aside className="lg:col-span-3 hidden lg:block space-y-6">
+            <PodcastPlayer 
+              title={moduleTitle}
+              content={microTopics.map(t => `${t.topic_title}: ${t.theory_explanation}`).join('\n\n')} 
+            />
+            
             <div className="sticky top-28 bg-white/80 backdrop-blur-md p-6 rounded-3xl border border-gray-100 shadow-sm">
               <h3 className="font-display font-bold text-lg text-gray-900 mb-6">Topic Outline</h3>
               <div className="relative pl-2">

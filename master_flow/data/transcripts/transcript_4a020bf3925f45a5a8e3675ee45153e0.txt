@@ -1,0 +1,38 @@
+(scratchpad)
+The user wants a TTS-optimized podcast conversation discussing the provided input text about Computer Science. I need to create a fast-paced, enthusiastic dialogue between Person1 and Person2, focusing on the definition and scope of Computer Science.
+Here's my plan:
+1.  Analyze Input Content: The input defines Computer Science as "the study of algorithmic processes, computational machines and computation itself." It also states that it "spans a range of topics from theoretical studies of algorithms, computation and information to the practical issues of implementing computing systems in hardware and software."
+2.  Conversation Setup:
+       Person1 will initiate the conversation, introducing the topic based on the input.
+       Person2 will engage with questions, clarifications, and enthusiastic agreement.
+       Both will act as experts, discussing the definition and breadth of Computer Science.
+3.  Topic Exploration:
+       The core definition: algorithmic processes, computational machines, computation.
+       The theoretical side: algorithms, computation, information.
+       The practical side: implementing computing systems (hardware/software).
+       Emphasize the "spanning a range of topics" aspect.
+4.  Dialogue Structure:
+       Introduction: Welcome to PODCASTIFY, introduce the topic of Computer Science.
+       Main Content: Break down the definition. Discuss the theoretical aspects, then the practical application. Use back-and-forth banter.
+       Engagement: Incorporate rhetorical questions, enthusiastic exclamations, and maybe a gentle challenge or clarification.
+       Conclusion: Summarize the broad impact and say goodbye.
+5.  Style & TTS Optimization:
+       Fast-paced, enthusiastic, engaging.
+       Short sentences, natural conversational flow.
+       Use TTS markup for pitch, rate, volume, and emotional context.
+       Person1 and Person2 distinct voices.
+       Include filler words like "um," "uh," "you know."
+       No `` tags longer than 0.2s.
+       Strictly adhere to the Person1/Person2 tags and no scratchpad in output.
+       Avoid forbidden tags and phrases (e.g., "This image describes...").
+       Ensure the conversation length is substantial by elaborating on each point and creating a detailed, yet fast-paced exchange.
+Mental Sandbox/Refinement:
+   How to make the definition "algorithmic processes, computational machines, and computation itself" sound exciting? Break it down: "It's not just about computers, right?" "No, it's about the thinking behind them!"
+   For theoretical vs. practical: "So, the 'why' and the 'how'?" "Exactly! From pure math to making apps!"
+   Need to ensure a natural flow and avoid just reading out the text. Rephrase and elaborate.
+   Emphasize the "discipline" aspect – it's a field of study.
+   Let's make sure there's at least one instance of a gentle challenge or critique. Maybe Person2 could ask for clarification on the "computation itself" part, prompting Person1 to elaborate enthusiastically.
+   TTS tags: I'll use `pitch`, `rate`, `volume`, and `express-as` for emotional cues.
+   Ensure each turn is relatively short to maintain the fast pace.
+(Self-correction during planning): I need to make sure I don't just rephrase the input; I need to discuss it, adding enthusiasm and interpretation while staying true to the core definitions. For instance, when talking about "algorithmic processes," I can add, "that's the recipe bit, right?" or for "computational machines," "like your phone, your laptop, even your smart toaster!"
+Let's begin crafting the dialogue.

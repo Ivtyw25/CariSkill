@@ -1,13 +1,20 @@
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
-from fastapi import FastAPI, HTTPException
+import uuid
+import shutil
+import asyncio
+from typing import Optional, List
+from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi.responses import FileResponse
 from dotenv import load_dotenv
-# Load the environment variables from the .env file
-load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 from master_flow.main import MasterFlow
+from master_flow.model.system_state import SystemState
+
+# Load the environment variables from the .env file
+load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 
 # --- ADDED FOR LOGGING ---
 import re
@@ -31,13 +38,12 @@ sys.stdout = DualLogger(sys.stdout, "temp_master_flow.log")
 sys.stderr = sys.stdout
 # -------------------------
 
-from typing import Optional
-import asyncio
-from master_flow.model.system_state import SystemState
-
 app = FastAPI()
 
 active_flows = {}  # In-memory dictionary to track background generation tasks
+active_podcasts = {} # In-memory dictionary to track podcast generation tasks
+PODCAST_DIR = os.path.join(os.path.dirname(__file__), "temp_podcasts")
+os.makedirs(PODCAST_DIR, exist_ok=True)
 
 # Allow frontend requests
 app.add_middleware(
@@ -48,7 +54,78 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class PodcastRequest(BaseModel):
+    topic: Optional[str] = None
+    urls: Optional[List[str]] = None
+    text: Optional[str] = None
+    session_id: str
 
+@app.post("/api/podcast/generate")
+async def generate_podcast_endpoint(req: PodcastRequest):
+    if not any([req.topic, req.urls, req.text]):
+        raise HTTPException(status_code=400, detail="Either topic, urls, or text must be provided.")
+    
+    task_id = str(uuid.uuid4())
+    active_podcasts[task_id] = {"status": "processing", "session_id": req.session_id}
+
+    async def run_podcast_generation():
+        try:
+            from podcastfy.client import generate_podcast
+            
+            # Generate the podcast audio file using asyncio.to_thread as podcastfy is sync
+            audio_path = await asyncio.to_thread(
+                generate_podcast,
+                topic=req.topic,
+                urls=req.urls,
+                text=req.text,
+                tts_model='edge'
+            )
+            
+            if not audio_path or not os.path.exists(audio_path):
+                raise Exception("Podcast generation failed to produce a file.")
+
+            # Move file to our local temp directory for serving
+            local_filename = f"{task_id}.mp3"
+            local_path = os.path.join(PODCAST_DIR, local_filename)
+            shutil.move(audio_path, local_path)
+
+            active_podcasts[task_id] = {
+                "status": "completed",
+                "file_path": local_path,
+                "session_id": req.session_id
+            }
+            print(f"Podcast {task_id} generated successfully: {local_path}")
+
+        except Exception as e:
+            print(f"Podcast generation error: {str(e)}")
+            active_podcasts[task_id] = {"status": "error", "message": str(e)}
+
+    asyncio.create_task(run_podcast_generation())
+    return {"status": "processing", "task_id": task_id}
+
+@app.get("/api/podcast/status/{task_id}")
+async def get_podcast_status(task_id: str):
+    if task_id in active_podcasts:
+        status_data = active_podcasts[task_id].copy()
+        # Don't expose internal file paths to the frontend
+        status_data.pop("file_path", None)
+        return status_data
+    return {"status": "unknown"}
+
+@app.get("/api/podcast/download/{task_id}")
+async def download_podcast(task_id: str):
+    if task_id not in active_podcasts or active_podcasts[task_id]["status"] != "completed":
+        raise HTTPException(status_code=404, detail="Podcast not found or not yet completed.")
+    
+    file_path = active_podcasts[task_id]["file_path"]
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="Audio file missing from server.")
+        
+    return FileResponse(
+        path=file_path,
+        media_type="audio/mpeg",
+        filename=f"CariSkill_Podcast_{task_id[:8]}.mp3"
+    )
 
 class StartMacroRequest(BaseModel):
     session_id: str
