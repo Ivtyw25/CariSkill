@@ -261,6 +261,23 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
       const { createClient } = await import('@/utils/supabase/client');
       const supabase = createClient();
       
+      // Check if all modules have generated materials
+      const moduleIds = data.modules.map(m => m.id);
+      
+      const { data: generatedTopics } = await supabase
+        .from('micro_topics_contents')
+        .select('macro_node_id')
+        .in('macro_node_id', moduleIds);
+        
+      const generatedSet = new Set(generatedTopics?.map(t => t.macro_node_id) || []);
+      const isCompletelyGenerated = moduleIds.every(mid => generatedSet.has(mid));
+      
+      if (!isCompletelyGenerated) {
+        alert("Please wait for the AI to completely finish generating study materials for every module before publishing your roadmap. To generate materials, simply click on each module to start your journey.");
+        setIsPublishing(false);
+        return;
+      }
+
       // Auto-categorize via Gemini API
       let category = 'Uncategorized';
       let iconType = 'database';

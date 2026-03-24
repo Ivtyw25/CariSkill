@@ -387,11 +387,8 @@ export default function CommunityPage() {
                             className="w-10 h-10 rounded-full border border-gray-100 object-cover shrink-0"
                           />
                           <div className="flex flex-col overflow-hidden">
-                            <span className="text-sm font-bold text-gray-900 leading-none mb-1 truncate">
+                            <span className="text-sm font-bold text-gray-900 leading-none truncate">
                               {course.creator_name || 'Anonymous'}
-                            </span>
-                            <span className="text-xs text-gray-400 leading-none truncate">
-                              {course.creator_role || 'Member'}
                             </span>
                           </div>
                         </div>
