@@ -39,14 +39,15 @@ def main():
     print("\n[2/5] Upgrading pip and installing backend dependencies...")
     run_command([python_exe, "-m", "pip", "install", "--upgrade", "pip"])
     
-    # Prefer requirements.txt if available, otherwise use pyproject.toml
+    # Install base dependencies and specific new ones
+    # (google-genai, edge-tts, and podcastfy are in requirements.txt or installed here)
     req_file = os.path.join(master_flow_dir, "requirements.txt")
     if os.path.exists(req_file):
         run_command([pip_exe, "install", "-r", req_file], cwd=master_flow_dir)
     else:
-        run_command([pip_exe, "install", "."], cwd=master_flow_dir)
+        run_command([pip_exe, "install", "crewai[tools,google-genai]==1.9.3", "fastapi", "uvicorn", "qdrant-client", "sentence-transformers", "tavily-python", "python-dotenv", "google-genai", "edge-tts", "podcastfy"], cwd=master_flow_dir)
 
-    # 3. Install Playwright Browsers
+    # 3. Install Playwright Browsers (Required for crewai-tools and podcastfy)
     print("\n[3/5] Installing Playwright browsers...")
     run_command([python_exe, "-m", "playwright", "install"])
 
