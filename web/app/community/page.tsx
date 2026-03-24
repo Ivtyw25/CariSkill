@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Database, TrendingUp, List as ListIcon, ChevronUp, ChevronDown, Loader2, Search } from 'lucide-react';
+import { Database, TrendingUp, List as ListIcon, ThumbsUp, ThumbsDown, Loader2, Search } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 
@@ -13,7 +13,9 @@ interface CourseNode {
   roadmap_id: string;
   category: string;
   icon_type: string;
-  upvotes: number;
+  upvotes: number; // legacy net score
+  upvoteCount?: number;
+  downvoteCount?: number;
   title: string;
   description: string;
   creator_avatar: string;
@@ -40,6 +42,8 @@ export default function CommunityPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [searchResultsIdList, setSearchResultsIdList] = useState<string[] | null>(null);
+  
+  const [userVotes, setUserVotes] = useState<Record<string, number>>({});
 
   useEffect(() => {
     const fetchUserAndCourses = async () => {
@@ -51,9 +55,44 @@ export default function CommunityPage() {
         .select('*')
         .order('upvotes', { ascending: false });
 
-      if (data) {
-        setCourses(data);
+      // Fetch all votes to compute up/down metrics locally
+      const { data: allVotes } = await supabase
+        .from('community_roadmap_votes')
+        .select('community_roadmap_id, vote_type')
+        .limit(15000); // Temporary high limit for prototype scale
+
+      const upMap: Record<string, number> = {};
+      const downMap: Record<string, number> = {};
+      if (allVotes) {
+        allVotes.forEach(v => {
+          if (v.vote_type === 1) upMap[v.community_roadmap_id] = (upMap[v.community_roadmap_id] || 0) + 1;
+          if (v.vote_type === -1) downMap[v.community_roadmap_id] = (downMap[v.community_roadmap_id] || 0) + 1;
+        });
       }
+
+      if (data) {
+        setCourses(data.map(c => ({
+          ...c,
+          upvoteCount: upMap[c.id] || 0,
+          downvoteCount: downMap[c.id] || 0
+        })));
+      }
+
+      if (user) {
+        const { data: voteData } = await supabase
+          .from('community_roadmap_votes')
+          .select('community_roadmap_id, vote_type')
+          .eq('user_id', user.id);
+        
+        if (voteData) {
+          const votesMap: Record<string, number> = {};
+          voteData.forEach(v => {
+            votesMap[v.community_roadmap_id] = v.vote_type;
+          });
+          setUserVotes(votesMap);
+        }
+      }
+
       setLoading(false);
     };
 
@@ -68,15 +107,47 @@ export default function CommunityPage() {
 
     const voteValue = type === 'up' ? 1 : -1;
 
+    // Prevent duplicate voting of the same type
+    if (userVotes[id] === voteValue) {
+      return;
+    }
+
+    // Determine the net change in score
+    const previousVote = userVotes[id] || 0;
+    const scoreDiff = voteValue - previousVote;
+
+    let upDelta = 0;
+    let downDelta = 0;
+    if (previousVote === 1) upDelta -= 1;
+    if (previousVote === -1) downDelta -= 1;
+    if (voteValue === 1) upDelta += 1;
+    if (voteValue === -1) downDelta += 1;
+
     // Optimistic update
     setCourses(prev => prev.map(course => {
       if (course.id === id) {
-        return { ...course, upvotes: course.upvotes + voteValue };
+        return { 
+          ...course, 
+          upvotes: course.upvotes + scoreDiff,
+          upvoteCount: (course.upvoteCount || 0) + upDelta,
+          downvoteCount: (course.downvoteCount || 0) + downDelta
+        };
       }
       return course;
     }));
+    setUserVotes(prev => ({ ...prev, [id]: voteValue }));
 
-    // Record the vote
+    // Record the vote using an upsert conceptually.
+    // If we only have insert and no delete, we can try to delete previous ones first.
+    if (previousVote !== 0) {
+      await supabase
+        .from('community_roadmap_votes')
+        .delete()
+        .eq('community_roadmap_id', id)
+        .eq('user_id', user.id);
+    }
+    
+    // Insert new vote
     const { error: insertError } = await supabase.from('community_roadmap_votes').insert({
       community_roadmap_id: id,
       user_id: user.id,
@@ -84,20 +155,24 @@ export default function CommunityPage() {
     });
 
     if (insertError) {
-      // Revert if vote fails (e.g., unique constraint violation meaning they already voted)
-      alert("You have already voted on this roadmap or an error occurred.");
+      // Background revert
       setCourses(prev => prev.map(course => {
         if (course.id === id) {
-          return { ...course, upvotes: course.upvotes - voteValue };
+          return { 
+            ...course, 
+            upvotes: course.upvotes - scoreDiff,
+            upvoteCount: (course.upvoteCount || 0) - upDelta,
+            downvoteCount: (course.downvoteCount || 0) - downDelta
+          };
         }
         return course;
       }));
+      setUserVotes(prev => ({ ...prev, [id]: previousVote }));
+      alert("An error occurred while voting.");
       return;
     }
 
     // Update main counter
-    // For a highly concurrent app, use an RPC for atomic increment. 
-    // Here we use a standard select + update since we lack an RPC currently.
     const { data: currentData } = await supabase
       .from('community_roadmaps')
       .select('upvotes')
@@ -107,7 +182,7 @@ export default function CommunityPage() {
     if (currentData) {
       await supabase
         .from('community_roadmaps')
-        .update({ upvotes: currentData.upvotes + voteValue })
+        .update({ upvotes: currentData.upvotes + scoreDiff })
         .eq('id', id);
     }
   };
@@ -166,6 +241,16 @@ export default function CommunityPage() {
   const clearSearch = () => {
     setSearchQuery('');
     setSearchResultsIdList(null);
+  };
+
+  const popNode = {
+    hidden: { opacity: 0, scale: 0.9, y: 30 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { type: "spring" as const, stiffness: 250, damping: 25 }
+    }
   };
 
   return (
@@ -234,38 +319,52 @@ export default function CommunityPage() {
                   <div className="h-[1px] bg-gray-200 w-full rounded-full"></div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="flex gap-6 overflow-x-auto pb-8 pt-2 snap-x snap-mandatory px-1 -mx-1" style={{ scrollbarWidth: 'thin' }}>
                   <AnimatePresence>
-                    {catCourses.map((course) => (
+                    {catCourses.map((course) => {
+                      const userVote = userVotes[course.id] || 0;
+                      return (
                       <motion.div
                         key={course.id}
                         layout
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3 }}
+                        variants={popNode}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-50px 0px" }}
+                        whileHover={{ y: -8, scale: 1.02 }}
                         onClick={() => router.push(`/skill/${course.roadmap_id}/overview`)}
-                        className="bg-white rounded-[24px] p-6 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col hover:shadow-xl hover:border-[#FFD700]/60 transition-all duration-300 group cursor-pointer"
+                        className="w-[85vw] sm:w-[340px] lg:w-[360px] shrink-0 snap-start bg-white rounded-[24px] p-6 shadow-sm border border-gray-100 flex flex-col hover:shadow-2xl hover:shadow-[#FFD700]/10 hover:border-[#FFD700] transition-all duration-300 group cursor-pointer relative z-10"
                       >
                         {/* Top Row: Icon and Votes */}
                         <div className="flex justify-between items-start mb-6 w-full">
-                          <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center transition-colors group-hover:bg-[#FEF9C3] shrink-0">
+                          <div className="w-12 h-12 bg-gray-50 rounded-full border border-gray-100 flex items-center justify-center transition-colors group-hover:bg-[#FFFDF6] group-hover:border-[#FFD700]/50 shrink-0">
                             {getIcon(course.icon_type)}
                           </div>
-                          <div className="flex flex-col items-center bg-gray-50 rounded-[20px] py-1.5 px-3 min-w-[50px] shrink-0">
+                          <div className="flex items-center gap-3 bg-gray-50 rounded-full py-1.5 px-3 border border-gray-100 transition-colors group-hover:bg-white group-hover:border-gray-200 shrink-0">
                             <button
                               onClick={(e) => { e.stopPropagation(); handleVote(course.id, 'up'); }}
-                              className="text-gray-400 hover:text-gray-900 focus:outline-none transition-colors py-0.5"
+                              className={`flex items-center gap-1.5 focus:outline-none transition-transform hover:scale-105 active:scale-95 ${
+                                userVote === 1 ? 'text-blue-500' : 'text-gray-400 hover:text-blue-500'
+                              }`}
                             >
-                              <ChevronUp className="w-4 h-4" />
+                              <ThumbsUp className={`w-4 h-4 ${userVote === 1 ? 'fill-blue-500' : ''}`} />
+                              <span className={`text-sm font-bold select-none ${userVote === 1 ? 'text-blue-600' : 'text-gray-600'}`}>
+                                {formatVotes(course.upvoteCount || 0)}
+                              </span>
                             </button>
-                            <span className="text-sm font-bold text-gray-900 my-0.5 select-none text-center">
-                              {formatVotes(course.upvotes)}
-                            </span>
+
+                            <div className="w-[1px] h-4 bg-gray-200 leading-none"></div>
+
                             <button
                               onClick={(e) => { e.stopPropagation(); handleVote(course.id, 'down'); }}
-                              className="text-gray-400 hover:text-gray-900 focus:outline-none transition-colors py-0.5"
+                              className={`flex items-center gap-1.5 focus:outline-none transition-transform hover:scale-105 active:scale-95 ${
+                                userVote === -1 ? 'text-orange-500' : 'text-gray-400 hover:text-orange-500'
+                              }`}
                             >
-                              <ChevronDown className="w-4 h-4" />
+                              <ThumbsDown className={`w-4 h-4 mt-0.5 ${userVote === -1 ? 'fill-orange-500' : ''}`} />
+                              <span className={`text-xs font-bold select-none opacity-90 ${userVote === -1 ? 'text-orange-600' : 'text-gray-500'}`}>
+                                {formatVotes(course.downvoteCount || 0)}
+                              </span>
                             </button>
                           </div>
                         </div>
@@ -297,7 +396,8 @@ export default function CommunityPage() {
                           </div>
                         </div>
                       </motion.div>
-                    ))}
+                    );
+                    })}
                   </AnimatePresence>
                 </div>
               </section>
