@@ -126,7 +126,7 @@ async def generate_podcast_audio(script_text: str, task_id: str) -> Path:
     
     try:
         # subprocess.run is a STRICTLY BLOCKING call
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True, encoding="utf-8")
         print(f"[FFMPEG] Conversion completed successfully.")
     except subprocess.CalledProcessError as e:
         print(f"[ERROR] FFmpeg conversion failed with exit code {e.returncode}")

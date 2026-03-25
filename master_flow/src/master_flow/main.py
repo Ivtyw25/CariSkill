@@ -51,7 +51,7 @@ class MasterFlow(Flow[SystemState]):
         # Save trace to help debug empty arrays
         debug_path = os.path.join(os.path.dirname(__file__), "../../api/temp_macro_crew_debug.json")
         try:
-            with open(debug_path, "w") as f:
+            with open(debug_path, "w", encoding="utf-8") as f:
                 json.dump(debug_info, f, indent=2, default=str)
         except Exception as e:
             print(f"Warning: Could not write debug info to {debug_path}: {e}")
@@ -80,7 +80,7 @@ class MasterFlow(Flow[SystemState]):
         # Log final blueprint state assigned to the master flow
         final_blueprint_path = os.path.join(os.path.dirname(__file__), "../../api/temp_macro_blueprint_final.json")
         try:
-            with open(final_blueprint_path, "w") as f:
+            with open(final_blueprint_path, "w", encoding="utf-8") as f:
                 json.dump(self.state.blueprint, f, indent=2)
         except Exception as e:
             print(f"Warning: Could not write final blueprint to {final_blueprint_path}: {e}")

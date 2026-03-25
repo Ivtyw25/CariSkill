@@ -142,7 +142,7 @@ def stitch_videos(task_id: str, video_paths: List[Path], narration_path: Optiona
     
     try:
         # 1. Create concat.txt
-        with open(concat_file, "w") as f:
+        with open(concat_file, "w", encoding="utf-8") as f:
             for path in video_paths:
                 f.write(f"file '{path.absolute()}'\n")
         

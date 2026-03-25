@@ -490,3 +490,455 @@ Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step
   ]
 }
 ```"
+2026-03-25 02:46:38: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Fluffy bread baking Experience: Beginner Goal: Be able to bake fluffy bread, guided by videos and clear recipes Constraints/Worries: Prefers learning with videos and clear recipes.
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-25 02:46:57: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Fluffy bread baking Experience: Beginner Goal: Be able to bake fluffy bread, guided by videos and clear recipes Constraints/Worries: Prefers learning with videos and clear recipes.
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="```json
+{
+  "nodes": [
+    {
+      "node_id": "baking_basics_equipment",
+      "title": "Baking Basics: Essential Equipment",
+      "rationale": "Understanding the basic tools and equipment is crucial for a beginner to start baking efficiently and safely. This module will introduce the necessary items and their uses.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Measuring cups and spoons",
+        "Mixing bowls",
+        "Whisks and spatulas",
+        "Baking pans and sheets",
+        "Oven thermometers",
+        "Kitchen scales (optional but recommended)"
+      ]
+    },
+    {
+      "node_id": "understanding_ingredients",
+      "title": "Understanding Key Ingredients",
+      "rationale": "Knowing the role of each ingredient is fundamental to achieving the desired texture and flavor in bread. This module will cover the basic components of bread.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Flour types (all-purpose, bread flour)",
+        "Yeast (active dry, instant)",
+        "Water temperature and its role",
+        "Salt's function in bread",
+        "Sugar and its impact (optional for basic fluffy bread)"
+      ]
+    },
+    {
+      "node_id": "basic_dough_preparation",
+      "title": "Basic Dough Preparation: The Straight Dough Method",
+      "rationale": "The 'straight dough' method is ideal for beginners as it's simple and forms the foundation for many bread recipes. This module will focus on the initial mixing and kneading.",
+      "prerequisites": [
+        "baking_basics_equipment",
+        "understanding_ingredients"
+      ],
+      "suggested_micro_topics": [
+        "Measuring ingredients accurately",
+        "Mixing dry and wet ingredients",
+        "Basic hand kneading techniques (video-guided)",
+        "First rise (bulk fermentation)",
+        "Recognizing proper dough consistency"
+      ]
+    },
+    {
+      "node_id": "shaping_and_proofing",
+      "title": "Shaping and Proofing for Fluffy Bread",
+      "rationale": "Proper shaping and proofing are critical steps to achieve a light and airy crumb. This module will guide the user through these essential techniques.",
+      "prerequisites": [
+        "basic_dough_preparation"
+      ],
+      "suggested_micro_topics": [
+        "Degassing the dough",
+        "Basic shaping techniques (e.g., round loaf, simple pan loaf)",
+        "Second rise (proofing)",
+        "Identifying when dough is properly proofed (poke test)",
+        "Troubleshooting under-proofed/over-proofed dough"
+      ]
+    },
+    {
+      "node_id": "baking_and_cooling",
+      "title": "Baking and Cooling Your First Loaf",
+      "rationale": "The baking process transforms the dough into bread, and proper cooling ensures the best texture and flavor. This module will cover oven techniques and post-baking care.",
+      "prerequisites": [
+        "shaping_and_proofing"
+      ],
+      "suggested_micro_topics": [
+        "Preheating the oven correctly",
+        "Baking temperatures and times for fluffy bread",
+        "Achieving a golden crust",
+        "Internal temperature for doneness",
+        "Cooling bread on a wire rack",
+        "When to slice and enjoy"
+      ]
+    },
+    {
+      "node_id": "troubleshooting_common_issues",
+      "title": "Troubleshooting Common Fluffy Bread Issues",
+      "rationale": "Beginners often encounter common problems. This module will help the user identify and correct issues to improve their baking success.",
+      "prerequisites": [
+        "baking_and_cooling"
+      ],
+      "suggested_micro_topics": [
+        "Why is my bread dense?",
+        "Why didn't my bread rise?",
+        "Crust too hard/soft",
+        "Uneven baking",
+        "Flavor issues (too salty, bland)"
+      ]
+    },
+    {
+      "node_id": "simple_fluffy_bread_recipes",
+      "title": "Simple Fluffy Bread Recipes (Video-Guided)",
+      "rationale": "Applying learned techniques to clear, video-guided recipes is essential for hands-on learning and building confidence. This module will provide practical baking experiences.",
+      "prerequisites": [
+        "troubleshooting_common_issues"
+      ],
+      "suggested_micro_topics": [
+        "Classic white sandwich bread",
+        "Soft dinner rolls",
+        "Basic milk bread",
+        "Quick no-knead fluffy bread (as an alternative)"
+      ]
+    }
+  ]
+}
+```"
+2026-03-25 02:51:22: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Fluffy bread baking Experience: Beginner Goal: Be able to bake fluffy bread, guided by videos and clear recipes Constraints/Worries: Prefers learning with videos and clear recipes.
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-25 02:51:38: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Fluffy bread baking Experience: Beginner Goal: Be able to bake fluffy bread, guided by videos and clear recipes Constraints/Worries: Prefers learning with videos and clear recipes.
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="```json
+{
+  "nodes": [
+    {
+      "node_id": "baking_basics",
+      "title": "Baking Basics & Kitchen Setup",
+      "rationale": "Understanding fundamental baking principles and having the right tools is crucial for any beginner to succeed in baking fluffy bread.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Essential baking tools (measuring cups, scales, mixing bowls)",
+        "Understanding ingredient functions (flour types, yeast, salt, sugar)",
+        "Basic kitchen hygiene and safety",
+        "Reading and understanding recipes",
+        "Oven temperature and calibration"
+      ]
+    },
+    {
+      "node_id": "understanding_yeast",
+      "title": "Understanding Yeast and Leavening",
+      "rationale": "Fluffy bread relies heavily on proper leavening. This module will demystify yeast and its role in creating the desired texture.",
+      "prerequisites": [
+        "baking_basics"
+      ],
+      "suggested_micro_topics": [
+        "Types of yeast (active dry, instant, fresh)",
+        "Activating yeast (proofing)",
+        "Yeast's role in fermentation",
+        "Factors affecting yeast activity (temperature, sugar)",
+        "Troubleshooting yeast issues"
+      ]
+    },
+    {
+      "node_id": "dough_mixing_kneading",
+      "title": "Dough Mixing and Kneading Techniques",
+      "rationale": "Proper mixing and kneading are essential for developing gluten, which gives bread its structure and chewiness, contributing to fluffiness.",
+      "prerequisites": [
+        "understanding_yeast"
+      ],
+      "suggested_micro_topics": [
+        "Mixing ingredients by hand vs. stand mixer",
+        "Developing gluten through kneading",
+        "Windowpane test for gluten development",
+        "Over-kneading and under-kneading",
+        "No-knead bread principles (for context)"
+      ]
+    },
+    {
+      "node_id": "first_fluffy_loaf",
+      "title": "Baking Your First Fluffy Loaf (Straight Dough Method)",
+      "rationale": "This module provides a practical, guided experience to bake a simple, fluffy bread using the straightforward 'straight dough' method, directly addressing the user's goal and preference for clear recipes and videos.",
+      "prerequisites": [
+        "dough_mixing_kneading"
+      ],
+      "suggested_micro_topics": [
+        "Step-by-step video recipe for a basic white fluffy bread",
+        "Measuring ingredients precisely",
+        "First rise (bulk fermentation)",
+        "Shaping a basic loaf",
+        "Second rise (proofing)",
+        "Baking at correct temperature",
+        "Cooling and slicing (abreaducation.com/content/lesson1-first-loaf)"
+      ]
+    },
+    {
+      "node_id": "troubleshooting_common_issues",
+      "title": "Troubleshooting Common Fluffy Bread Problems",
+      "rationale": "Even with clear recipes, beginners encounter issues. This module helps identify and correct common problems to ensure consistent success.",
+      "prerequisites": [
+        "first_fluffy_loaf"
+      ],
+      "suggested_micro_topics": [
+        "Why bread is dense or heavy",
+        "Why bread didn't rise",
+        "Crust issues (too hard, too soft)",
+        "Flavor issues (too bland, too yeasty)",
+        "Adjusting for environmental factors (humidity, altitude)"
+      ]
+    },
+    {
+      "node_id": "exploring_fluffy_variations",
+      "title": "Exploring Fluffy Bread Variations",
+      "rationale": "Once comfortable with a basic loaf, this module encourages exploration of different fluffy bread types, expanding the user's baking repertoire.",
+      "prerequisites": [
+        "first_fluffy_loaf",
+        "troubleshooting_common_issues"
+      ],
+      "suggested_micro_topics": [
+        "Brioche (enriched dough)",
+        "Milk bread (tangzhong method)",
+        "Dinner rolls",
+        "Sweet fluffy breads (e.g., cinnamon rolls dough)",
+        "Introduction to different flour blends for texture"
+      ]
+    }
+  ]
+}
+```"
+2026-03-25 03:02:48: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Fluffy bread baking Experience: Beginner Goal: Be able to bake fluffy bread, guided by videos and clear recipes Constraints/Worries: Prefers learning with videos and clear recipes.
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-25 03:03:06: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Fluffy bread baking Experience: Beginner Goal: Be able to bake fluffy bread, guided by videos and clear recipes Constraints/Worries: Prefers learning with videos and clear recipes.
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="```json
+{
+  "nodes": [
+    {
+      "node_id": "baking_basics_equipment",
+      "title": "Baking Basics: Essential Equipment",
+      "rationale": "Understanding the basic tools and equipment is crucial for a beginner to start baking efficiently and safely. This module will introduce the necessary items for fluffy bread baking.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Measuring cups and spoons",
+        "Mixing bowls",
+        "Dough scraper",
+        "Baking pans/sheets",
+        "Oven thermometer",
+        "Kitchen scale (optional but recommended)"
+      ]
+    },
+    {
+      "node_id": "baking_basics_ingredients",
+      "title": "Baking Basics: Understanding Ingredients",
+      "rationale": "Knowing the role of each ingredient is fundamental to achieving the desired texture and flavor in fluffy bread. This module covers the core ingredients and their functions.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Types of flour (all-purpose, bread flour)",
+        "Yeast (active dry, instant)",
+        "Water/milk",
+        "Salt",
+        "Sugar (optional, for flavor/browning)",
+        "Fats (butter, oil - for richness and tenderness)"
+      ]
+    },
+    {
+      "node_id": "basic_dough_preparation",
+      "title": "Basic Dough Preparation: Straight Dough Method",
+      "rationale": "The 'straight dough' method is ideal for beginners as it's simple and forms the foundation for many bread recipes. This module focuses on the initial steps of mixing and kneading.",
+      "prerequisites": [
+        "baking_basics_equipment",
+        "baking_basics_ingredients"
+      ],
+      "suggested_micro_topics": [
+        "Measuring ingredients accurately",
+        "Mixing dry and wet ingredients",
+        "Kneading techniques (by hand and stand mixer)",
+        "First rise (bulk fermentation)",
+        "Understanding dough consistency"
+      ]
+    },
+    {
+      "node_id": "shaping_and_proofing",
+      "title": "Shaping and Proofing for Fluffy Bread",
+      "rationale": "Proper shaping and proofing are critical for the final texture and rise of fluffy bread. This module guides the user through these crucial intermediate steps.",
+      "prerequisites": [
+        "basic_dough_preparation"
+      ],
+      "suggested_micro_topics": [
+        "Dividing dough",
+        "Gentle shaping techniques for loaves and rolls",
+        "Second rise (proofing)",
+        "Assessing proofing readiness",
+        "Creating a humid environment for proofing"
+      ]
+    },
+    {
+      "node_id": "baking_and_cooling",
+      "title": "Baking and Cooling Your First Fluffy Loaf",
+      "rationale": "The baking process transforms the dough into bread, and correct cooling prevents sogginess. This module covers the final stages to achieve a perfect fluffy loaf.",
+      "prerequisites": [
+        "shaping_and_proofing"
+      ],
+      "suggested_micro_topics": [
+        "Preheating the oven correctly",
+        "Baking temperatures and times",
+        "Achieving a golden crust",
+        "Checking for doneness (internal temperature, sound)",
+        "Cooling on a wire rack to prevent sogginess"
+      ]
+    },
+    {
+      "node_id": "troubleshooting_common_issues",
+      "title": "Troubleshooting Common Fluffy Bread Issues",
+      "rationale": "Even with clear instructions, beginners might encounter issues. This module helps identify and correct common problems, fostering confidence and learning from mistakes.",
+      "prerequisites": [
+        "baking_and_cooling"
+      ],
+      "suggested_micro_topics": [
+        "Dense crumb",
+        "Bread not rising",
+        "Crust too hard/soft",
+        "Uneven baking",
+        "Over-proofing vs. under-proofing"
+      ]
+    },
+    {
+      "node_id": "exploring_simple_fluffy_recipes",
+      "title": "Exploring Simple Fluffy Bread Recipes",
+      "rationale": "Applying learned skills to various simple recipes reinforces understanding and builds a repertoire of fluffy breads. This module encourages practical application.",
+      "prerequisites": [
+        "baking_and_cooling",
+        "troubleshooting_common_issues"
+      ],
+      "suggested_micro_topics": [
+        "Basic white sandwich bread",
+        "Simple dinner rolls",
+        "Sweet fluffy buns",
+        "No-knead fluffy bread variations",
+        "Enriched doughs (e.g., brioche without complex shaping)"
+      ]
+    }
+  ]
+}
+```"
+2026-03-25 03:16:37: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Fluffy bread baking Experience: Beginner Goal: Be able to bake fluffy bread, guided by videos and clear recipes Constraints/Worries: Prefers learning with videos and clear recipes.
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-25 03:16:55: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Fluffy bread baking Experience: Beginner Goal: Be able to bake fluffy bread, guided by videos and clear recipes Constraints/Worries: Prefers learning with videos and clear recipes.
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="```json
+{
+  "nodes": [
+    {
+      "node_id": "baking_basics",
+      "title": "Baking Basics: Tools and Ingredients",
+      "rationale": "Understanding the fundamental tools and ingredients is crucial for any beginner to start baking successfully. This module sets the foundation for all subsequent baking activities.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Essential baking tools (measuring cups/spoons, mixing bowls, spatulas, baking pans)",
+        "Common bread ingredients (flour types, yeast, salt, sugar, water)",
+        "Ingredient measurement techniques (weight vs. volume)",
+        "Basic kitchen safety and hygiene"
+      ]
+    },
+    {
+      "node_id": "understanding_yeast",
+      "title": "Understanding Yeast and Leavening",
+      "rationale": "Yeast is the primary leavening agent for fluffy bread. A beginner needs to understand how yeast works, how to activate it, and its role in dough development to achieve the desired texture.",
+      "prerequisites": [
+        "baking_basics"
+      ],
+      "suggested_micro_topics": [
+        "Types of yeast (active dry, instant, fresh)",
+        "Activating yeast (proofing)",
+        "The role of yeast in fermentation",
+        "Factors affecting yeast activity (temperature, sugar)",
+        "Alternative leavening agents (brief overview for context)"
+      ]
+    },
+    {
+      "node_id": "dough_mixing_kneading",
+      "title": "Dough Mixing and Kneading Techniques",
+      "rationale": "Proper mixing and kneading are essential for developing gluten, which gives bread its structure and fluffiness. This module focuses on the practical skills needed to prepare dough correctly.",
+      "prerequisites": [
+        "understanding_yeast"
+      ],
+      "suggested_micro_topics": [
+        "Combining ingredients for a basic dough",
+        "Hand kneading techniques (stretch and fold, push and pull)",
+        "Visual cues for properly kneaded dough (windowpane test)",
+        "Resting and rising the dough (first proof)"
+      ]
+    },
+    {
+      "node_id": "shaping_proofing",
+      "title": "Shaping and Second Proofing",
+      "rationale": "After the initial rise, shaping the dough correctly and allowing it to proof again are critical steps for achieving a well-formed and airy loaf. This module covers these intermediate stages.",
+      "prerequisites": [
+        "dough_mixing_kneading"
+      ],
+      "suggested_micro_topics": [
+        "Degassing the dough",
+        "Basic bread shapes (round, oval, simple loaf)",
+        "Second proofing (final rise) techniques",
+        "Indicators of a properly proofed dough",
+        "Preparing baking pans"
+      ]
+    },
+    {
+      "node_id": "baking_techniques",
+      "title": "Baking: Temperature, Time, and Doneness",
+      "rationale": "The actual baking process is where the dough transforms into bread. Understanding oven temperatures, baking times, and how to determine doneness is vital for a successful outcome.",
+      "prerequisites": [
+        "shaping_proofing"
+      ],
+      "suggested_micro_topics": [
+        "Preheating the oven",
+        "Ideal baking temperatures for fluffy bread",
+        "Monitoring baking progress",
+        "Determining bread doneness (internal temperature, tapping crust)",
+        "Cooling baked bread"
+      ]
+    },
+    {
+      "node_id": "troubleshooting_common_issues",
+      "title": "Troubleshooting Common Bread Baking Issues",
+      "rationale": "Beginners will inevitably encounter challenges. This module helps them identify common problems (e.g., dense bread, tough crust) and provides solutions, fostering problem-solving skills.",
+      "prerequisites": [
+        "baking_techniques"
+      ],
+      "suggested_micro_topics": [
+        "Why bread turns out dense or heavy",
+        "Causes of a tough or dry crust",
+        "Understanding uneven baking",
+        "Dealing with sticky dough",
+        "Adjusting for different environmental conditions"
+      ]
+    },
+    {
+      "node_id": "simple_fluffy_bread_recipes",
+      "title": "Simple Fluffy Bread Recipes (Video-Guided)",
+      "rationale": "Applying learned concepts through clear, video-guided recipes is essential for a beginner. This module provides practical experience with straightforward recipes, reinforcing previous learning.",
+      "prerequisites": [
+        "troubleshooting_common_issues"
+      ],
+      "suggested_micro_topics": [
+        "Basic white sandwich bread",
+        "Simple milk bread",
+        "No-knead fluffy bread variations",
+        "Brioche (beginner-friendly version)",
+        "Recipe interpretation and adaptation"
+      ]
+    }
+  ]
+}
+```"

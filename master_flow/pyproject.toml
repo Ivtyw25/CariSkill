@@ -10,7 +10,7 @@ dependencies = [
     "uvicorn",
     "qdrant-client",
     "sentence-transformers",
-    "tavily-python",
+    "ddgs",
     "python-dotenv"
 ]
 

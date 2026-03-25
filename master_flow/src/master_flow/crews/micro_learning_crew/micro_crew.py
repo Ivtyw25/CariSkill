@@ -2,11 +2,14 @@ import os
 from crewai import Agent, Crew, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from master_flow.model.micro_models import MacroNodeContent, FullScrapeResult
-from crewai_tools import TavilySearchTool
+
+# 1. Import your new high-speed async tool
+from master_flow.tools.custom_tools import AsyncDeepSearchTool
 
 os.environ["OPENAI_API_KEY"] = "sk-dummy-key-to-bypass-pydantic-bug"
-# 2. Initialize the Tools WITH the configuration
-tavily_tool = TavilySearchTool() # Tavily doesn't use an internal LLM, just its own API key
+
+# 2. Initialize the Deep Search Tool
+deep_search_tool = AsyncDeepSearchTool()
 
 @CrewBase
 class MicroLearningCrew():
@@ -16,7 +19,7 @@ class MicroLearningCrew():
 
     def get_llm(self) -> LLM:
         return LLM(
-            model="gemini/gemini-2.5-flash", 
+            model="gemini/gemini-2.5-flash",
             api_key=os.getenv("GEMINI_API_KEY"),
             temperature=0.5
         )
@@ -25,7 +28,7 @@ class MicroLearningCrew():
     def scraper(self) -> Agent:
         return Agent(
             config=self.agents_config['scraper'],
-            tools=[tavily_tool],
+            tools=[deep_search_tool], # <-- The new tool is wired in here!
             verbose=True,
             llm=self.get_llm(),
             allow_delegation=False
@@ -64,7 +67,7 @@ class MicroLearningCrew():
     def estimate_and_compile_task(self) -> Task:
         return Task(
             config=self.tasks_config['estimate_and_compile_task'],
-            output_pydantic=MacroNodeContent # Forces the final output structure
+            output_pydantic=MacroNodeContent
         )
 
     @crew

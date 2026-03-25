@@ -3,31 +3,31 @@ scrape_task:
     We are building content for the Macro Node: "{macro_title}".
     The specific sub-topics to research are: {micro_topics_list}.
     
-    Your ONLY job is to find the best resource links using `TavilySearchTool`. Do NOT attempt to scrape or read the content inside the websites.
+    Your job is to perform a deep research dive using the `AsyncDeepSearchTool`.
     
-    For EACH sub-topic, perform two highly specific searches using `TavilySearchTool`:
-    
-    1. THE DOC SEARCH: Query -> search for the documentation or article of the sub-topic. 
-       Extract the top 1 or 2 relevant URLs and their titles.
-    2. THE VIDEO SEARCH: Query -> search for the video tutorial or explanation of the sub-topic in youtube.
-       Extract the top 1 or 2 relevant YouTube URLs and their titles.
-    3. Identify whether the links found are relevant to the user's goal and experience level.do not include it if it dont match
+    For EACH sub-topic:
+    1. SEARCH: Fire a query into the `AsyncDeepSearchTool` to find documentation and video links.
+    2. ANALYZE: Review the extracted markdown content provided by the tool. Identify high-signal facts, 
+       technical architectures, and specific code examples that are relevant to the user's experience level ({experience}) and goal ({goal}).
+    3. COMPILE: Gather the best URLs and their titles, ensuring you prioritize sources that returned clean, readable markdown content.
     
     IMPORTANT RULES:
-    - You are exclusively a link fetcher. Do NOT use website scraping tools to read the content.
-    - If Tavily returns irrelevant results or nothing at all for a specific search, SKIP IT. It is perfectly fine if a sub-topic has no video or no article.
-    - Do not hallucinate or make up URLs.
+    - You are now a DEEP RESEARCHER. You must leverage the markdown content returned by your tool.
+    - Extract code snippets and detailed explanations from the sources to pass to the Educator.
+    - If a tool returns no content or irrelevant results for a specific search, SKIP IT.
+    - Do not hallucinate or make up URLs or content.
   expected_output: >
-    A perfectly structured FullScrapeResult object containing the found URLs, titles, and resource types ('youtube' or 'article') for each sub-topic. If a sub-topic lacks a certain resource, omit it from the list.
+    A comprehensive research report for each sub-topic, including validated URLs, titles, and a synthesis of the key technical information extracted from the markdown content.
   agent: scraper
   
 educate_task:
   description: >
-    Review the resources curated by the Scraper. 
+    Review the deep research report curated by the Researcher. 
     Now, write the theoretical explanation for EACH of these micro-topics: {micro_topics_list}.
     
+    Use the extracted facts and code snippets from the Researcher's report to make your theory 100% accurate and practical.
     Keep the user's experience level ({experience}) and goal ({goal}) in mind.
-    Make the theory highly engaging. explain theory in details but being concise with words that won't overwhelm the reader by having too much words.
+    Make the theory highly engaging. explain theory in details but being concise with words that won't overwhelm the reader.
     You must also evaluate and assign a difficulty rating ("easy", "medium", or "hard") for each topic.
   expected_output: >
     A comprehensive document containing the written theory and difficulty rating for every requested micro-topic.
@@ -35,7 +35,7 @@ educate_task:
 
 estimate_and_compile_task:
   description: >
-    Review the Scraper's resources and the Educator's theory for the Macro Node: "{macro_title}" (ID: {node_id}).
+    Review the Researcher's resources and the Educator's theory for the Macro Node: "{macro_title}" (ID: {node_id}).
     
     1. Estimate the time to read the Educator's theory (~250 words/min).
     2. Estimate the time to consume each external resource (e.g., standard tech article = 5 mins, standard tutorial video = 10 mins unless specified).

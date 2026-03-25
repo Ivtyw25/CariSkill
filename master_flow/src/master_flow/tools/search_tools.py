@@ -3,7 +3,7 @@ import json
 from crewai.tools import tool
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
-from tavily import TavilyClient
+from ddgs import DDGS
 
 # We use a getter for clients to avoid crushing the process if env vars are missing at startup
 _qdrant_client = None
@@ -29,24 +29,21 @@ def web_syllabus_search(skill: str) -> str:
     """Fetches course syllabus and curriculum steps from the web when local database fails. Use this to find the live industry standard roadmap for a skill."""
     skill_query = skill.get("skill", skill) if isinstance(skill, dict) else skill
     
-    tavily_key = os.getenv("TAVILY_API_KEY")
-    if not tavily_key:
-        return "ERROR: TAVILY_API_KEY is not set in the environment. Cannot perform web search."
-        
     try:
-        tavily = TavilyClient(api_key=tavily_key)
-        # We prompt Tavily to find step-by-step learning roadmaps or course syllabi
-        response = tavily.search(query=f"Best learning roadmap or complete step-by-step course syllabus for {skill_query} 2026", search_depth="advanced", max_results=3)
+        # We prompt DuckDuckGo to find step-by-step learning roadmaps or course syllabi
+        response = DDGS().text(f"Best learning roadmap or complete step-by-step course syllabus for {skill_query} 2026", max_results=3)
         
-        if not response or not response.get("results"):
+        results = list(response)
+        
+        if not results:
             return f"No web results found for {skill_query}."
             
-        formatted_results = [f"Found {len(response['results'])} relevant articles. Use this information to construct a standard learning curriculum for {skill_query}, and MAKE SURE to include the URLs as references:"]
+        formatted_results = [f"Found {len(results)} relevant articles. Use this information to construct a standard learning curriculum for {skill_query}, and MAKE SURE to include the URLs as references:"]
         
-        for idx, result in enumerate(response["results"]):
+        for idx, result in enumerate(results):
             title = result.get("title", "Unknown Title")
-            url = result.get("url", "")
-            content = result.get("content", "")[:1000] # Take first 1000 characters of each top result
+            url = result.get("href", "")
+            content = result.get("body", "")[:1000] # Take first 1000 characters of each top result
             
             formatted_results.append(f"\n--- Source {idx+1} ---\nTitle: {title}\nURL: {url}\nContent Snippet: {content}")
             

@@ -31,7 +31,12 @@ class DualLogger:
         self.ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
         
     def write(self, text):
-        self.original_stdout.write(text)
+        try:
+            self.original_stdout.write(text)
+        except UnicodeEncodeError:
+            # Fallback for Windows console that doesn't support UTF-8
+            self.original_stdout.write(text.encode('ascii', 'replace').decode('ascii'))
+        
         clean_text = self.ansi_escape.sub('', text)
         self.log_file.write(clean_text)
         self.log_file.flush()
@@ -79,31 +84,28 @@ async def generate_podcast_endpoint(req: PodcastRequest):
 
     async def run_podcast_generation():
         try:
-            from podcastfy.client import generate_podcast
+            try:
+                from api.custom_podcast import run_custom_podcast_pipeline
+            except ImportError:
+                from custom_podcast import run_custom_podcast_pipeline
             
-            # Generate the podcast audio file using asyncio.to_thread as podcastfy is sync
-            audio_path = await asyncio.to_thread(
-                generate_podcast,
-                topic=req.topic,
-                urls=req.urls,
-                text=req.text,
-                tts_model='edge'
-            )
+            # Generate the podcast audio file using our custom async pipeline
+            # We prioritize topic, then text, then first URL if available
+            input_text = req.topic or req.text
+            if not input_text and req.urls:
+                input_text = f"Content from URLs: {', '.join(req.urls)}"
+                
+            final_path = await run_custom_podcast_pipeline(input_text)
             
-            if not audio_path or not os.path.exists(audio_path):
+            if not final_path or not os.path.exists(final_path):
                 raise Exception("Podcast generation failed to produce a file.")
-
-            # Move file to our local temp directory for serving
-            local_filename = f"{task_id}.mp3"
-            local_path = os.path.join(PODCAST_DIR, local_filename)
-            shutil.move(audio_path, local_path)
 
             active_podcasts[task_id] = {
                 "status": "completed",
-                "file_path": local_path,
+                "file_path": str(final_path),
                 "session_id": req.session_id
             }
-            print(f"Podcast {task_id} generated successfully: {local_path}")
+            print(f"Podcast {task_id} generated successfully: {final_path}")
 
         except Exception as e:
             print(f"Podcast generation error: {str(e)}")
