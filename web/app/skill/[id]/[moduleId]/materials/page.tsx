@@ -26,6 +26,7 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
 
   // Data State
   const [moduleTitle, setModuleTitle] = useState("Loading Topic...");
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [microTopics, setMicroTopics] = useState<any[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -34,15 +35,16 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
       try {
         const supabase = createClient();
 
-        // Fetch Parent Topic Title
+        // Fetch Parent Topic Title and Audio URL
         const { data: nodeData } = await supabase
           .from('roadmap_nodes')
-          .select('title')
+          .select('title, audio_url')
           .eq('node_id', moduleId)
           .limit(1);
 
         if (nodeData && nodeData.length > 0) {
           setModuleTitle(nodeData[0].title);
+          setAudioUrl(nodeData[0].audio_url);
         }
 
         // Fetch Micro Topics
@@ -223,6 +225,9 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
             <PodcastPlayer 
               title={moduleTitle}
               content={microTopics.map(t => `${t.topic_title}: ${t.theory_explanation}`).join('\n\n')} 
+              roadmapId={id}
+              nodeId={moduleId}
+              initialAudioUrl={audioUrl}
             />
             
             <div className="sticky top-28 bg-white/80 backdrop-blur-md p-6 rounded-3xl border border-gray-100 shadow-sm">

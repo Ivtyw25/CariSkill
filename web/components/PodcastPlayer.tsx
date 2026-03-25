@@ -1,23 +1,41 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { createClient } from '@/utils/supabase/client';
 import { Play, Pause, Loader2, Headphones, Download, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 interface PodcastPlayerProps {
   content: string;
   title?: string;
+  roadmapId?: string;
+  nodeId?: string;
+  initialAudioUrl?: string | null;
 }
 
 type GenerationStatus = 'idle' | 'requesting' | 'processing' | 'completed' | 'error';
 
-export default function PodcastPlayer({ content, title = "Module Summary" }: PodcastPlayerProps) {
-  const [status, setStatus] = useState<GenerationStatus>('idle');
+export default function PodcastPlayer({
+  content,
+  title = "Module Summary",
+  roadmapId,
+  nodeId,
+  initialAudioUrl = null
+}: PodcastPlayerProps) {
+  const [status, setStatus] = useState<GenerationStatus>(initialAudioUrl ? 'completed' : 'idle');
   const [taskId, setTaskId] = useState<string | null>(null);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [audioUrl, setAudioUrl] = useState<string | null>(initialAudioUrl);
   const [error, setError] = useState<string | null>(null);
   const pollingInterval = useRef<NodeJS.Timeout | null>(null);
 
   const WORKER_URL = process.env.NEXT_PUBLIC_AI_WORKER_URL || 'http://localhost:8000';
+
+  // Update audioUrl if initialAudioUrl changes
+  useEffect(() => {
+    if (initialAudioUrl) {
+      setAudioUrl(initialAudioUrl);
+      setStatus('completed');
+    }
+  }, [initialAudioUrl]);
 
   // Cleanup polling on unmount
   useEffect(() => {
@@ -53,18 +71,52 @@ export default function PodcastPlayer({ content, title = "Module Summary" }: Pod
     }
   };
 
+  const updateNodeAudioUrl = async (url: string) => {
+    if (!roadmapId || !nodeId) {
+      console.warn('⚠️ Missing roadmapId or nodeId. roadmapId:', roadmapId, 'nodeId:', nodeId);
+      return;
+    }
+
+    try {
+      const supabase = createClient();
+
+      console.log('Attempting to save URL:', url);
+      console.log('Using Roadmap ID:', roadmapId, 'and Node ID:', nodeId);
+
+      const { data: updateData, error: updateError } = await supabase
+        .from('roadmap_nodes')
+        .update({ audio_url: url })
+        .eq('roadmap_id', roadmapId)
+        .eq('node_id', nodeId)
+        .select();
+
+      if (updateError) {
+        console.error('❌ SUPABASE UPDATE FAILED:', updateError.message, updateError.details);
+      } else {
+        console.log('✅ SUPABASE UPDATE SUCCESS:', updateData);
+      }
+    } catch (err) {
+      console.error('❌ SUPABASE UPDATE THREW AN EXCEPTION:', err);
+    }
+  };
+
   const startPolling = (id: string) => {
     pollingInterval.current = setInterval(async () => {
       try {
         const response = await fetch(`${WORKER_URL}/api/podcast/status/${id}`);
         if (!response.ok) throw new Error('Failed to check status');
-        
+
         const data = await response.json();
-        
+
         if (data.status === 'completed') {
           if (pollingInterval.current) clearInterval(pollingInterval.current);
-          setAudioUrl(`${WORKER_URL}/api/podcast/download/${id}`);
+
+          const finalUrl = `${WORKER_URL}/api/podcast/download/${id}`;
+          setAudioUrl(finalUrl);
           setStatus('completed');
+
+          // Save to Supabase
+          await updateNodeAudioUrl(finalUrl);
         } else if (data.status === 'error') {
           if (pollingInterval.current) clearInterval(pollingInterval.current);
           setError(data.message || 'Generation failed');
@@ -88,7 +140,7 @@ export default function PodcastPlayer({ content, title = "Module Summary" }: Pod
             <p className="text-xs text-gray-500">Convert this module into a conversational podcast</p>
           </div>
         </div>
-        
+
         {status === 'idle' && (
           <button
             onClick={startGeneration}
@@ -128,8 +180,8 @@ export default function PodcastPlayer({ content, title = "Module Summary" }: Pod
             Your browser does not support the audio element.
           </audio>
           <div className="flex justify-end">
-            <a 
-              href={audioUrl} 
+            <a
+              href={audioUrl}
               download={`Podcast_${title.replace(/\s+/g, '_')}.mp3`}
               className="text-xs text-gray-500 hover:text-primary flex items-center gap-1 underline transition-colors"
             >
@@ -145,7 +197,7 @@ export default function PodcastPlayer({ content, title = "Module Summary" }: Pod
           <div className="flex-1">
             <p className="text-sm font-bold text-red-800 dark:text-red-200">Generation Failed</p>
             <p className="text-xs text-red-600 dark:text-red-400">{error || 'Please ensure FFmpeg is installed on the server.'}</p>
-            <button 
+            <button
               onClick={startGeneration}
               className="mt-2 text-xs font-bold text-red-800 dark:text-red-200 underline"
             >
