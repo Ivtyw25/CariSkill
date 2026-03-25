@@ -7,6 +7,39 @@ import base64
 import uuid
 from pathlib import Path
 from dotenv import load_dotenv
+from supabase import create_client, Client
+
+async def upload_to_supabase(file_path: Path, topic: str) -> str:
+    # Read the exact Next.js environment variables
+    url = os.environ.get("NEXT_PUBLIC_SUPABASE_URL")
+    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+    
+    if not url or not key:
+        print("[ERROR] Supabase keys missing. Returning local path.")
+        return str(file_path)
+
+    supabase: Client = create_client(url, key)
+    bucket_name = "cariskill-media"
+    
+    # Create a safe, unique filename
+    safe_topic = "".join([c if c.isalnum() else "_" for c in topic[:30]])
+    file_name = f"podcasts/{safe_topic}_{uuid.uuid4().hex[:8]}.mp3"
+    
+    print(f"[SUPABASE] Uploading to {file_name}...")
+    
+    try:
+        with open(file_path, 'rb') as f:
+            supabase.storage.from_(bucket_name).upload(
+                path=file_name,
+                file=f.read(),
+                file_options={"content-type": "audio/mpeg"}
+            )
+        
+        # Return the public URL
+        return supabase.storage.from_(bucket_name).get_public_url(file_name)
+    except Exception as e:
+        print(f"[SUPABASE ERROR] {e}")
+        return str(file_path)
 
 # Use the new google-genai SDK
 try:
@@ -162,8 +195,16 @@ async def run_custom_podcast_pipeline(topic: str):
     # 2. Generate Audio
     try:
         mp3_path = await generate_podcast_audio(script, task_id)
-        print(f"\n[SUCCESS] Podcast generated at: {mp3_path.absolute()}")
-        return mp3_path
+        
+        # Upload to Supabase
+        public_url = await upload_to_supabase(mp3_path, topic)
+        
+        # Cleanup the local file so your server doesn't run out of space
+        if public_url.startswith("http") and mp3_path.exists():
+            os.remove(mp3_path)
+            
+        print(f"\n[SUCCESS] Podcast available at: {public_url}")
+        return public_url
     except Exception as e:
         print(f"[PIPELINE ERROR] {e}")
 

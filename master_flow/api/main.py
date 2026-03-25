@@ -4,9 +4,9 @@ import uuid
 import shutil
 import asyncio
 import time
-from typing import Optional, List
+from typing import Optional, List, Any
 from fastapi import FastAPI, HTTPException, BackgroundTasks
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -52,9 +52,9 @@ sys.stderr = sys.stdout
 
 app = FastAPI()
 
-active_flows = {}  # In-memory dictionary to track background generation tasks
-active_podcasts = {} # In-memory dictionary to track podcast generation tasks
-active_videos = {} # In-memory dictionary to track video generation tasks
+active_flows: dict[str, dict[str, Any]] = {}  # In-memory dictionary to track background generation tasks
+active_podcasts: dict[str, dict[str, Any]] = {} # In-memory dictionary to track podcast generation tasks
+active_videos: dict[str, dict[str, Any]] = {} # In-memory dictionary to track video generation tasks
 
 PODCAST_DIR = os.path.join(os.path.dirname(__file__), "temp_podcasts")
 os.makedirs(PODCAST_DIR, exist_ok=True)
@@ -99,8 +99,8 @@ async def generate_podcast_endpoint(req: PodcastRequest):
                 
             final_path = await run_custom_podcast_pipeline(input_text)
             
-            if not final_path or not os.path.exists(final_path):
-                raise Exception("Podcast generation failed to produce a file.")
+            if not final_path:
+                raise Exception("Podcast generation failed to produce a result.")
 
             active_podcasts[task_id] = {
                 "status": "completed",
@@ -143,6 +143,12 @@ async def download_podcast(task_id: str):
         raise HTTPException(status_code=404, detail="Podcast not found or not yet completed.")
     
     file_path = active_podcasts[task_id]["file_path"]
+    
+    # If it's a Supabase URL, redirect
+    if file_path.startswith("http"):
+        return RedirectResponse(url=file_path)
+
+    # Otherwise, serve as a local file
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="Audio file missing from server.")
         
