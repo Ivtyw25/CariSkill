@@ -2,267 +2,207 @@
   "pydantic_output": {
     "nodes": [
       {
-        "node_id": "understanding_business_audience",
-        "title": "Understanding Your Business & Audience",
-        "rationale": "Before any marketing efforts, it's crucial to have a clear understanding of your own business, its unique value proposition, and who your ideal customers are. This foundational knowledge will guide all subsequent marketing decisions.",
+        "node_id": "limits_continuity",
+        "title": "Limits and Continuity",
+        "rationale": "Understanding limits is fundamental to grasping the concepts of derivatives and integrals, forming the bedrock of calculus. Continuity is a direct application of limits.",
         "prerequisites": [],
         "suggested_micro_topics": [
-          "Defining your business model and offerings",
-          "Identifying your Unique Selling Proposition (USP)",
-          "Creating customer personas",
-          "Market research basics",
-          "Competitor analysis for small businesses"
+          "Introduction to Limits",
+          "One-Sided Limits",
+          "Limit Laws",
+          "Continuity at a Point",
+          "Continuity on Intervals",
+          "Intermediate Value Theorem",
+          "Limits at Infinity"
         ]
       },
       {
-        "node_id": "building_online_presence",
-        "title": "Building a Basic Online Presence",
-        "rationale": "For a small business in today's world, an online presence is non-negotiable. This module focuses on establishing the essential digital touchpoints where potential customers can find and interact with your business.",
+        "node_id": "derivatives",
+        "title": "Introduction to Derivatives",
+        "rationale": "Derivatives are essential for understanding rates of change, slopes of curves, and optimization problems, which are core applications of calculus.",
         "prerequisites": [
-          "understanding_business_audience"
+          "limits_continuity"
         ],
         "suggested_micro_topics": [
-          "Choosing a domain name and web hosting",
-          "Setting up a simple website (e.g., using WordPress, Shopify, or a landing page builder)",
-          "Optimizing Google My Business profile",
-          "Creating essential website pages (About Us, Contact, Services/Products)",
-          "Ensuring mobile responsiveness"
+          "Definition of the Derivative",
+          "Derivative as a Function",
+          "Differentiation Rules (Power, Product, Quotient, Chain)",
+          "Implicit Differentiation",
+          "Higher-Order Derivatives"
         ]
       },
       {
-        "node_id": "introduction_content_marketing",
-        "title": "Introduction to Content Marketing",
-        "rationale": "Content is the fuel for almost all digital marketing strategies. Learning how to create valuable content will attract, engage, and retain your target audience, establishing your business as an authority.",
+        "node_id": "applications_derivatives",
+        "title": "Applications of Derivatives",
+        "rationale": "This module demonstrates the practical power of derivatives in solving real-world problems related to optimization, motion, and curve sketching, enhancing general curiosity.",
         "prerequisites": [
-          "understanding_business_audience",
-          "building_online_presence"
+          "derivatives"
         ],
         "suggested_micro_topics": [
-          "Understanding different content formats (blog posts, images, videos, infographics)",
-          "Developing a basic content calendar",
-          "Principles of effective copywriting for small businesses",
-          "Crafting compelling calls-to-action (CTAs)",
-          "Content distribution basics"
+          "Related Rates",
+          "Optimization Problems",
+          "L'H\u00f4pital's Rule",
+          "Curve Sketching (First and Second Derivative Tests)",
+          "Linear Approximation and Differentials",
+          "Newton's Method"
         ]
       },
       {
-        "node_id": "social_media_fundamentals",
-        "title": "Social Media Marketing Fundamentals",
-        "rationale": "Social media provides a direct channel to connect with your audience, build brand awareness, and drive traffic. This module covers the basics of using social platforms effectively for your business.",
+        "node_id": "integrals",
+        "title": "Introduction to Integrals",
+        "rationale": "Integrals are the inverse of derivatives and are crucial for calculating areas, volumes, and accumulated change, providing another fundamental pillar of calculus.",
         "prerequisites": [
-          "understanding_business_audience",
-          "introduction_content_marketing"
+          "derivatives"
         ],
         "suggested_micro_topics": [
-          "Choosing the right social media platforms for your business (e.g., Facebook, Instagram, LinkedIn)",
-          "Setting up and optimizing business profiles",
-          "Basic social media content creation and posting strategies",
-          "Engaging with your audience and community management",
-          "Understanding social media analytics basics"
+          "Antiderivatives",
+          "Indefinite Integrals",
+          "Definite Integrals",
+          "Fundamental Theorem of Calculus (Part 1 & 2)",
+          "Integration by Substitution"
         ]
       },
       {
-        "node_id": "seo_basics",
-        "title": "Search Engine Optimization (SEO) Basics",
-        "rationale": "SEO helps your business appear higher in search engine results, making it easier for potential customers to find you organically when they search for products or services you offer.",
+        "node_id": "applications_integrals",
+        "title": "Applications of Integrals",
+        "rationale": "This module showcases the versatility of integrals in solving problems involving areas between curves, volumes of solids, and other real-world accumulation scenarios.",
         "prerequisites": [
-          "building_online_presence",
-          "introduction_content_marketing"
+          "integrals"
         ],
         "suggested_micro_topics": [
-          "Introduction to how search engines work",
-          "Basic keyword research for small businesses",
-          "On-page SEO fundamentals (titles, meta descriptions, headings)",
-          "Local SEO strategies (e.g., Google My Business optimization)",
-          "Understanding Google Search Console"
+          "Area Between Curves",
+          "Volumes by Slicing (Disk/Washer Method)",
+          "Volumes by Cylindrical Shells",
+          "Average Value of a Function",
+          "Work",
+          "Arc Length"
         ]
       },
       {
-        "node_id": "paid_advertising_intro",
-        "title": "Paid Advertising Introduction (Google & Social)",
-        "rationale": "Paid advertising offers a faster way to gain visibility and drive targeted traffic to your business, complementing organic efforts. This module introduces the fundamentals of popular ad platforms.",
+        "node_id": "sequences_series",
+        "title": "Sequences and Series",
+        "rationale": "This topic extends calculus to infinite sums, which is vital for understanding Taylor series, Fourier series, and many advanced mathematical and scientific applications, satisfying general curiosity.",
         "prerequisites": [
-          "building_online_presence",
-          "social_media_fundamentals",
-          "seo_basics"
+          "limits_continuity"
         ],
         "suggested_micro_topics": [
-          "Introduction to Google Ads (Search Campaigns)",
-          "Setting up your first Facebook/Instagram Ad campaign",
-          "Understanding ad targeting options for small businesses",
-          "Basic ad copy and creative best practices",
-          "Setting and managing a small advertising budget"
-        ]
-      },
-      {
-        "node_id": "email_marketing_essentials",
-        "title": "Email Marketing Essentials",
-        "rationale": "Email marketing remains one of the most effective direct communication channels for nurturing leads, building customer relationships, and driving sales for small businesses.",
-        "prerequisites": [
-          "building_online_presence",
-          "introduction_content_marketing"
-        ],
-        "suggested_micro_topics": [
-          "Strategies for building an email list (e.g., website forms, lead magnets)",
-          "Choosing an email service provider (e.g., Mailchimp, Constant Contact)",
-          "Designing basic email newsletters and promotional emails",
-          "Writing compelling subject lines",
-          "Understanding email automation basics (e.g., welcome sequences)"
-        ]
-      },
-      {
-        "node_id": "marketing_analytics_measurement",
-        "title": "Marketing Analytics & Measurement",
-        "rationale": "To ensure your marketing efforts are effective and to continuously improve, it's vital to track performance, understand what's working (and what isn't), and make data-driven decisions.",
-        "prerequisites": [
-          "social_media_fundamentals",
-          "seo_basics",
-          "paid_advertising_intro",
-          "email_marketing_essentials"
-        ],
-        "suggested_micro_topics": [
-          "Introduction to Google Analytics 4 (GA4) for website tracking",
-          "Interpreting social media insights and reports",
-          "Analyzing paid ad campaign performance",
-          "Tracking email marketing metrics (open rates, click-through rates)",
-          "Defining key performance indicators (KPIs) for your business"
+          "Sequences and Convergence",
+          "Series and Convergence",
+          "Geometric Series",
+          "P-Series",
+          "Integral Test",
+          "Comparison Tests",
+          "Ratio and Root Tests",
+          "Alternating Series Test",
+          "Power Series",
+          "Taylor and Maclaurin Series"
         ]
       }
     ]
   },
   "json_dict_output": null,
-  "raw_output": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"understanding_business_audience\",\n      \"title\": \"Understanding Your Business & Audience\",\n      \"rationale\": \"Before any marketing efforts, it's crucial to have a clear understanding of your own business, its unique value proposition, and who your ideal customers are. This foundational knowledge will guide all subsequent marketing decisions.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Defining your business model and offerings\",\n        \"Identifying your Unique Selling Proposition (USP)\",\n        \"Creating customer personas\",\n        \"Market research basics\",\n        \"Competitor analysis for small businesses\"\n      ]\n    },\n    {\n      \"node_id\": \"building_online_presence\",\n      \"title\": \"Building a Basic Online Presence\",\n      \"rationale\": \"For a small business in today's world, an online presence is non-negotiable. This module focuses on establishing the essential digital touchpoints where potential customers can find and interact with your business.\",\n      \"prerequisites\": [\n        \"understanding_business_audience\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Choosing a domain name and web hosting\",\n        \"Setting up a simple website (e.g., using WordPress, Shopify, or a landing page builder)\",\n        \"Optimizing Google My Business profile\",\n        \"Creating essential website pages (About Us, Contact, Services/Products)\",\n        \"Ensuring mobile responsiveness\"\n      ]\n    },\n    {\n      \"node_id\": \"introduction_content_marketing\",\n      \"title\": \"Introduction to Content Marketing\",\n      \"rationale\": \"Content is the fuel for almost all digital marketing strategies. Learning how to create valuable content will attract, engage, and retain your target audience, establishing your business as an authority.\",\n      \"prerequisites\": [\n        \"understanding_business_audience\",\n        \"building_online_presence\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Understanding different content formats (blog posts, images, videos, infographics)\",\n        \"Developing a basic content calendar\",\n        \"Principles of effective copywriting for small businesses\",\n        \"Crafting compelling calls-to-action (CTAs)\",\n        \"Content distribution basics\"\n      ]\n    },\n    {\n      \"node_id\": \"social_media_fundamentals\",\n      \"title\": \"Social Media Marketing Fundamentals\",\n      \"rationale\": \"Social media provides a direct channel to connect with your audience, build brand awareness, and drive traffic. This module covers the basics of using social platforms effectively for your business.\",\n      \"prerequisites\": [\n        \"understanding_business_audience\",\n        \"introduction_content_marketing\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Choosing the right social media platforms for your business (e.g., Facebook, Instagram, LinkedIn)\",\n        \"Setting up and optimizing business profiles\",\n        \"Basic social media content creation and posting strategies\",\n        \"Engaging with your audience and community management\",\n        \"Understanding social media analytics basics\"\n      ]\n    },\n    {\n      \"node_id\": \"seo_basics\",\n      \"title\": \"Search Engine Optimization (SEO) Basics\",\n      \"rationale\": \"SEO helps your business appear higher in search engine results, making it easier for potential customers to find you organically when they search for products or services you offer.\",\n      \"prerequisites\": [\n        \"building_online_presence\",\n        \"introduction_content_marketing\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to how search engines work\",\n        \"Basic keyword research for small businesses\",\n        \"On-page SEO fundamentals (titles, meta descriptions, headings)\",\n        \"Local SEO strategies (e.g., Google My Business optimization)\",\n        \"Understanding Google Search Console\"\n      ]\n    },\n    {\n      \"node_id\": \"paid_advertising_intro\",\n      \"title\": \"Paid Advertising Introduction (Google & Social)\",\n      \"rationale\": \"Paid advertising offers a faster way to gain visibility and drive targeted traffic to your business, complementing organic efforts. This module introduces the fundamentals of popular ad platforms.\",\n      \"prerequisites\": [\n        \"building_online_presence\",\n        \"social_media_fundamentals\",\n        \"seo_basics\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to Google Ads (Search Campaigns)\",\n        \"Setting up your first Facebook/Instagram Ad campaign\",\n        \"Understanding ad targeting options for small businesses\",\n        \"Basic ad copy and creative best practices\",\n        \"Setting and managing a small advertising budget\"\n      ]\n    },\n    {\n      \"node_id\": \"email_marketing_essentials\",\n      \"title\": \"Email Marketing Essentials\",\n      \"rationale\": \"Email marketing remains one of the most effective direct communication channels for nurturing leads, building customer relationships, and driving sales for small businesses.\",\n      \"prerequisites\": [\n        \"building_online_presence\",\n        \"introduction_content_marketing\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Strategies for building an email list (e.g., website forms, lead magnets)\",\n        \"Choosing an email service provider (e.g., Mailchimp, Constant Contact)\",\n        \"Designing basic email newsletters and promotional emails\",\n        \"Writing compelling subject lines\",\n        \"Understanding email automation basics (e.g., welcome sequences)\"\n      ]\n    },\n    {\n      \"node_id\": \"marketing_analytics_measurement\",\n      \"title\": \"Marketing Analytics & Measurement\",\n      \"rationale\": \"To ensure your marketing efforts are effective and to continuously improve, it's vital to track performance, understand what's working (and what isn't), and make data-driven decisions.\",\n      \"prerequisites\": [\n        \"social_media_fundamentals\",\n        \"seo_basics\",\n        \"paid_advertising_intro\",\n        \"email_marketing_essentials\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to Google Analytics 4 (GA4) for website tracking\",\n        \"Interpreting social media insights and reports\",\n        \"Analyzing paid ad campaign performance\",\n        \"Tracking email marketing metrics (open rates, click-through rates)\",\n        \"Defining key performance indicators (KPIs) for your business\"\n      ]\n    }\n  ]\n}\n```",
+  "raw_output": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"limits_continuity\",\n      \"title\": \"Limits and Continuity\",\n      \"rationale\": \"Understanding limits is fundamental to grasping the concepts of derivatives and integrals, forming the bedrock of calculus. Continuity is a direct application of limits.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Introduction to Limits\",\n        \"One-Sided Limits\",\n        \"Limit Laws\",\n        \"Continuity at a Point\",\n        \"Continuity on Intervals\",\n        \"Intermediate Value Theorem\",\n        \"Limits at Infinity\"\n      ]\n    },\n    {\n      \"node_id\": \"derivatives\",\n      \"title\": \"Introduction to Derivatives\",\n      \"rationale\": \"Derivatives are essential for understanding rates of change, slopes of curves, and optimization problems, which are core applications of calculus.\",\n      \"prerequisites\": [\n        \"limits_continuity\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Definition of the Derivative\",\n        \"Derivative as a Function\",\n        \"Differentiation Rules (Power, Product, Quotient, Chain)\",\n        \"Implicit Differentiation\",\n        \"Higher-Order Derivatives\"\n      ]\n    },\n    {\n      \"node_id\": \"applications_derivatives\",\n      \"title\": \"Applications of Derivatives\",\n      \"rationale\": \"This module demonstrates the practical power of derivatives in solving real-world problems related to optimization, motion, and curve sketching, enhancing general curiosity.\",\n      \"prerequisites\": [\n        \"derivatives\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Related Rates\",\n        \"Optimization Problems\",\n        \"L'H\u00f4pital's Rule\",\n        \"Curve Sketching (First and Second Derivative Tests)\",\n        \"Linear Approximation and Differentials\",\n        \"Newton's Method\"\n      ]\n    },\n    {\n      \"node_id\": \"integrals\",\n      \"title\": \"Introduction to Integrals\",\n      \"rationale\": \"Integrals are the inverse of derivatives and are crucial for calculating areas, volumes, and accumulated change, providing another fundamental pillar of calculus.\",\n      \"prerequisites\": [\n        \"derivatives\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Antiderivatives\",\n        \"Indefinite Integrals\",\n        \"Definite Integrals\",\n        \"Fundamental Theorem of Calculus (Part 1 & 2)\",\n        \"Integration by Substitution\"\n      ]\n    },\n    {\n      \"node_id\": \"applications_integrals\",\n      \"title\": \"Applications of Integrals\",\n      \"rationale\": \"This module showcases the versatility of integrals in solving problems involving areas between curves, volumes of solids, and other real-world accumulation scenarios.\",\n      \"prerequisites\": [\n        \"integrals\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Area Between Curves\",\n        \"Volumes by Slicing (Disk/Washer Method)\",\n        \"Volumes by Cylindrical Shells\",\n        \"Average Value of a Function\",\n        \"Work\",\n        \"Arc Length\"\n      ]\n    },\n    {\n      \"node_id\": \"sequences_series\",\n      \"title\": \"Sequences and Series\",\n      \"rationale\": \"This topic extends calculus to infinite sums, which is vital for understanding Taylor series, Fourier series, and many advanced mathematical and scientific applications, satisfying general curiosity.\",\n      \"prerequisites\": [\n        \"limits_continuity\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Sequences and Convergence\",\n        \"Series and Convergence\",\n        \"Geometric Series\",\n        \"P-Series\",\n        \"Integral Test\",\n        \"Comparison Tests\",\n        \"Ratio and Root Tests\",\n        \"Alternating Series Test\",\n        \"Power Series\",\n        \"Taylor and Maclaurin Series\"\n      ]\n    }\n  ]\n}\n```",
   "tasks_output": [
     {
-      "raw": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"understanding_business_audience\",\n      \"title\": \"Understanding Your Business & Audience\",\n      \"rationale\": \"Before any marketing efforts, it's crucial to have a clear understanding of your own business, its unique value proposition, and who your ideal customers are. This foundational knowledge will guide all subsequent marketing decisions.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Defining your business model and offerings\",\n        \"Identifying your Unique Selling Proposition (USP)\",\n        \"Creating customer personas\",\n        \"Market research basics\",\n        \"Competitor analysis for small businesses\"\n      ]\n    },\n    {\n      \"node_id\": \"building_online_presence\",\n      \"title\": \"Building a Basic Online Presence\",\n      \"rationale\": \"For a small business in today's world, an online presence is non-negotiable. This module focuses on establishing the essential digital touchpoints where potential customers can find and interact with your business.\",\n      \"prerequisites\": [\n        \"understanding_business_audience\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Choosing a domain name and web hosting\",\n        \"Setting up a simple website (e.g., using WordPress, Shopify, or a landing page builder)\",\n        \"Optimizing Google My Business profile\",\n        \"Creating essential website pages (About Us, Contact, Services/Products)\",\n        \"Ensuring mobile responsiveness\"\n      ]\n    },\n    {\n      \"node_id\": \"introduction_content_marketing\",\n      \"title\": \"Introduction to Content Marketing\",\n      \"rationale\": \"Content is the fuel for almost all digital marketing strategies. Learning how to create valuable content will attract, engage, and retain your target audience, establishing your business as an authority.\",\n      \"prerequisites\": [\n        \"understanding_business_audience\",\n        \"building_online_presence\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Understanding different content formats (blog posts, images, videos, infographics)\",\n        \"Developing a basic content calendar\",\n        \"Principles of effective copywriting for small businesses\",\n        \"Crafting compelling calls-to-action (CTAs)\",\n        \"Content distribution basics\"\n      ]\n    },\n    {\n      \"node_id\": \"social_media_fundamentals\",\n      \"title\": \"Social Media Marketing Fundamentals\",\n      \"rationale\": \"Social media provides a direct channel to connect with your audience, build brand awareness, and drive traffic. This module covers the basics of using social platforms effectively for your business.\",\n      \"prerequisites\": [\n        \"understanding_business_audience\",\n        \"introduction_content_marketing\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Choosing the right social media platforms for your business (e.g., Facebook, Instagram, LinkedIn)\",\n        \"Setting up and optimizing business profiles\",\n        \"Basic social media content creation and posting strategies\",\n        \"Engaging with your audience and community management\",\n        \"Understanding social media analytics basics\"\n      ]\n    },\n    {\n      \"node_id\": \"seo_basics\",\n      \"title\": \"Search Engine Optimization (SEO) Basics\",\n      \"rationale\": \"SEO helps your business appear higher in search engine results, making it easier for potential customers to find you organically when they search for products or services you offer.\",\n      \"prerequisites\": [\n        \"building_online_presence\",\n        \"introduction_content_marketing\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to how search engines work\",\n        \"Basic keyword research for small businesses\",\n        \"On-page SEO fundamentals (titles, meta descriptions, headings)\",\n        \"Local SEO strategies (e.g., Google My Business optimization)\",\n        \"Understanding Google Search Console\"\n      ]\n    },\n    {\n      \"node_id\": \"paid_advertising_intro\",\n      \"title\": \"Paid Advertising Introduction (Google & Social)\",\n      \"rationale\": \"Paid advertising offers a faster way to gain visibility and drive targeted traffic to your business, complementing organic efforts. This module introduces the fundamentals of popular ad platforms.\",\n      \"prerequisites\": [\n        \"building_online_presence\",\n        \"social_media_fundamentals\",\n        \"seo_basics\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to Google Ads (Search Campaigns)\",\n        \"Setting up your first Facebook/Instagram Ad campaign\",\n        \"Understanding ad targeting options for small businesses\",\n        \"Basic ad copy and creative best practices\",\n        \"Setting and managing a small advertising budget\"\n      ]\n    },\n    {\n      \"node_id\": \"email_marketing_essentials\",\n      \"title\": \"Email Marketing Essentials\",\n      \"rationale\": \"Email marketing remains one of the most effective direct communication channels for nurturing leads, building customer relationships, and driving sales for small businesses.\",\n      \"prerequisites\": [\n        \"building_online_presence\",\n        \"introduction_content_marketing\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Strategies for building an email list (e.g., website forms, lead magnets)\",\n        \"Choosing an email service provider (e.g., Mailchimp, Constant Contact)\",\n        \"Designing basic email newsletters and promotional emails\",\n        \"Writing compelling subject lines\",\n        \"Understanding email automation basics (e.g., welcome sequences)\"\n      ]\n    },\n    {\n      \"node_id\": \"marketing_analytics_measurement\",\n      \"title\": \"Marketing Analytics & Measurement\",\n      \"rationale\": \"To ensure your marketing efforts are effective and to continuously improve, it's vital to track performance, understand what's working (and what isn't), and make data-driven decisions.\",\n      \"prerequisites\": [\n        \"social_media_fundamentals\",\n        \"seo_basics\",\n        \"paid_advertising_intro\",\n        \"email_marketing_essentials\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to Google Analytics 4 (GA4) for website tracking\",\n        \"Interpreting social media insights and reports\",\n        \"Analyzing paid ad campaign performance\",\n        \"Tracking email marketing metrics (open rates, click-through rates)\",\n        \"Defining key performance indicators (KPIs) for your business\"\n      ]\n    }\n  ]\n}\n```",
+      "raw": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"limits_continuity\",\n      \"title\": \"Limits and Continuity\",\n      \"rationale\": \"Understanding limits is fundamental to grasping the concepts of derivatives and integrals, forming the bedrock of calculus. Continuity is a direct application of limits.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Introduction to Limits\",\n        \"One-Sided Limits\",\n        \"Limit Laws\",\n        \"Continuity at a Point\",\n        \"Continuity on Intervals\",\n        \"Intermediate Value Theorem\",\n        \"Limits at Infinity\"\n      ]\n    },\n    {\n      \"node_id\": \"derivatives\",\n      \"title\": \"Introduction to Derivatives\",\n      \"rationale\": \"Derivatives are essential for understanding rates of change, slopes of curves, and optimization problems, which are core applications of calculus.\",\n      \"prerequisites\": [\n        \"limits_continuity\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Definition of the Derivative\",\n        \"Derivative as a Function\",\n        \"Differentiation Rules (Power, Product, Quotient, Chain)\",\n        \"Implicit Differentiation\",\n        \"Higher-Order Derivatives\"\n      ]\n    },\n    {\n      \"node_id\": \"applications_derivatives\",\n      \"title\": \"Applications of Derivatives\",\n      \"rationale\": \"This module demonstrates the practical power of derivatives in solving real-world problems related to optimization, motion, and curve sketching, enhancing general curiosity.\",\n      \"prerequisites\": [\n        \"derivatives\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Related Rates\",\n        \"Optimization Problems\",\n        \"L'H\u00f4pital's Rule\",\n        \"Curve Sketching (First and Second Derivative Tests)\",\n        \"Linear Approximation and Differentials\",\n        \"Newton's Method\"\n      ]\n    },\n    {\n      \"node_id\": \"integrals\",\n      \"title\": \"Introduction to Integrals\",\n      \"rationale\": \"Integrals are the inverse of derivatives and are crucial for calculating areas, volumes, and accumulated change, providing another fundamental pillar of calculus.\",\n      \"prerequisites\": [\n        \"derivatives\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Antiderivatives\",\n        \"Indefinite Integrals\",\n        \"Definite Integrals\",\n        \"Fundamental Theorem of Calculus (Part 1 & 2)\",\n        \"Integration by Substitution\"\n      ]\n    },\n    {\n      \"node_id\": \"applications_integrals\",\n      \"title\": \"Applications of Integrals\",\n      \"rationale\": \"This module showcases the versatility of integrals in solving problems involving areas between curves, volumes of solids, and other real-world accumulation scenarios.\",\n      \"prerequisites\": [\n        \"integrals\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Area Between Curves\",\n        \"Volumes by Slicing (Disk/Washer Method)\",\n        \"Volumes by Cylindrical Shells\",\n        \"Average Value of a Function\",\n        \"Work\",\n        \"Arc Length\"\n      ]\n    },\n    {\n      \"node_id\": \"sequences_series\",\n      \"title\": \"Sequences and Series\",\n      \"rationale\": \"This topic extends calculus to infinite sums, which is vital for understanding Taylor series, Fourier series, and many advanced mathematical and scientific applications, satisfying general curiosity.\",\n      \"prerequisites\": [\n        \"limits_continuity\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Sequences and Convergence\",\n        \"Series and Convergence\",\n        \"Geometric Series\",\n        \"P-Series\",\n        \"Integral Test\",\n        \"Comparison Tests\",\n        \"Ratio and Root Tests\",\n        \"Alternating Series Test\",\n        \"Power Series\",\n        \"Taylor and Maclaurin Series\"\n      ]\n    }\n  ]\n}\n```",
       "json_dict": null,
       "pydantic": {
         "nodes": [
           {
-            "node_id": "understanding_business_audience",
-            "title": "Understanding Your Business & Audience",
-            "rationale": "Before any marketing efforts, it's crucial to have a clear understanding of your own business, its unique value proposition, and who your ideal customers are. This foundational knowledge will guide all subsequent marketing decisions.",
+            "node_id": "limits_continuity",
+            "title": "Limits and Continuity",
+            "rationale": "Understanding limits is fundamental to grasping the concepts of derivatives and integrals, forming the bedrock of calculus. Continuity is a direct application of limits.",
             "prerequisites": [],
             "suggested_micro_topics": [
-              "Defining your business model and offerings",
-              "Identifying your Unique Selling Proposition (USP)",
-              "Creating customer personas",
-              "Market research basics",
-              "Competitor analysis for small businesses"
+              "Introduction to Limits",
+              "One-Sided Limits",
+              "Limit Laws",
+              "Continuity at a Point",
+              "Continuity on Intervals",
+              "Intermediate Value Theorem",
+              "Limits at Infinity"
             ]
           },
           {
-            "node_id": "building_online_presence",
-            "title": "Building a Basic Online Presence",
-            "rationale": "For a small business in today's world, an online presence is non-negotiable. This module focuses on establishing the essential digital touchpoints where potential customers can find and interact with your business.",
+            "node_id": "derivatives",
+            "title": "Introduction to Derivatives",
+            "rationale": "Derivatives are essential for understanding rates of change, slopes of curves, and optimization problems, which are core applications of calculus.",
             "prerequisites": [
-              "understanding_business_audience"
+              "limits_continuity"
             ],
             "suggested_micro_topics": [
-              "Choosing a domain name and web hosting",
-              "Setting up a simple website (e.g., using WordPress, Shopify, or a landing page builder)",
-              "Optimizing Google My Business profile",
-              "Creating essential website pages (About Us, Contact, Services/Products)",
-              "Ensuring mobile responsiveness"
+              "Definition of the Derivative",
+              "Derivative as a Function",
+              "Differentiation Rules (Power, Product, Quotient, Chain)",
+              "Implicit Differentiation",
+              "Higher-Order Derivatives"
             ]
           },
           {
-            "node_id": "introduction_content_marketing",
-            "title": "Introduction to Content Marketing",
-            "rationale": "Content is the fuel for almost all digital marketing strategies. Learning how to create valuable content will attract, engage, and retain your target audience, establishing your business as an authority.",
+            "node_id": "applications_derivatives",
+            "title": "Applications of Derivatives",
+            "rationale": "This module demonstrates the practical power of derivatives in solving real-world problems related to optimization, motion, and curve sketching, enhancing general curiosity.",
             "prerequisites": [
-              "understanding_business_audience",
-              "building_online_presence"
+              "derivatives"
             ],
             "suggested_micro_topics": [
-              "Understanding different content formats (blog posts, images, videos, infographics)",
-              "Developing a basic content calendar",
-              "Principles of effective copywriting for small businesses",
-              "Crafting compelling calls-to-action (CTAs)",
-              "Content distribution basics"
+              "Related Rates",
+              "Optimization Problems",
+              "L'H\u00f4pital's Rule",
+              "Curve Sketching (First and Second Derivative Tests)",
+              "Linear Approximation and Differentials",
+              "Newton's Method"
             ]
           },
           {
-            "node_id": "social_media_fundamentals",
-            "title": "Social Media Marketing Fundamentals",
-            "rationale": "Social media provides a direct channel to connect with your audience, build brand awareness, and drive traffic. This module covers the basics of using social platforms effectively for your business.",
+            "node_id": "integrals",
+            "title": "Introduction to Integrals",
+            "rationale": "Integrals are the inverse of derivatives and are crucial for calculating areas, volumes, and accumulated change, providing another fundamental pillar of calculus.",
             "prerequisites": [
-              "understanding_business_audience",
-              "introduction_content_marketing"
+              "derivatives"
             ],
             "suggested_micro_topics": [
-              "Choosing the right social media platforms for your business (e.g., Facebook, Instagram, LinkedIn)",
-              "Setting up and optimizing business profiles",
-              "Basic social media content creation and posting strategies",
-              "Engaging with your audience and community management",
-              "Understanding social media analytics basics"
+              "Antiderivatives",
+              "Indefinite Integrals",
+              "Definite Integrals",
+              "Fundamental Theorem of Calculus (Part 1 & 2)",
+              "Integration by Substitution"
             ]
           },
           {
-            "node_id": "seo_basics",
-            "title": "Search Engine Optimization (SEO) Basics",
-            "rationale": "SEO helps your business appear higher in search engine results, making it easier for potential customers to find you organically when they search for products or services you offer.",
+            "node_id": "applications_integrals",
+            "title": "Applications of Integrals",
+            "rationale": "This module showcases the versatility of integrals in solving problems involving areas between curves, volumes of solids, and other real-world accumulation scenarios.",
             "prerequisites": [
-              "building_online_presence",
-              "introduction_content_marketing"
+              "integrals"
             ],
             "suggested_micro_topics": [
-              "Introduction to how search engines work",
-              "Basic keyword research for small businesses",
-              "On-page SEO fundamentals (titles, meta descriptions, headings)",
-              "Local SEO strategies (e.g., Google My Business optimization)",
-              "Understanding Google Search Console"
+              "Area Between Curves",
+              "Volumes by Slicing (Disk/Washer Method)",
+              "Volumes by Cylindrical Shells",
+              "Average Value of a Function",
+              "Work",
+              "Arc Length"
             ]
           },
           {
-            "node_id": "paid_advertising_intro",
-            "title": "Paid Advertising Introduction (Google & Social)",
-            "rationale": "Paid advertising offers a faster way to gain visibility and drive targeted traffic to your business, complementing organic efforts. This module introduces the fundamentals of popular ad platforms.",
+            "node_id": "sequences_series",
+            "title": "Sequences and Series",
+            "rationale": "This topic extends calculus to infinite sums, which is vital for understanding Taylor series, Fourier series, and many advanced mathematical and scientific applications, satisfying general curiosity.",
             "prerequisites": [
-              "building_online_presence",
-              "social_media_fundamentals",
-              "seo_basics"
+              "limits_continuity"
             ],
             "suggested_micro_topics": [
-              "Introduction to Google Ads (Search Campaigns)",
-              "Setting up your first Facebook/Instagram Ad campaign",
-              "Understanding ad targeting options for small businesses",
-              "Basic ad copy and creative best practices",
-              "Setting and managing a small advertising budget"
-            ]
-          },
-          {
-            "node_id": "email_marketing_essentials",
-            "title": "Email Marketing Essentials",
-            "rationale": "Email marketing remains one of the most effective direct communication channels for nurturing leads, building customer relationships, and driving sales for small businesses.",
-            "prerequisites": [
-              "building_online_presence",
-              "introduction_content_marketing"
-            ],
-            "suggested_micro_topics": [
-              "Strategies for building an email list (e.g., website forms, lead magnets)",
-              "Choosing an email service provider (e.g., Mailchimp, Constant Contact)",
-              "Designing basic email newsletters and promotional emails",
-              "Writing compelling subject lines",
-              "Understanding email automation basics (e.g., welcome sequences)"
-            ]
-          },
-          {
-            "node_id": "marketing_analytics_measurement",
-            "title": "Marketing Analytics & Measurement",
-            "rationale": "To ensure your marketing efforts are effective and to continuously improve, it's vital to track performance, understand what's working (and what isn't), and make data-driven decisions.",
-            "prerequisites": [
-              "social_media_fundamentals",
-              "seo_basics",
-              "paid_advertising_intro",
-              "email_marketing_essentials"
-            ],
-            "suggested_micro_topics": [
-              "Introduction to Google Analytics 4 (GA4) for website tracking",
-              "Interpreting social media insights and reports",
-              "Analyzing paid ad campaign performance",
-              "Tracking email marketing metrics (open rates, click-through rates)",
-              "Defining key performance indicators (KPIs) for your business"
+              "Sequences and Convergence",
+              "Series and Convergence",
+              "Geometric Series",
+              "P-Series",
+              "Integral Test",
+              "Comparison Tests",
+              "Ratio and Root Tests",
+              "Alternating Series Test",
+              "Power Series",
+              "Taylor and Maclaurin Series"
             ]
           }
         ]

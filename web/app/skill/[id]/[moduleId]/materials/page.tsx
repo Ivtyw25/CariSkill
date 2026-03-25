@@ -10,6 +10,12 @@ import { createClient } from '@/utils/supabase/client';
 import BookmarkButton from '@/components/BookmarkButton';
 import PodcastPlayer from '@/components/PodcastPlayer';
 
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
+
 export default function MaterialsPage({ params }: { params: Promise<{ id: string, moduleId: string }> }) {
   const { id, moduleId } = use(params);
   const router = useRouter();
@@ -272,16 +278,13 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
                 <h2 className="font-display font-bold text-2xl text-gray-900 mb-6">{currentTopic.topic_title || "Conceptual Deep Dive"}</h2>
 
                 {currentTopic.theory_explanation ? (
-                  <div className="text-gray-700 leading-relaxed text-[17px] space-y-4">
-                    {currentTopic.theory_explanation.split('\n').map((line: string, i: number) => {
-                      if (!line.trim()) return null;
-                      // Basic regex for **bold** and `code`
-                      const formattedLine = line
-                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                        .replace(/`([^`]+)`/g, '<code style="background-color: rgba(243, 244, 246, 0.5); color: #db2777; padding: 2px 6px; border-radius: 4px; font-size: 14px;">$1</code>')
-                        .replace(/\*   /g, '• '); // basic bullet point conversion
-                      return <p key={i} dangerouslySetInnerHTML={{ __html: formattedLine }} />;
-                    })}
+                  <div className="prose max-w-none text-gray-700 leading-relaxed text-[17px]">
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm, remarkMath]} 
+                      rehypePlugins={[rehypeKatex]}
+                    >
+                      {currentTopic.theory_explanation}
+                    </ReactMarkdown>
                   </div>
                 ) : (
                   <p className="text-gray-500 italic">No theory explanation was generated for this topic.</p>

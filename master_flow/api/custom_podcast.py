@@ -37,6 +37,12 @@ def generate_podcast_script(topic: str) -> str:
     Write a short, engaging 2-person podcast dialogue about '{topic}'.
     The conversation should be educational but conversational.
     
+    CRITICAL PRONUNCIATION RULES: You are writing a script that will be read by a Text-to-Speech engine. 
+    You MUST NEVER use Markdown symbols, asterisks, hashtags, or LaTeX (like $, \\, ^, _, or $$). 
+    You MUST spell out all math formulas, code snippets, and symbols in plain English phonetic words. 
+    For example, instead of writing $E=mc^2$, you must write E equals M C squared. 
+    Instead of O(N^2), write Big O of N squared.
+
     Format the output STRICTLY like this:
     Host: [dialogue]
     Guest: [dialogue]
