@@ -1,137 +1,124 @@
 {
   "nodes": [
     {
-      "node_id": "math_foundations",
-      "title": "Mathematical Foundations for Game Physics",
-      "rationale": "A solid understanding of linear algebra, vector calculus, and quaternions is crucial for accurately representing and manipulating physical objects, forces, and rotations in a 3D environment. This module ensures a strong theoretical base for subsequent implementation.",
+      "node_id": "Marketing_Fundamentals",
+      "title": "Marketing Fundamentals for Business Promotion",
+      "rationale": "To effectively promote your business, it's essential to first grasp the core principles of marketing, including understanding market dynamics and how businesses interact with customers.",
       "prerequisites": [],
       "suggested_micro_topics": [
-        "Vector Math",
-        "Matrix Transformations",
-        "Quaternions for Rotation",
-        "Coordinate Systems",
-        "Tensor Math Basics"
+        "What is Marketing?",
+        "The Marketing Mix (4 Ps)",
+        "Understanding Market Segments",
+        "Introduction to Value Proposition",
+        "Marketing Ethics and Regulations"
       ]
     },
     {
-      "node_id": "rigid_body_dynamics",
-      "title": "Rigid Body Dynamics",
-      "rationale": "Understanding how to represent and simulate the motion of rigid bodies under various forces and torques is fundamental. This module covers the theoretical underpinnings of rigid body motion, including mass, inertia, and angular momentum.",
+      "node_id": "Define_Your_Business_Goals_and_Audience",
+      "title": "Defining Business Goals & Target Audience",
+      "rationale": "Before creating any promotional content, especially videos, you must clearly define what you want to achieve and precisely who you want to reach. This ensures your efforts are focused and effective.",
       "prerequisites": [
-        "math_foundations"
+        "Marketing_Fundamentals"
       ],
       "suggested_micro_topics": [
-        "Mass and Inertia Tensors",
-        "Center of Mass",
-        "Linear and Angular Velocity",
-        "Linear and Angular Momentum",
-        "Newton-Euler Equations of Motion"
+        "Setting SMART Business Goals",
+        "Developing Buyer Personas",
+        "Market Research Basics",
+        "Identifying Customer Needs and Pain Points",
+        "Competitor Analysis for Small Businesses"
       ]
     },
     {
-      "node_id": "numerical_integration",
-      "title": "Numerical Integration Techniques",
-      "rationale": "Accurately advancing the state of rigid bodies through time requires robust numerical integration schemes. This module explores various integrators and their stability/accuracy trade-offs, essential for a stable simulation.",
+      "node_id": "Content_Strategy_for_Video_Promotion",
+      "title": "Content Strategy with a Video Focus",
+      "rationale": "Given your preference for videos, this module focuses on planning a content strategy that leverages video to engage your target audience and achieve your business promotion goals.",
       "prerequisites": [
-        "rigid_body_dynamics"
+        "Define_Your_Business_Goals_and_Audience"
       ],
       "suggested_micro_topics": [
-        "Euler Integration (Forward/Backward)",
-        "Verlet Integration",
-        "Runge-Kutta Methods",
-        "Symplectic Integrators",
-        "Time Step Management"
+        "Brainstorming Video Content Ideas (e.g., tutorials, behind-the-scenes, testimonials)",
+        "Developing a Content Calendar",
+        "Storytelling Principles for Video",
+        "Call to Action (CTA) in Videos",
+        "Content Pillars and Themes for Your Business"
       ]
     },
     {
-      "node_id": "collision_detection",
-      "title": "Collision Detection Algorithms",
-      "rationale": "Detecting when two or more objects intersect or come into contact is a primary function of a physics engine. This module covers various algorithms for efficiently identifying potential and actual collisions.",
+      "node_id": "Basic_Video_Production_and_Editing",
+      "title": "Basic Video Production and Editing Skills",
+      "rationale": "To create engaging videos for your business, you need fundamental skills in shooting and editing. This module will equip you with the practical knowledge to produce your own promotional video content.",
       "prerequisites": [
-        "math_foundations"
+        "Content_Strategy_for_Video_Promotion"
       ],
       "suggested_micro_topics": [
-        "Bounding Volume Hierarchies (BVH)",
-        "Spatial Partitioning (Octrees, KD-Trees)",
-        "Separating Axis Theorem (SAT)",
-        "GJK Algorithm",
-        "Minkowski Sum and Difference"
+        "Smartphone Videography Techniques",
+        "Basic Lighting and Audio Setup",
+        "Introduction to Simple Editing Software (e.g., CapCut, InShot, DaVinci Resolve Free)",
+        "Scripting and Storyboarding for Short Videos",
+        "Adding Text, Music, and Graphics"
       ]
     },
     {
-      "node_id": "broad_phase_collision",
-      "title": "Broad-Phase Collision Detection",
-      "rationale": "For scenes with many objects, checking every pair for collision is computationally expensive. Broad-phase algorithms efficiently narrow down the potential collision pairs, drastically improving performance.",
+      "node_id": "Social_Media_Marketing_for_Beginners",
+      "title": "Social Media Marketing for Business Promotion",
+      "rationale": "Social media platforms are crucial for distributing your video content and connecting with potential customers. This module covers the basics of using social media to promote your business effectively.",
       "prerequisites": [
-        "collision_detection"
+        "Content_Strategy_for_Video_Promotion"
       ],
       "suggested_micro_topics": [
-        "Spatial Hashing",
-        "Sweep and Prune (SAP)",
-        "Grid-based Methods",
-        "Dynamic Bounding Volume Trees",
-        "AABB Tree Construction"
+        "Choosing the Right Social Media Platforms (e.g., Instagram, TikTok, Facebook, YouTube)",
+        "Optimizing Social Media Profiles",
+        "Crafting Engaging Captions for Video Posts",
+        "Understanding Hashtags and Trends",
+        "Basic Engagement Strategies and Community Building"
       ]
     },
     {
-      "node_id": "narrow_phase_collision",
-      "title": "Narrow-Phase Collision Detection",
-      "rationale": "After broad-phase identifies potential pairs, narrow-phase algorithms perform precise intersection tests to determine exact contact points and normals. This is where detailed geometry interaction is handled.",
+      "node_id": "Video_SEO_and_Discovery",
+      "title": "Video SEO and Maximizing Discoverability",
+      "rationale": "Even great videos won't promote your business if no one can find them. This module teaches you how to optimize your videos for search engines and platforms to increase their visibility and reach.",
       "prerequisites": [
-        "broad_phase_collision"
+        "Basic_Video_Production_and_Editing",
+        "Social_Media_Marketing_for_Beginners"
       ],
       "suggested_micro_topics": [
-        "GJK and EPA Algorithms",
-        "Minkowski Portal Refinement (MPR)",
-        "Convex Hull Intersection",
-        "Triangle Mesh vs. Primitive Collision",
-        "Contact Point Generation"
+        "Keyword Research for Video Content",
+        "Optimizing Video Titles and Descriptions",
+        "Creating Engaging Thumbnails",
+        "Utilizing Tags and Categories",
+        "Understanding YouTube SEO Best Practices",
+        "Transcripts and Closed Captions for Accessibility and SEO"
       ]
     },
     {
-      "node_id": "collision_response",
-      "title": "Collision Response and Resolution",
-      "rationale": "Once a collision is detected, the engine must calculate the appropriate forces or impulses to prevent interpenetration and simulate realistic bouncing or sliding. This module delves into methods for resolving detected collisions.",
+      "node_id": "Intro_to_Paid_Video_Advertising",
+      "title": "Introduction to Paid Video Advertising",
+      "rationale": "To quickly expand your reach and target specific audiences, understanding paid advertising for videos is essential. This module introduces you to the basics of running video ad campaigns.",
       "prerequisites": [
-        "narrow_phase_collision",
-        "numerical_integration"
+        "Social_Media_Marketing_for_Beginners"
       ],
       "suggested_micro_topics": [
-        "Impulse-based Resolution",
-        "Penalty-based Resolution",
-        "Contact Manifolds",
-        "Friction Models",
-        "Restitution (Bounciness)"
+        "Overview of Major Ad Platforms (e.g., Facebook Ads, YouTube Ads)",
+        "Setting Ad Objectives (e.g., Brand Awareness, Leads)",
+        "Basic Audience Targeting",
+        "Understanding Ad Budgets and Bidding",
+        "Creating Simple Video Ad Creatives"
       ]
     },
     {
-      "node_id": "constraint_solvers",
-      "title": "Constraint Solvers",
-      "rationale": "Constraints are essential for simulating joints, hinges, and other limitations on rigid body motion. This module covers techniques for enforcing these constraints realistically and stably.",
+      "node_id": "Measuring_Marketing_Success",
+      "title": "Measuring and Analyzing Marketing Performance",
+      "rationale": "To ensure your video promotion efforts are successful and continuously improve, you need to track their performance. This module covers how to measure results and make data-driven decisions.",
       "prerequisites": [
-        "collision_response"
+        "Video_SEO_and_Discovery",
+        "Intro_to_Paid_Video_Advertising"
       ],
       "suggested_micro_topics": [
-        "Jacobian-based Solvers",
-        "Sequential Impulse Solver (SIS)",
-        "Projected Gauss-Seidel (PGS)",
-        "Contact Constraints",
-        "Joint Constraints (Hinge, Ball-and-Socket)"
-      ]
-    },
-    {
-      "node_id": "engine_architecture",
-      "title": "Physics Engine Architecture and Optimization",
-      "rationale": "Designing a robust, performant, and extensible physics engine requires careful architectural considerations and optimization techniques. This module focuses on structuring the engine and improving its efficiency.",
-      "prerequisites": [
-        "constraint_solvers"
-      ],
-      "suggested_micro_topics": [
-        "Data Structures for Physics Objects",
-        "Memory Management",
-        "Multithreading and Parallelism",
-        "Profiling and Optimization Techniques",
-        "Debugging Physics Simulations"
+        "Key Performance Indicators (KPIs) for Video Marketing",
+        "Introduction to Analytics Tools (e.g., YouTube Analytics, Facebook Insights)",
+        "Understanding Video Engagement Metrics",
+        "Basic Conversion Tracking",
+        "Interpreting Data for Optimization"
       ]
     }
   ]

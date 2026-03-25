@@ -1,6 +1,7 @@
 import asyncio
 import aiohttp
 import os
+import threading
 from typing import Type
 from pydantic import BaseModel, Field
 from crewai.tools import BaseTool
@@ -22,12 +23,25 @@ class AsyncDeepSearchTool(BaseTool):
     def _run(self, query: str) -> str:
         """
         Synchronous wrapper for the async scraping logic.
+        Uses a separate thread to avoid event loop conflicts.
         """
-        try:
-            # We use asyncio.run to execute the async pipeline from a sync context
-            return asyncio.run(self._async_scrape(query))
-        except Exception as e:
-            return f"Error executing deep search: {str(e)}"
+        results_container = []
+
+        def worker():
+            try:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                res = loop.run_until_complete(self._async_scrape(query))
+                results_container.append(res)
+                loop.close()
+            except Exception as e:
+                results_container.append(f"Error executing deep search in thread: {str(e)}")
+
+        thread = threading.Thread(target=worker)
+        thread.start()
+        thread.join()
+
+        return results_container[0] if results_container else "No search results retrieved."
 
     async def _async_scrape(self, query: str) -> str:
         """

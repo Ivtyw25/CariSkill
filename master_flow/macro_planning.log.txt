@@ -1209,3 +1209,137 @@ Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step
   ]
 }
 ```"
+2026-03-25 13:50:47: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Marketing Experience: Beginner Goal: Promote my business Constraints/Worries: Likes videos
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-25 13:51:11: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Marketing Experience: Beginner Goal: Promote my business Constraints/Worries: Likes videos
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="```json
+{
+  "nodes": [
+    {
+      "node_id": "Marketing_Fundamentals",
+      "title": "Marketing Fundamentals for Business Promotion",
+      "rationale": "To effectively promote your business, it's essential to first grasp the core principles of marketing, including understanding market dynamics and how businesses interact with customers.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "What is Marketing?",
+        "The Marketing Mix (4 Ps)",
+        "Understanding Market Segments",
+        "Introduction to Value Proposition",
+        "Marketing Ethics and Regulations"
+      ]
+    },
+    {
+      "node_id": "Define_Your_Business_Goals_and_Audience",
+      "title": "Defining Business Goals & Target Audience",
+      "rationale": "Before creating any promotional content, especially videos, you must clearly define what you want to achieve and precisely who you want to reach. This ensures your efforts are focused and effective.",
+      "prerequisites": [
+        "Marketing_Fundamentals"
+      ],
+      "suggested_micro_topics": [
+        "Setting SMART Business Goals",
+        "Developing Buyer Personas",
+        "Market Research Basics",
+        "Identifying Customer Needs and Pain Points",
+        "Competitor Analysis for Small Businesses"
+      ]
+    },
+    {
+      "node_id": "Content_Strategy_for_Video_Promotion",
+      "title": "Content Strategy with a Video Focus",
+      "rationale": "Given your preference for videos, this module focuses on planning a content strategy that leverages video to engage your target audience and achieve your business promotion goals.",
+      "prerequisites": [
+        "Define_Your_Business_Goals_and_Audience"
+      ],
+      "suggested_micro_topics": [
+        "Brainstorming Video Content Ideas (e.g., tutorials, behind-the-scenes, testimonials)",
+        "Developing a Content Calendar",
+        "Storytelling Principles for Video",
+        "Call to Action (CTA) in Videos",
+        "Content Pillars and Themes for Your Business"
+      ]
+    },
+    {
+      "node_id": "Basic_Video_Production_and_Editing",
+      "title": "Basic Video Production and Editing Skills",
+      "rationale": "To create engaging videos for your business, you need fundamental skills in shooting and editing. This module will equip you with the practical knowledge to produce your own promotional video content.",
+      "prerequisites": [
+        "Content_Strategy_for_Video_Promotion"
+      ],
+      "suggested_micro_topics": [
+        "Smartphone Videography Techniques",
+        "Basic Lighting and Audio Setup",
+        "Introduction to Simple Editing Software (e.g., CapCut, InShot, DaVinci Resolve Free)",
+        "Scripting and Storyboarding for Short Videos",
+        "Adding Text, Music, and Graphics"
+      ]
+    },
+    {
+      "node_id": "Social_Media_Marketing_for_Beginners",
+      "title": "Social Media Marketing for Business Promotion",
+      "rationale": "Social media platforms are crucial for distributing your video content and connecting with potential customers. This module covers the basics of using social media to promote your business effectively.",
+      "prerequisites": [
+        "Content_Strategy_for_Video_Promotion"
+      ],
+      "suggested_micro_topics": [
+        "Choosing the Right Social Media Platforms (e.g., Instagram, TikTok, Facebook, YouTube)",
+        "Optimizing Social Media Profiles",
+        "Crafting Engaging Captions for Video Posts",
+        "Understanding Hashtags and Trends",
+        "Basic Engagement Strategies and Community Building"
+      ]
+    },
+    {
+      "node_id": "Video_SEO_and_Discovery",
+      "title": "Video SEO and Maximizing Discoverability",
+      "rationale": "Even great videos won't promote your business if no one can find them. This module teaches you how to optimize your videos for search engines and platforms to increase their visibility and reach.",
+      "prerequisites": [
+        "Basic_Video_Production_and_Editing",
+        "Social_Media_Marketing_for_Beginners"
+      ],
+      "suggested_micro_topics": [
+        "Keyword Research for Video Content",
+        "Optimizing Video Titles and Descriptions",
+        "Creating Engaging Thumbnails",
+        "Utilizing Tags and Categories",
+        "Understanding YouTube SEO Best Practices",
+        "Transcripts and Closed Captions for Accessibility and SEO"
+      ]
+    },
+    {
+      "node_id": "Intro_to_Paid_Video_Advertising",
+      "title": "Introduction to Paid Video Advertising",
+      "rationale": "To quickly expand your reach and target specific audiences, understanding paid advertising for videos is essential. This module introduces you to the basics of running video ad campaigns.",
+      "prerequisites": [
+        "Social_Media_Marketing_for_Beginners"
+      ],
+      "suggested_micro_topics": [
+        "Overview of Major Ad Platforms (e.g., Facebook Ads, YouTube Ads)",
+        "Setting Ad Objectives (e.g., Brand Awareness, Leads)",
+        "Basic Audience Targeting",
+        "Understanding Ad Budgets and Bidding",
+        "Creating Simple Video Ad Creatives"
+      ]
+    },
+    {
+      "node_id": "Measuring_Marketing_Success",
+      "title": "Measuring and Analyzing Marketing Performance",
+      "rationale": "To ensure your video promotion efforts are successful and continuously improve, you need to track their performance. This module covers how to measure results and make data-driven decisions.",
+      "prerequisites": [
+        "Video_SEO_and_Discovery",
+        "Intro_to_Paid_Video_Advertising"
+      ],
+      "suggested_micro_topics": [
+        "Key Performance Indicators (KPIs) for Video Marketing",
+        "Introduction to Analytics Tools (e.g., YouTube Analytics, Facebook Insights)",
+        "Understanding Video Engagement Metrics",
+        "Basic Conversion Tracking",
+        "Interpreting Data for Optimization"
+      ]
+    }
+  ]
+}
+```"
