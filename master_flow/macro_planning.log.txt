@@ -1062,3 +1062,150 @@ Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step
   ]
 }
 ```"
+2026-03-25 13:27:25: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Physics engine using C++ Experience: Advanced in C++ and physics development Goal: Understand and implement core physics engine algorithms from scratch as a learning exercise Constraints/Worries: None specified
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-25 13:27:49: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Physics engine using C++ Experience: Advanced in C++ and physics development Goal: Understand and implement core physics engine algorithms from scratch as a learning exercise Constraints/Worries: None specified
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="```json
+{
+  "nodes": [
+    {
+      "node_id": "math_foundations",
+      "title": "Mathematical Foundations for Game Physics",
+      "rationale": "A solid understanding of linear algebra, vector calculus, and quaternions is crucial for accurately representing and manipulating physical objects, forces, and rotations in a 3D environment. This module ensures a strong theoretical base for subsequent implementation.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Vector Math",
+        "Matrix Transformations",
+        "Quaternions for Rotation",
+        "Coordinate Systems",
+        "Tensor Math Basics"
+      ]
+    },
+    {
+      "node_id": "rigid_body_dynamics",
+      "title": "Rigid Body Dynamics",
+      "rationale": "Understanding how to represent and simulate the motion of rigid bodies under various forces and torques is fundamental. This module covers the theoretical underpinnings of rigid body motion, including mass, inertia, and angular momentum.",
+      "prerequisites": [
+        "math_foundations"
+      ],
+      "suggested_micro_topics": [
+        "Mass and Inertia Tensors",
+        "Center of Mass",
+        "Linear and Angular Velocity",
+        "Linear and Angular Momentum",
+        "Newton-Euler Equations of Motion"
+      ]
+    },
+    {
+      "node_id": "numerical_integration",
+      "title": "Numerical Integration Techniques",
+      "rationale": "Accurately advancing the state of rigid bodies through time requires robust numerical integration schemes. This module explores various integrators and their stability/accuracy trade-offs, essential for a stable simulation.",
+      "prerequisites": [
+        "rigid_body_dynamics"
+      ],
+      "suggested_micro_topics": [
+        "Euler Integration (Forward/Backward)",
+        "Verlet Integration",
+        "Runge-Kutta Methods",
+        "Symplectic Integrators",
+        "Time Step Management"
+      ]
+    },
+    {
+      "node_id": "collision_detection",
+      "title": "Collision Detection Algorithms",
+      "rationale": "Detecting when two or more objects intersect or come into contact is a primary function of a physics engine. This module covers various algorithms for efficiently identifying potential and actual collisions.",
+      "prerequisites": [
+        "math_foundations"
+      ],
+      "suggested_micro_topics": [
+        "Bounding Volume Hierarchies (BVH)",
+        "Spatial Partitioning (Octrees, KD-Trees)",
+        "Separating Axis Theorem (SAT)",
+        "GJK Algorithm",
+        "Minkowski Sum and Difference"
+      ]
+    },
+    {
+      "node_id": "broad_phase_collision",
+      "title": "Broad-Phase Collision Detection",
+      "rationale": "For scenes with many objects, checking every pair for collision is computationally expensive. Broad-phase algorithms efficiently narrow down the potential collision pairs, drastically improving performance.",
+      "prerequisites": [
+        "collision_detection"
+      ],
+      "suggested_micro_topics": [
+        "Spatial Hashing",
+        "Sweep and Prune (SAP)",
+        "Grid-based Methods",
+        "Dynamic Bounding Volume Trees",
+        "AABB Tree Construction"
+      ]
+    },
+    {
+      "node_id": "narrow_phase_collision",
+      "title": "Narrow-Phase Collision Detection",
+      "rationale": "After broad-phase identifies potential pairs, narrow-phase algorithms perform precise intersection tests to determine exact contact points and normals. This is where detailed geometry interaction is handled.",
+      "prerequisites": [
+        "broad_phase_collision"
+      ],
+      "suggested_micro_topics": [
+        "GJK and EPA Algorithms",
+        "Minkowski Portal Refinement (MPR)",
+        "Convex Hull Intersection",
+        "Triangle Mesh vs. Primitive Collision",
+        "Contact Point Generation"
+      ]
+    },
+    {
+      "node_id": "collision_response",
+      "title": "Collision Response and Resolution",
+      "rationale": "Once a collision is detected, the engine must calculate the appropriate forces or impulses to prevent interpenetration and simulate realistic bouncing or sliding. This module delves into methods for resolving detected collisions.",
+      "prerequisites": [
+        "narrow_phase_collision",
+        "numerical_integration"
+      ],
+      "suggested_micro_topics": [
+        "Impulse-based Resolution",
+        "Penalty-based Resolution",
+        "Contact Manifolds",
+        "Friction Models",
+        "Restitution (Bounciness)"
+      ]
+    },
+    {
+      "node_id": "constraint_solvers",
+      "title": "Constraint Solvers",
+      "rationale": "Constraints are essential for simulating joints, hinges, and other limitations on rigid body motion. This module covers techniques for enforcing these constraints realistically and stably.",
+      "prerequisites": [
+        "collision_response"
+      ],
+      "suggested_micro_topics": [
+        "Jacobian-based Solvers",
+        "Sequential Impulse Solver (SIS)",
+        "Projected Gauss-Seidel (PGS)",
+        "Contact Constraints",
+        "Joint Constraints (Hinge, Ball-and-Socket)"
+      ]
+    },
+    {
+      "node_id": "engine_architecture",
+      "title": "Physics Engine Architecture and Optimization",
+      "rationale": "Designing a robust, performant, and extensible physics engine requires careful architectural considerations and optimization techniques. This module focuses on structuring the engine and improving its efficiency.",
+      "prerequisites": [
+        "constraint_solvers"
+      ],
+      "suggested_micro_topics": [
+        "Data Structures for Physics Objects",
+        "Memory Management",
+        "Multithreading and Parallelism",
+        "Profiling and Optimization Techniques",
+        "Debugging Physics Simulations"
+      ]
+    }
+  ]
+}
+```"

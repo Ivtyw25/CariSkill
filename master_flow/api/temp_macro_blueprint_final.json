@@ -1,110 +1,137 @@
 {
   "nodes": [
     {
-      "node_id": "baking_basics_equipment",
-      "title": "Essential Baking Equipment & Tools",
-      "rationale": "Understanding and having the right tools is foundational for any baking project, ensuring proper execution and consistent results. For a beginner, knowing what's essential prevents unnecessary purchases and frustration.",
+      "node_id": "math_foundations",
+      "title": "Mathematical Foundations for Game Physics",
+      "rationale": "A solid understanding of linear algebra, vector calculus, and quaternions is crucial for accurately representing and manipulating physical objects, forces, and rotations in a 3D environment. This module ensures a strong theoretical base for subsequent implementation.",
       "prerequisites": [],
       "suggested_micro_topics": [
-        "Measuring cups and spoons (dry and liquid)",
-        "Mixing bowls (various sizes)",
-        "Whisks and spatulas",
-        "Baking pans (round, square, loaf)",
-        "Parchment paper and non-stick spray",
-        "Oven thermometer",
-        "Cooling racks"
+        "Vector Math",
+        "Matrix Transformations",
+        "Quaternions for Rotation",
+        "Coordinate Systems",
+        "Tensor Math Basics"
       ]
     },
     {
-      "node_id": "baking_basics_ingredients",
-      "title": "Understanding Basic Cake Ingredients",
-      "rationale": "Knowing the role of each ingredient (flour, sugar, eggs, butter, leavening agents) is crucial for successful baking. It helps beginners understand why recipes work and how to troubleshoot common issues.",
-      "prerequisites": [],
-      "suggested_micro_topics": [
-        "Types of flour and their uses",
-        "Sugars: granulated, powdered, brown",
-        "Fats: butter vs. oil",
-        "Eggs: function and size",
-        "Leavening agents: baking powder vs. baking soda",
-        "Liquids: milk, buttermilk, water",
-        "Flavorings: vanilla extract, cocoa powder"
-      ]
-    },
-    {
-      "node_id": "basic_baking_techniques",
-      "title": "Fundamental Baking Techniques",
-      "rationale": "Mastering basic techniques like measuring accurately, mixing methods, and oven temperature control is essential for consistent results and building confidence.",
+      "node_id": "rigid_body_dynamics",
+      "title": "Rigid Body Dynamics",
+      "rationale": "Understanding how to represent and simulate the motion of rigid bodies under various forces and torques is fundamental. This module covers the theoretical underpinnings of rigid body motion, including mass, inertia, and angular momentum.",
       "prerequisites": [
-        "baking_basics_equipment",
-        "baking_basics_ingredients"
+        "math_foundations"
       ],
       "suggested_micro_topics": [
-        "Accurate measuring techniques (dry and liquid)",
-        "Creaming method (butter and sugar)",
-        "Sifting dry ingredients",
-        "Folding wet into dry ingredients",
-        "Preparing baking pans",
-        "Oven preheating and temperature management",
-        "Testing for doneness"
+        "Mass and Inertia Tensors",
+        "Center of Mass",
+        "Linear and Angular Velocity",
+        "Linear and Angular Momentum",
+        "Newton-Euler Equations of Motion"
       ]
     },
     {
-      "node_id": "first_simple_cake",
-      "title": "Baking Your First Simple Cake (Vanilla/Chocolate)",
-      "rationale": "Applying learned knowledge to bake a straightforward, forgiving cake recipe builds confidence and provides immediate gratification, reinforcing basic skills. Focus on a simple, delicious outcome.",
+      "node_id": "numerical_integration",
+      "title": "Numerical Integration Techniques",
+      "rationale": "Accurately advancing the state of rigid bodies through time requires robust numerical integration schemes. This module explores various integrators and their stability/accuracy trade-offs, essential for a stable simulation.",
       "prerequisites": [
-        "basic_baking_techniques"
+        "rigid_body_dynamics"
       ],
       "suggested_micro_topics": [
-        "Simple vanilla cake recipe walkthrough (video preferred)",
-        "Simple chocolate cake recipe walkthrough (video preferred)",
-        "Troubleshooting common beginner mistakes (sinking, dry cake)",
-        "Cooling and handling a baked cake"
+        "Euler Integration (Forward/Backward)",
+        "Verlet Integration",
+        "Runge-Kutta Methods",
+        "Symplectic Integrators",
+        "Time Step Management"
       ]
     },
     {
-      "node_id": "basic_frosting",
-      "title": "Mastering Basic Buttercream Frosting",
-      "rationale": "Frosting is a key component of most cakes. Learning a simple, stable buttercream allows beginners to finish their cakes beautifully and adds another layer of skill.",
+      "node_id": "collision_detection",
+      "title": "Collision Detection Algorithms",
+      "rationale": "Detecting when two or more objects intersect or come into contact is a primary function of a physics engine. This module covers various algorithms for efficiently identifying potential and actual collisions.",
       "prerequisites": [
-        "first_simple_cake"
+        "math_foundations"
       ],
       "suggested_micro_topics": [
-        "American buttercream recipe and technique",
-        "Achieving desired frosting consistency",
-        "Basic frosting tools (offset spatula, piping bag)",
-        "Crumb coating technique",
-        "Simple frosting decorations (smooth finish)"
+        "Bounding Volume Hierarchies (BVH)",
+        "Spatial Partitioning (Octrees, KD-Trees)",
+        "Separating Axis Theorem (SAT)",
+        "GJK Algorithm",
+        "Minkowski Sum and Difference"
       ]
     },
     {
-      "node_id": "cupcakes_variation",
-      "title": "Expanding to Cupcakes: A Fun Variation",
-      "rationale": "Cupcakes use similar techniques to cakes but offer a quicker bake time and individual portions, making them ideal for practicing and experimenting with flavors and decorations on a smaller scale.",
+      "node_id": "broad_phase_collision",
+      "title": "Broad-Phase Collision Detection",
+      "rationale": "For scenes with many objects, checking every pair for collision is computationally expensive. Broad-phase algorithms efficiently narrow down the potential collision pairs, drastically improving performance.",
       "prerequisites": [
-        "first_simple_cake",
-        "basic_frosting"
+        "collision_detection"
       ],
       "suggested_micro_topics": [
-        "Adapting cake recipes for cupcakes",
-        "Cupcake liners and baking times",
-        "Basic cupcake piping techniques",
-        "Flavor variations for cupcakes"
+        "Spatial Hashing",
+        "Sweep and Prune (SAP)",
+        "Grid-based Methods",
+        "Dynamic Bounding Volume Trees",
+        "AABB Tree Construction"
       ]
     },
     {
-      "node_id": "exploring_simple_flavors",
-      "title": "Exploring Simple Flavor Variations",
-      "rationale": "Once comfortable with basic techniques, experimenting with different flavor profiles keeps baking fun and allows for personalization, enhancing the \"bake for fun\" goal.",
+      "node_id": "narrow_phase_collision",
+      "title": "Narrow-Phase Collision Detection",
+      "rationale": "After broad-phase identifies potential pairs, narrow-phase algorithms perform precise intersection tests to determine exact contact points and normals. This is where detailed geometry interaction is handled.",
       "prerequisites": [
-        "cupcakes_variation"
+        "broad_phase_collision"
       ],
       "suggested_micro_topics": [
-        "Adding citrus zest and juice",
-        "Incorporating fruits (berries, bananas)",
-        "Using spices (cinnamon, nutmeg)",
-        "Chocolate variations (chips, different cocoa types)",
-        "Simple glazes and drizzles"
+        "GJK and EPA Algorithms",
+        "Minkowski Portal Refinement (MPR)",
+        "Convex Hull Intersection",
+        "Triangle Mesh vs. Primitive Collision",
+        "Contact Point Generation"
+      ]
+    },
+    {
+      "node_id": "collision_response",
+      "title": "Collision Response and Resolution",
+      "rationale": "Once a collision is detected, the engine must calculate the appropriate forces or impulses to prevent interpenetration and simulate realistic bouncing or sliding. This module delves into methods for resolving detected collisions.",
+      "prerequisites": [
+        "narrow_phase_collision",
+        "numerical_integration"
+      ],
+      "suggested_micro_topics": [
+        "Impulse-based Resolution",
+        "Penalty-based Resolution",
+        "Contact Manifolds",
+        "Friction Models",
+        "Restitution (Bounciness)"
+      ]
+    },
+    {
+      "node_id": "constraint_solvers",
+      "title": "Constraint Solvers",
+      "rationale": "Constraints are essential for simulating joints, hinges, and other limitations on rigid body motion. This module covers techniques for enforcing these constraints realistically and stably.",
+      "prerequisites": [
+        "collision_response"
+      ],
+      "suggested_micro_topics": [
+        "Jacobian-based Solvers",
+        "Sequential Impulse Solver (SIS)",
+        "Projected Gauss-Seidel (PGS)",
+        "Contact Constraints",
+        "Joint Constraints (Hinge, Ball-and-Socket)"
+      ]
+    },
+    {
+      "node_id": "engine_architecture",
+      "title": "Physics Engine Architecture and Optimization",
+      "rationale": "Designing a robust, performant, and extensible physics engine requires careful architectural considerations and optimization techniques. This module focuses on structuring the engine and improving its efficiency.",
+      "prerequisites": [
+        "constraint_solvers"
+      ],
+      "suggested_micro_topics": [
+        "Data Structures for Physics Objects",
+        "Memory Management",
+        "Multithreading and Parallelism",
+        "Profiling and Optimization Techniques",
+        "Debugging Physics Simulations"
       ]
     }
   ]

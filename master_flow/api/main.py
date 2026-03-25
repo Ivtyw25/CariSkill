@@ -3,6 +3,7 @@ import os
 import uuid
 import shutil
 import asyncio
+import time
 from typing import Optional, List
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.responses import FileResponse
@@ -83,6 +84,7 @@ async def generate_podcast_endpoint(req: PodcastRequest):
     active_podcasts[task_id] = {"status": "processing", "session_id": req.session_id}
 
     async def run_podcast_generation():
+        start_time = time.time()
         try:
             try:
                 from api.custom_podcast import run_custom_podcast_pipeline
@@ -106,6 +108,7 @@ async def generate_podcast_endpoint(req: PodcastRequest):
                 "session_id": req.session_id
             }
             print(f"Podcast {task_id} generated successfully: {final_path}")
+            print(f"\n⏳ [DURATION TRACKER] Podcast Phase completed in: {time.time() - start_time:.2f} seconds\n")
 
         except Exception as e:
             print(f"Podcast generation error: {str(e)}")
@@ -238,6 +241,7 @@ async def start_macro_endpoint(req: StartMacroRequest):
     active_flows[req.session_id] = {"status": "processing"}
 
     async def execute_flow():
+        overall_start = time.time()
         try:
             result = await flow.kickoff_async() 
             response_data = result if isinstance(result, dict) else {"status": "completed", "result": result}
@@ -252,6 +256,8 @@ async def start_macro_endpoint(req: StartMacroRequest):
             import json
             with open("temp_master_flow_output.json", "w", encoding="utf-8") as f:
                 json.dump(final_response, f, indent=2)
+            
+            print(f"\n⏳ [DURATION TRACKER] Overall Generation completed in: {time.time() - overall_start:.2f} seconds\n")
                 
         except Exception as e:
             print(f"Error during CrewAI execution: {str(e)}")
