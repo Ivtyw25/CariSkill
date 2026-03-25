@@ -44,6 +44,9 @@ GEMINI_API_KEY="your_google_ai_studio_key"
 QDRANT_URL="your_qdrant_instance_url"
 QDRANT_API_KEY="your_qdrant_api_key"
 TAVILY_API_KEY="your_tavily_key"
+# Required for podcast audio cloud storage:
+NEXT_PUBLIC_SUPABASE_URL="your_supabase_url"
+SUPABASE_SERVICE_ROLE_KEY="your_service_role_key"
 ```
 
 ### Frontend (`web/.env.local`)

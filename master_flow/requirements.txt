@@ -479,3 +479,4 @@ youtube-transcript-api==1.2.4
     # via crewai-tools
 zipp==3.23.0
     # via importlib-metadata
+supabase

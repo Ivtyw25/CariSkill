@@ -11,7 +11,8 @@ dependencies = [
     "qdrant-client",
     "sentence-transformers",
     "ddgs",
-    "python-dotenv"
+    "python-dotenv",
+    "supabase"
 ]
 
 [project.scripts]
