@@ -261,19 +261,21 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
       const { createClient } = await import('@/utils/supabase/client');
       const supabase = createClient();
       
-      // Check if all modules have generated materials
+      // Check if all modules have been 100% completed by the user
       const moduleIds = data.modules.map(m => m.id);
       
-      const { data: generatedTopics } = await supabase
-        .from('micro_topics_contents')
-        .select('macro_node_id')
-        .in('macro_node_id', moduleIds);
+      const { data: progressNodes } = await supabase
+        .from('node_progress')
+        .select('node_id')
+        .eq('roadmap_id', id)
+        .eq('user_id', user.id)
+        .eq('is_completed', true);
         
-      const generatedSet = new Set(generatedTopics?.map(t => t.macro_node_id) || []);
-      const isCompletelyGenerated = moduleIds.every(mid => generatedSet.has(mid));
+      const completedSet = new Set(progressNodes?.map(p => p.node_id) || []);
+      const is100PercentCompleted = moduleIds.every(mid => completedSet.has(mid));
       
-      if (!isCompletelyGenerated) {
-        alert("Please wait for the AI to completely finish generating study materials for every module before publishing your roadmap. To generate materials, simply click on each module to start your journey.");
+      if (!is100PercentCompleted) {
+        alert("You must 100% complete all modules in this roadmap before you can publish it to the community. Please finish learning all topics first to ensure all content is fully generated for others!");
         setIsPublishing(false);
         return;
       }

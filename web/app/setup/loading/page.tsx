@@ -289,6 +289,17 @@ function LoadingRoadmapContent() {
           await updateRoadmapDB(supabase, dbRecordId, activeTopic, parsedRoadmap, totalTimeMinutes);
           await insertMicroTopicsDB(supabase, dbRecordId, rawResult);
           await insertGraphNodesDB(supabase, dbRecordId, parsedRoadmap);
+
+          // NEW STEP: Trigger skill replacement logic in the background
+          try {
+            fetch('/api/skills/replace', { 
+              method: 'POST', 
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ addedSkill: activeTopic }) 
+            }).catch(e => console.error("Background replacement error:", e));
+          } catch (e) {
+            console.error("Replacement API fetch trigger failed:", e);
+          }
         }
 
         // 5. Finalize UI navigation

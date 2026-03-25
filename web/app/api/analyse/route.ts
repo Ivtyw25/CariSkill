@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
+import { createClient } from "@/utils/supabase/server";
 
 // Initialize Gemini
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
@@ -20,18 +21,43 @@ async function fileToGenerativePart(file: File) {
 
 export async function POST(req: Request) {
   try {
+    const supabase = await createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const userId = session.user.id;
+
     // 1. Receive the raw files from the frontend
     const formData = await req.formData();
     const resumeFile = formData.get("resume") as File;
-    const jobFile = formData.get("job") as File;
 
-    if (!resumeFile || !jobFile) {
-      return NextResponse.json({ error: "Missing PDF files." }, { status: 400 });
+    if (!resumeFile) {
+      return NextResponse.json({ error: "Missing resume PDF." }, { status: 400 });
     }
 
-    // 2. Convert both PDFs into the format Gemini understands
+    // Fetch user's current roadmaps so we can avoid recommending them
+    const { data: activeRoadmaps } = await supabase
+      .from("roadmaps")
+      .select("topic")
+      .eq("user_id", userId);
+      
+    // Fetch user's explicitly tracking skills
+    const { data: userSkills } = await supabase
+      .from("user_skills")
+      .select("title")
+      .eq("user_id", userId)
+      .in("status", ["Ongoing", "Completed"]);
+    
+    const activeTopicsArray = [
+      ...(activeRoadmaps || []).map(r => r.topic),
+      ...(userSkills || []).map(s => s.title)
+    ];
+    
+    const activeTopics = Array.from(new Set(activeTopicsArray)).join(", ");
+
+    // 2. Convert PDF into the format Gemini understands
     const resumePart = await fileToGenerativePart(resumeFile);
-    const jobPart = await fileToGenerativePart(jobFile);
 
     // 3. Set up the Gemini model
     const model = genAI.getGenerativeModel({
@@ -41,32 +67,98 @@ export async function POST(req: Request) {
 
     // 4. Create the prompt
     const prompt = `
-      You are an expert technical recruiter and career coach.
-      I have provided two PDF documents:
-      1. A candidate's Resume.
-      2. A Job Advertisement.
+      You are an expert career coach and technical recruiter.
+      I have provided a candidate's Resume PDF.
 
-      Analyze the Resume against the Job Description. 
-      Identify missing skills and calculate a realistic match percentage.
+      First, extract their resume data into a structured format:
+      "resume": {
+        "name": "Full Name",
+        "title": "Professional Title (e.g. Software Engineer)",
+        "location": "City, Country",
+        "email": "email address",
+        "phone": "phone number",
+        "summary": "A brief 2-3 sentence professional summary based on their experience.",
+        "experience": [
+          {
+            "role": "Job Title",
+            "company": "Company Name",
+            "period": "Start Date - End Date",
+            "isPrimary": true,
+            "achievements": ["Bullet point 1", "Bullet point 2"]
+          }
+        ],
+        "projects": [
+          { "name": "Project Name", "description": "Brief description" }
+        ],
+        "education": [
+          { "degree": "Degree Name", "school": "University Name", "period": "Year" }
+        ],
+        "skills": ["Skill 1", "Skill 2", "Skill 3"]
+      }
+
+      Second, based on the candidate's skills and experience, recommend exactly 6 new specific skills (technologies, tools, or concepts) they should learn next to advance their career. 
+      IMPORTANT: Do NOT recommend any of these skills because they are already learning them: [${activeTopics}].
+      Assign a size "sm", "md", or "lg" to each skill to represent its importance ("lg" being the most important, "sm" being the least).
+      
       Return ONLY a JSON object with this exact structure:
       {
-        "matchPercentage": number,
-        "mustHave": [{ "id": "m1", "name": "Skill Name" }],
-        "useful": [{ "id": "u1", "name": "Skill Name" }],
-        "mightNeed": [{ "id": "n1", "name": "Skill Name" }]
+        "resume": { ...extracted resume data... },
+        "recommendations": [
+          { "title": "Skill Name 1", "size": "lg" },
+          { "title": "Skill Name 2", "size": "md" },
+          { "title": "Skill Name 3", "size": "md" },
+          { "title": "Skill Name 4", "size": "sm" },
+          { "title": "Skill Name 5", "size": "sm" },
+          { "title": "Skill Name 6", "size": "sm" }
+        ]
       }
     `;
 
-    // 5. Send the prompt AND the PDF files directly to Gemini!
-    const result = await model.generateContent([prompt, resumePart, jobPart]);
+    // 5. Send the prompt AND the PDF file directly to Gemini!
+    const result = await model.generateContent([prompt, resumePart]);
 
     // 6. Clean the response text before parsing!
     let responseText = result.response.text();
-
-    // Strip out markdown code blocks if Gemini included them
     responseText = responseText.replace(/```json\n?/g, '').replace(/```/g, '').trim();
+    
+    const parsedData = JSON.parse(responseText);
 
-    return NextResponse.json(JSON.parse(responseText));
+    const { resume, recommendations } = parsedData;
+
+    // 7. Overwrite profile resume data
+    if (resume) {
+      await supabase
+        .from("profiles")
+        .update({ resume_data: resume })
+        .eq("id", userId);
+    }
+
+    // 8. Overwrite existing 'Recommended' skills with the new ones
+    if (recommendations && Array.isArray(recommendations) && recommendations.length === 6) {
+      // First delete all existing recommended skills
+      await supabase
+        .from("user_skills")
+        .delete()
+        .eq("user_id", userId)
+        .eq("status", "Recommended");
+
+      // Insert new ones
+      const skillsToInsert = recommendations.map(rec => ({
+        user_id: userId,
+        title: rec.title,
+        category: rec.size, // Safely hijacking category column to store size ("sm", "md", "lg") for bubbles
+        status: "Recommended",
+        progress: 0,
+        total_time_spent: 0,
+        icon_name: "Sparkles"
+      }));
+
+      await supabase
+        .from("user_skills")
+        .insert(skillsToInsert);
+    }
+
+    return NextResponse.json({ success: true, recommendations });
 
   } catch (error: any) {
     console.error("Gemini API Error:", error);

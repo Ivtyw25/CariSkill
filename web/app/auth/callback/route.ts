@@ -10,10 +10,8 @@ export async function GET(request: Request) {
         const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
         if (data.session && !error) {
-            // Check if user has completed onboarding
-            if (!data.session.user.user_metadata?.field) {
-                return NextResponse.redirect(`${requestUrl.origin}/onboarding`);
-            }
+            // Check if user has completed onboarding bypassed
+            // Proceed to standard redirection
         }
     }
 

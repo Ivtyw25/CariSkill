@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import { exploreData, BubbleSize } from '@/lib/explore-data';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import {
-  Upload, Plus, Sparkles, TrendingUp, Users, Loader2
+  Upload, Plus, Sparkles, TrendingUp, Users, Loader2, RefreshCw
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -33,7 +33,7 @@ const FloatingBubble = ({ text, size, top, left, delay, onClick }: any) => {
   return (
     <motion.div
       onClick={onClick}
-      className={`absolute rounded-full flex items-center justify-center bg-white font-bold text-gray-800 border border-yellow-100 cursor-pointer hover:scale-105 hover:shadow-2xl hover:ring-[#FFD700]/40 transition-all duration-300 z-20 text-center leading-tight break-words overflow-hidden
+      className={`absolute flex group rounded-full items-center justify-center bg-white font-bold text-gray-800 border border-yellow-100 cursor-pointer hover:scale-105 hover:shadow-2xl hover:ring-[#FFD700]/40 transition-all duration-300 z-20 text-center leading-tight break-words
         ${styleVariants[size]}
       `}
       style={{ top, left, transform: 'translate(-50%, -50%)' }}
@@ -52,7 +52,14 @@ const FloatingBubble = ({ text, size, top, left, delay, onClick }: any) => {
         x: { duration: 4 + Math.random() * 2, repeat: Infinity, ease: "easeInOut", delay }
       }}
     >
-      <span className="line-clamp-3">{text}</span>
+      <span className="line-clamp-3 relative z-10">{text}</span>
+      
+      {/* Custom Tooltip */}
+      <div className="absolute -top-12 scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-gray-900 text-white min-w-[max-content] max-w-[200px] text-xs py-2 px-3 rounded-lg shadow-xl pointer-events-none z-50 border border-gray-700/50">
+        {text}
+        {/* Caret */}
+        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45 border-b border-r border-gray-700/50"></div>
+      </div>
     </motion.div>
   );
 };
@@ -61,11 +68,17 @@ export default function ExplorePage() {
   const router = useRouter();
   const [bubbles, setBubbles] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleBubbleClick = (topic: string) => {
+    const sessionId = crypto.randomUUID();
+    localStorage.setItem(`chat_initial_topic_${sessionId}`, topic);
+    router.push(`/chat?id=${sessionId}`);
+  };
 
   // 1. We need a reference to the container to know its exact pixel size
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // 2. The Collision Detection Algorithm
   // 2. The Collision Detection Algorithm (UPDATED)
   const calculatePositions = (rawBubbles: any[], containerW: number, containerH: number) => {
     const placedBubbles: any[] = [];
@@ -119,44 +132,52 @@ export default function ExplorePage() {
     return placedBubbles;
   };
 
-  useEffect(() => {
-    const fetchSuggestions = async () => {
-      try {
-        const payload = {
-          field: "Software Engineering & Full-Stack Development",
-          level: "University Student / Intermediate",
-          currentSkills: ["Angular", "Firebase", "React.js", "Node.js", "Oracle APEX", "SQL"]
-        };
+  const fetchSuggestions = async () => {
+    try {
+      const response = await fetch('/api/skills/recommendations');
+      if (!response.ok) throw new Error("API Failed");
+      const dynamicBubbles = await response.json();
 
-        const response = await fetch('/api/suggestions', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) throw new Error("API Failed");
-
-        const dynamicBubbles = await response.json();
-
-        // 3. Once we get the bubbles, run the positioning algorithm based on screen size
-        if (containerRef.current) {
-          const containerW = containerRef.current.clientWidth;
-          const containerH = containerRef.current.clientHeight;
-          const positionedBubbles = calculatePositions(dynamicBubbles, containerW, containerH);
-          setBubbles(positionedBubbles);
-        } else {
-          setBubbles(dynamicBubbles); // Fallback
-        }
-
-      } catch (error) {
-        console.error("Error loading bubbles:", error);
-      } finally {
-        setIsLoading(false);
+      if (containerRef.current) {
+        const containerW = containerRef.current.clientWidth;
+        const containerH = containerRef.current.clientHeight;
+        const positionedBubbles = calculatePositions(dynamicBubbles, containerW, containerH);
+        setBubbles(positionedBubbles);
+      } else {
+        setBubbles(dynamicBubbles); // Fallback
       }
-    };
+    } catch (error) {
+      console.error("Error loading bubbles:", error);
+    }
+  };
 
-    fetchSuggestions();
+  useEffect(() => {
+    const init = async () => {
+      await fetchSuggestions();
+      setIsLoading(false);
+    };
+    init();
   }, []);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    setBubbles([]); // Clear immediately for visual feedback
+    try {
+      const res = await fetch('/api/skills/refresh-all', { method: 'POST' });
+      if (res.ok) {
+        await fetchSuggestions();
+      } else {
+        const errorData = await res.json();
+        alert(errorData.error || "Failed to refresh recommendations.");
+        await fetchSuggestions(); // reload old ones if failed
+      }
+    } catch (e) {
+      console.error(e);
+      await fetchSuggestions();
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FFFDF6] font-sans text-gray-900 overflow-hidden">
@@ -175,7 +196,7 @@ export default function ExplorePage() {
 
         <div className="w-full max-w-7xl mx-auto z-10">
 
-          <div className="w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-24 relative">
+          <div className="w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 relative">
             <button
               onClick={() => router.push('/analyse')}
               className="w-full bg-[#FFD700] hover:bg-[#E6C200] text-gray-900 rounded-3xl p-6 md:p-8 flex items-center justify-between shadow-lg shadow-[#FFD700]/20 transition-all active:scale-95 group border-2 border-[#FFD700]"
@@ -211,41 +232,71 @@ export default function ExplorePage() {
             </Link>
           </div>
 
-          <div className="mb-32 flex flex-col items-center">
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-2 mb-12">
-              <Sparkles className="w-6 h-6 text-[#CA8A04] animate-pulse" />
-              Recommended for your stack
-            </h2>
+          <div className="mb-24 flex flex-col items-center">
+            <div className="flex items-center gap-4 mb-6">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-2">
+                <Sparkles className="w-6 h-6 text-[#CA8A04] animate-pulse" />
+                Recommended for your stack
+              </h2>
+              <button 
+                onClick={handleRefresh}
+                disabled={isLoading || isRefreshing}
+                className="p-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-700 rounded-full transition-colors disabled:opacity-50"
+                title="Refresh recommendations"
+              >
+                <RefreshCw className={`w-5 h-5 ${isRefreshing ? "animate-spin" : ""}`} />
+              </button>
+            </div>
 
             {/* 4. ATTACH THE REF TO THE CONTAINER */}
             <div
               ref={containerRef}
-              className="relative w-full max-w-4xl h-[450px] md:h-[500px] flex items-center justify-center"
+              className="relative w-full max-w-4xl h-[380px] md:h-[420px] flex items-center justify-center"
             >
               {isLoading ? (
                 <div className="flex flex-col items-center gap-4 text-gray-400">
                   <Loader2 className="w-10 h-10 animate-spin text-[#FFD700]" />
                   <p className="font-medium animate-pulse">AI is mapping your next skills...</p>
                 </div>
-              ) : (
+              ) : bubbles.length > 0 ? (
                 <AnimatePresence>
                   {bubbles.map((bubble) => (
                     <FloatingBubble
                       key={bubble.id || bubble.text}
                       text={bubble.text}
                       size={bubble.size}
-                      top={bubble.top}    // Now passed as "240px" instead of "40%"
-                      left={bubble.left}  // Now passed as "120px" instead of "20%"
-                      delay={Math.random()} // Randomize the float animation slightly
-                      onClick={() => router.push(`/setup?topic=${encodeURIComponent(bubble.text)}`)}
+                      top={bubble.top}
+                      left={bubble.left}
+                      delay={Math.random()}
+                      onClick={() => handleBubbleClick(bubble.text)}
                     />
                   ))}
                 </AnimatePresence>
+              ) : (
+                <div className="flex flex-col items-center justify-center text-center p-10 max-w-md bg-white/50 backdrop-blur-sm rounded-3xl border-2 border-dashed border-yellow-300 shadow-sm">
+                  <p className="text-gray-500 mb-6 font-medium text-lg">No recommendations yet.</p>
+                  <button
+                    onClick={() => router.push('/analyse')}
+                    className="px-8 py-3 bg-[#FFD700] hover:bg-[#E6C200] text-gray-900 font-bold rounded-xl shadow-md transition-transform active:scale-95"
+                  >
+                    Analyse Skills
+                  </button>
+                </div>
               )}
+            </div>
+            
+            <div className="mt-8 mb-6">
+              <button
+                onClick={() => router.push('/community')}
+                className="inline-flex items-center gap-2 bg-white border-2 border-yellow-300 hover:border-yellow-400 text-yellow-700 hover:bg-yellow-50 font-bold px-6 py-3 rounded-xl shadow-sm transition-all active:scale-95 hover:-translate-y-1 hover:shadow-md group"
+              >
+                <Users className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                View Shared Roadmaps
+              </button>
             </div>
           </div>
 
-          <div className="mb-12 w-full">
+          <div className="mb-12 w-full hidden">
             {/* ... Keep your existing Trending section here ... */}
             <div className="flex items-center mb-8">
               <h2 className="font-display text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-3">

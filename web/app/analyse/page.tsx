@@ -29,31 +29,29 @@ export default function AnalysePage() {
   const router = useRouter();
 
   // Keep your states as they were...
-  const [jobFile, setJobFile] = useState<File | null>(null);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [analysisData, setAnalysisData] = useState<any>(null);
 
   const handleAnalyse = async () => {
-    if (!jobFile || !resumeFile) return;
+    if (!resumeFile) return;
     setIsAnalyzing(true);
 
     try {
       const formData = new FormData();
       formData.append('resume', resumeFile);
-      formData.append('job', jobFile);
 
       const response = await fetch('/api/analyse', {
         method: 'POST',
-        body: formData, // No headers needed, fetch sets the boundary automatically
+        body: formData,
       });
 
       if (!response.ok) throw new Error("Analysis failed");
 
-      const data = await response.json();
-      setAnalysisData(data);
-      setShowResults(true);
+      // Redirect back to explore page after processing
+      router.push('/explore');
+      
     } catch (error: any) {
       alert(`Error: ${error.message}`);
     } finally {
@@ -62,7 +60,6 @@ export default function AnalysePage() {
   };
 
   const resetAnalysis = () => {
-    setJobFile(null);
     setResumeFile(null);
     setShowResults(false);
     setAnalysisData(null);
@@ -78,33 +75,13 @@ export default function AnalysePage() {
         <div className="w-full max-w-5xl mb-12 z-10">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
             <h1 className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4">Analyse Your Skill Gap</h1>
-            <p className="text-gray-600 text-lg">Upload your target job description and your current resume to see what you're missing.</p>
+            <p className="text-gray-600 text-lg">Upload your resume to see what you should learn next.</p>
           </motion.div>
 
           {/* Upload Section */}
-          <div className="grid md:grid-cols-2 gap-8 mb-10">
-            {/* Job Upload Card */}
-            <div className={`bg-white rounded-3xl p-8 shadow-sm border-2 transition-all h-[320px] relative flex flex-col items-center justify-center text-center ${jobFile ? 'border-green-400 bg-green-50/10' : 'border-dashed border-gray-300 hover:border-[#FFD700]'}`}>
-              {jobFile && (
-                <button onClick={() => { setJobFile(null); setShowResults(false); }} className="absolute top-4 right-4 p-2 text-gray-400 hover:text-red-500 rounded-full">
-                  <X className="w-5 h-5" />
-                </button>
-              )}
-              <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 ${jobFile ? 'bg-green-100 text-green-600' : 'bg-[#FEF9C3] text-[#CA8A04]'}`}>
-                {jobFile ? <CheckCircle2 className="w-10 h-10" /> : <FileText className="w-10 h-10" />}
-              </div>
-              <h2 className="font-display text-2xl font-bold text-gray-900 mb-2">Job Advertisement</h2>
-              <p className="text-gray-500 mb-6">{jobFile ? jobFile.name : "Upload the job description PDF."}</p>
-              {!jobFile && (
-                <label className="bg-[#FFD700] hover:bg-[#E6C200] text-gray-900 font-bold py-3 px-8 rounded-xl cursor-pointer shadow-md active:scale-95">
-                  <Upload className="w-5 h-5 inline mr-2" /> Browse PDF
-                  <input type="file" className="hidden" accept=".pdf" onChange={(e) => e.target.files?.[0] && setJobFile(e.target.files[0])} />
-                </label>
-              )}
-            </div>
-
+          <div className="flex justify-center mb-10">
             {/* Resume Upload Card */}
-            <div className={`bg-white rounded-3xl p-8 shadow-sm border-2 transition-all h-[320px] relative flex flex-col items-center justify-center text-center ${resumeFile ? 'border-green-400 bg-green-50/10' : 'border-dashed border-gray-300 hover:border-[#FFD700]'}`}>
+            <div className={`bg-white rounded-3xl p-8 shadow-sm border-2 transition-all w-full max-w-md h-[320px] relative flex flex-col items-center justify-center text-center ${resumeFile ? 'border-green-400 bg-green-50/10' : 'border-dashed border-gray-300 hover:border-[#FFD700]'}`}>
               {resumeFile && (
                 <button onClick={() => { setResumeFile(null); setShowResults(false); }} className="absolute top-4 right-4 p-2 text-gray-400 hover:text-red-500 rounded-full">
                   <X className="w-5 h-5" />
@@ -128,9 +105,9 @@ export default function AnalysePage() {
             <div className="flex justify-center mb-12">
               <button
                 onClick={handleAnalyse}
-                disabled={!jobFile || !resumeFile || isAnalyzing}
+                disabled={!resumeFile || isAnalyzing}
                 className={`flex items-center gap-3 px-12 py-4 rounded-2xl font-display font-bold text-xl transition-all shadow-xl
-                  ${(!jobFile || !resumeFile) ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-[#18181B] hover:bg-gray-800 text-white active:scale-95'}`}
+                  ${(!resumeFile) ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-[#18181B] hover:bg-gray-800 text-white active:scale-95'}`}
               >
                 {isAnalyzing ? (
                   <><Loader2 className="w-6 h-6 animate-spin text-[#FFD700]" /> Analyzing...</>
