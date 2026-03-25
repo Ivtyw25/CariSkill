@@ -34,11 +34,17 @@ def generate_podcast_script(topic: str) -> str:
     print(f"[SCRIPT] Writing podcast script for topic: {topic}...")
     
     prompt = f"""
-    Write a short, engaging 2-person podcast dialogue about '{topic}'.
+    Write a conversational, 2-person podcast dialogue about '{topic}'.
     The conversation should be educational but conversational.
     
+    DYNAMIC LENGTH & EXHAUSTIVE COVERAGE MANDATE: You must scale the length of this podcast directly to the depth of the provided input text. 
+    1. DO NOT summarize. You MUST cover EVERY SINGLE sub-topic provided in the input text in exhaustive detail.
+    2. If the input is short, produce a highly focused, punchy episode. If the input is massive, produce a comprehensive, long-form masterclass.
+    3. Expand on the concepts by having the hosts provide real-world examples and debate nuances, but DO NOT invent artificial filler, unrelated tangents, or repetitive banter just to extend the length.
+    4. Treat the input text as a syllabus that you must teach in full, adapting your time to the material.
+
     CRITICAL PRONUNCIATION RULES: You are writing a script that will be read by a Text-to-Speech engine. 
-    You MUST NEVER use Markdown symbols, asterisks, hashtags, or LaTeX (like $, \\, ^, _, or $$). 
+    You MUST NEVER use Markdown symbols, asterisks, hashtags, or LaTeX (like $, \, ^, _, or $$). 
     You MUST spell out all math formulas, code snippets, and symbols in plain English phonetic words. 
     For example, instead of writing $E=mc^2$, you must write E equals M C squared. 
     Instead of O(N^2), write Big O of N squared.
@@ -46,8 +52,6 @@ def generate_podcast_script(topic: str) -> str:
     Format the output STRICTLY like this:
     Host: [dialogue]
     Guest: [dialogue]
-    
-    Keep it to about 6-8 exchanges total.
     """
     
     # Using gemini-2.5-flash as requested by the user
