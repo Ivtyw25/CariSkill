@@ -5,10 +5,11 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Bookmark, Flag, Play, Volume2, Maximize2, ChevronLeft, ChevronRight, Loader2, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Bookmark, Flag, Play, Volume2, Maximize2, ChevronLeft, ChevronRight, Loader2, CheckCircle, Pencil } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import BookmarkButton from '@/components/BookmarkButton';
 import PodcastPlayer from '@/components/PodcastPlayer';
+import ContextChatbot from '@/components/ContextChatbot';
 
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -29,6 +30,20 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [microTopics, setMicroTopics] = useState<any[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  // Highlighter State
+  const [isHighlighterMode, setIsHighlighterMode] = useState(false);
+  const [selectedText, setSelectedText] = useState("");
+  const [showChatbot, setShowChatbot] = useState(false);
+
+  const handleContentMouseUp = () => {
+    if (!isHighlighterMode) return;
+    const text = window.getSelection()?.toString().trim();
+    if (text && text.length > 0) {
+      setSelectedText(text);
+      setShowChatbot(true);
+    }
+  };
 
   useEffect(() => {
     const fetchMaterials = async () => {
@@ -283,7 +298,10 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
                 <h2 className="font-display font-bold text-2xl text-gray-900 mb-6">{currentTopic.topic_title || "Conceptual Deep Dive"}</h2>
 
                 {currentTopic.theory_explanation ? (
-                  <div className="prose max-w-none text-gray-700 leading-relaxed text-[17px]">
+                  <div 
+                    className={`prose max-w-none text-gray-700 leading-relaxed text-[17px] transition-colors duration-200 ${isHighlighterMode ? 'cursor-text selection:bg-[#FFD700] selection:text-gray-900' : ''}`}
+                    onMouseUp={handleContentMouseUp}
+                  >
                     <ReactMarkdown 
                       remarkPlugins={[remarkGfm, remarkMath]} 
                       rehypePlugins={[rehypeKatex]}
@@ -359,6 +377,28 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
           </div>
         </div>
       </main>
+
+      {/* Highlighter Action Button */}
+      {microTopics && microTopics.length > 0 && (
+        <button
+          onClick={() => setIsHighlighterMode(!isHighlighterMode)}
+          className={`fixed bottom-6 right-6 z-50 p-4 rounded-full shadow-xl transition-all ${isHighlighterMode ? 'bg-[#FFD700] text-gray-900 ring-4 ring-yellow-200 scale-110' : 'bg-gray-800 text-white hover:scale-105'}`}
+          title="Toggle AI Reading Assistant"
+        >
+          <Pencil className="w-6 h-6" />
+        </button>
+      )}
+
+      {/* Context Chatbot Overlay Panel */}
+      {microTopics && microTopics.length > 0 && currentTopic && (
+        <ContextChatbot
+          isOpen={showChatbot}
+          onClose={() => setShowChatbot(false)}
+          selectedText={selectedText}
+          materialContext={currentTopic.theory_explanation || ""}
+        />
+      )}
+
       <Footer />
     </div>
   );
