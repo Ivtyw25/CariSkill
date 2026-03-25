@@ -2,221 +2,219 @@
   "pydantic_output": {
     "nodes": [
       {
-        "node_id": "functions_and_graphs",
-        "title": "Functions and Graphs",
-        "rationale": "To understand calculus, a strong foundation in functions and their graphical representation is essential. This module covers how variables relate to each other.",
+        "node_id": "understanding_fishing_basics",
+        "title": "Understanding Fishing Basics",
+        "rationale": "To relax by the water with fishing, a beginner needs to understand the fundamental concepts of fishing, including basic gear and fish behavior. This foundation will prevent frustration and allow for a more enjoyable experience.",
         "prerequisites": [],
         "suggested_micro_topics": [
-          "Definition of a function",
-          "Domain and range",
-          "Graphing basic functions (linear, quadratic, polynomial)",
-          "Function notation",
-          "Inverse functions"
+          "Types of fishing (e.g., bait fishing, lure fishing)",
+          "Basic fishing gear (rod, reel, line, hooks, sinkers, bobbers)",
+          "Understanding common freshwater fish (e.g., sunfish, perch)",
+          "Basic fish behavior and feeding patterns",
+          "Safety considerations near water"
         ]
       },
       {
-        "node_id": "limits_and_continuity",
-        "title": "Limits and Continuity",
-        "rationale": "Limits are the fundamental building blocks of calculus. Understanding limits is crucial for grasping the concepts of derivatives and integrals.",
+        "node_id": "selecting_and_setting_up_gear",
+        "title": "Selecting and Setting Up Gear",
+        "rationale": "Properly selecting and setting up fishing gear is crucial for a beginner to have a successful and relaxing experience. Ill-suited or incorrectly assembled gear can lead to tangles, lost fish, and overall frustration.",
         "prerequisites": [
-          "functions_and_graphs"
+          "understanding_fishing_basics"
         ],
         "suggested_micro_topics": [
-          "Introduction to limits",
-          "Evaluating limits numerically and graphically",
-          "Properties of limits",
-          "One-sided limits",
-          "Continuity of a function"
+          "Choosing a beginner-friendly rod and reel combo",
+          "Spooling fishing line",
+          "Tying basic fishing knots (e.g., clinch knot, palomar knot)",
+          "Attaching hooks, sinkers, and bobbers",
+          "Selecting appropriate bait or lures for target fish"
         ]
       },
       {
-        "node_id": "introduction_to_derivatives",
-        "title": "Introduction to Derivatives",
-        "rationale": "The derivative is a core concept in calculus, representing the rate of change of a function. This module introduces what a derivative is and how to calculate it from first principles.",
+        "node_id": "finding_and_approaching_fishing_spots",
+        "title": "Finding and Approaching Fishing Spots",
+        "rationale": "Knowing where to fish and how to approach a spot without disturbing the fish is essential for a relaxing and productive outing. This module focuses on practical location skills.",
         "prerequisites": [
-          "limits_and_continuity"
+          "understanding_fishing_basics"
         ],
         "suggested_micro_topics": [
-          "Secant and tangent lines",
-          "Definition of the derivative",
-          "Calculating derivatives using the limit definition",
-          "Geometric interpretation of the derivative",
-          "Instantaneous rate of change"
+          "Identifying promising fishing locations (e.g., near structures, weed beds)",
+          "Understanding local fishing regulations and licenses",
+          " stealthy approach to avoid scaring fish",
+          "Reading the water for signs of fish activity",
+          "Considering accessibility and comfort of fishing spots"
         ]
       },
       {
-        "node_id": "differentiation_rules",
-        "title": "Basic Differentiation Rules",
-        "rationale": "After understanding the concept of a derivative, learning standard rules allows for efficient calculation of derivatives for various types of functions.",
+        "node_id": "casting_and_retrieving_techniques",
+        "title": "Casting and Retrieving Techniques",
+        "rationale": "Mastering basic casting and retrieving techniques allows a beginner to effectively present their bait or lure, increasing their chances of catching fish and making the process more engaging and less frustrating.",
         "prerequisites": [
-          "introduction_to_derivatives"
+          "selecting_and_setting_up_gear"
         ],
         "suggested_micro_topics": [
-          "Power rule",
-          "Constant multiple rule",
-          "Sum and difference rules",
-          "Product rule",
-          "Quotient rule",
-          "Derivatives of trigonometric functions"
+          "Basic overhead casting",
+          "Underhand casting for accuracy",
+          "Varying retrieval speeds and patterns",
+          "Detecting bites and setting the hook",
+          "Practicing casting in open areas"
         ]
       },
       {
-        "node_id": "chain_rule",
-        "title": "The Chain Rule",
-        "rationale": "The Chain Rule is essential for differentiating composite functions, which are very common in real-world applications and advanced calculus topics.",
+        "node_id": "handling_and_releasing_fish",
+        "title": "Handling and Releasing Fish",
+        "rationale": "Learning how to properly handle and release fish is important for ethical fishing practices and ensures the well-being of the fish, contributing to a sustainable and enjoyable hobby.",
         "prerequisites": [
-          "differentiation_rules"
+          "casting_and_retrieving_techniques"
         ],
         "suggested_micro_topics": [
-          "Understanding composite functions",
-          "Statement of the Chain Rule",
-          "Applying the Chain Rule to various functions",
-          "Chain Rule with multiple layers",
-          "Derivatives of exponential and logarithmic functions using Chain Rule"
+          "Safe handling of fish (e.g., wet hands, supporting body)",
+          "Removing hooks safely",
+          "Understanding catch and release principles",
+          "Minimizing stress on the fish",
+          "Photography tips for fish (optional)"
         ]
       },
       {
-        "node_id": "implicit_differentiation",
-        "title": "Implicit Differentiation",
-        "rationale": "This module introduces a technique to find the derivative of functions where y is not explicitly defined as a function of x, which is crucial for many geometric and physical problems.",
+        "node_id": "fishing_for_relaxation_mindset",
+        "title": "Fishing for Relaxation Mindset",
+        "rationale": "Since the user's goal is to relax, this module focuses on cultivating a mindful approach to fishing, emphasizing patience, observation, and enjoying the natural surroundings.",
         "prerequisites": [
-          "chain_rule"
+          "understanding_fishing_basics"
         ],
         "suggested_micro_topics": [
-          "What is an implicit function?",
-          "Steps for implicit differentiation",
-          "Differentiating terms involving y with respect to x",
-          "Finding dy/dx for implicit equations",
-          "Implicit differentiation with product and quotient rules"
+          "Patience and observation in fishing",
+          "Connecting with nature during fishing",
+          "Mindfulness techniques while by the water",
+          "Enjoying the process over the catch",
+          "Dealing with slow fishing days"
         ]
       },
       {
-        "node_id": "applications_of_implicit_differentiation",
-        "title": "Applications of Implicit Differentiation",
-        "rationale": "Understanding the practical uses of implicit differentiation solidifies the concept and demonstrates its importance in solving real-world problems.",
+        "node_id": "beginner_fishing_podcasts",
+        "title": "Beginner Fishing Podcasts",
+        "rationale": "To address the user's desire for podcasts, this module provides resources for listening to fishing-related content, offering an alternative and convenient way to learn and relax.",
         "prerequisites": [
-          "implicit_differentiation"
+          "understanding_fishing_basics"
         ],
         "suggested_micro_topics": [
-          "Finding the slope of a tangent line to an implicitly defined curve",
-          "Related rates problems",
-          "Second derivatives using implicit differentiation",
-          "Applications in physics and engineering",
-          "Optimization problems with implicit relations"
+          "Identifying beginner-friendly fishing podcasts",
+          "Topics covered in popular fishing podcasts (e.g., gear reviews, fishing stories)",
+          "How podcasts can enhance the fishing experience",
+          "Finding podcasts focused on relaxation and nature",
+          "Using podcasts for continued learning and inspiration"
         ]
       }
     ]
   },
   "json_dict_output": null,
-  "raw_output": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"functions_and_graphs\",\n      \"title\": \"Functions and Graphs\",\n      \"rationale\": \"To understand calculus, a strong foundation in functions and their graphical representation is essential. This module covers how variables relate to each other.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Definition of a function\",\n        \"Domain and range\",\n        \"Graphing basic functions (linear, quadratic, polynomial)\",\n        \"Function notation\",\n        \"Inverse functions\"\n      ]\n    },\n    {\n      \"node_id\": \"limits_and_continuity\",\n      \"title\": \"Limits and Continuity\",\n      \"rationale\": \"Limits are the fundamental building blocks of calculus. Understanding limits is crucial for grasping the concepts of derivatives and integrals.\",\n      \"prerequisites\": [\n        \"functions_and_graphs\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to limits\",\n        \"Evaluating limits numerically and graphically\",\n        \"Properties of limits\",\n        \"One-sided limits\",\n        \"Continuity of a function\"\n      ]\n    },\n    {\n      \"node_id\": \"introduction_to_derivatives\",\n      \"title\": \"Introduction to Derivatives\",\n      \"rationale\": \"The derivative is a core concept in calculus, representing the rate of change of a function. This module introduces what a derivative is and how to calculate it from first principles.\",\n      \"prerequisites\": [\n        \"limits_and_continuity\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Secant and tangent lines\",\n        \"Definition of the derivative\",\n        \"Calculating derivatives using the limit definition\",\n        \"Geometric interpretation of the derivative\",\n        \"Instantaneous rate of change\"\n      ]\n    },\n    {\n      \"node_id\": \"differentiation_rules\",\n      \"title\": \"Basic Differentiation Rules\",\n      \"rationale\": \"After understanding the concept of a derivative, learning standard rules allows for efficient calculation of derivatives for various types of functions.\",\n      \"prerequisites\": [\n        \"introduction_to_derivatives\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Power rule\",\n        \"Constant multiple rule\",\n        \"Sum and difference rules\",\n        \"Product rule\",\n        \"Quotient rule\",\n        \"Derivatives of trigonometric functions\"\n      ]\n    },\n    {\n      \"node_id\": \"chain_rule\",\n      \"title\": \"The Chain Rule\",\n      \"rationale\": \"The Chain Rule is essential for differentiating composite functions, which are very common in real-world applications and advanced calculus topics.\",\n      \"prerequisites\": [\n        \"differentiation_rules\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Understanding composite functions\",\n        \"Statement of the Chain Rule\",\n        \"Applying the Chain Rule to various functions\",\n        \"Chain Rule with multiple layers\",\n        \"Derivatives of exponential and logarithmic functions using Chain Rule\"\n      ]\n    },\n    {\n      \"node_id\": \"implicit_differentiation\",\n      \"title\": \"Implicit Differentiation\",\n      \"rationale\": \"This module introduces a technique to find the derivative of functions where y is not explicitly defined as a function of x, which is crucial for many geometric and physical problems.\",\n      \"prerequisites\": [\n        \"chain_rule\"\n      ],\n      \"suggested_micro_topics\": [\n        \"What is an implicit function?\",\n        \"Steps for implicit differentiation\",\n        \"Differentiating terms involving y with respect to x\",\n        \"Finding dy/dx for implicit equations\",\n        \"Implicit differentiation with product and quotient rules\"\n      ]\n    },\n    {\n      \"node_id\": \"applications_of_implicit_differentiation\",\n      \"title\": \"Applications of Implicit Differentiation\",\n      \"rationale\": \"Understanding the practical uses of implicit differentiation solidifies the concept and demonstrates its importance in solving real-world problems.\",\n      \"prerequisites\": [\n        \"implicit_differentiation\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Finding the slope of a tangent line to an implicitly defined curve\",\n        \"Related rates problems\",\n        \"Second derivatives using implicit differentiation\",\n        \"Applications in physics and engineering\",\n        \"Optimization problems with implicit relations\"\n      ]\n    }\n  ]\n}\n```",
+  "raw_output": "{\"nodes\": [{\"node_id\": \"understanding_fishing_basics\", \"title\": \"Understanding Fishing Basics\", \"rationale\": \"To relax by the water with fishing, a beginner needs to understand the fundamental concepts of fishing, including basic gear and fish behavior. This foundation will prevent frustration and allow for a more enjoyable experience.\", \"prerequisites\": [], \"suggested_micro_topics\": [\"Types of fishing (e.g., bait fishing, lure fishing)\", \"Basic fishing gear (rod, reel, line, hooks, sinkers, bobbers)\", \"Understanding common freshwater fish (e.g., sunfish, perch)\", \"Basic fish behavior and feeding patterns\", \"Safety considerations near water\"]}, {\"node_id\": \"selecting_and_setting_up_gear\", \"title\": \"Selecting and Setting Up Gear\", \"rationale\": \"Properly selecting and setting up fishing gear is crucial for a beginner to have a successful and relaxing experience. Ill-suited or incorrectly assembled gear can lead to tangles, lost fish, and overall frustration.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Choosing a beginner-friendly rod and reel combo\", \"Spooling fishing line\", \"Tying basic fishing knots (e.g., clinch knot, palomar knot)\", \"Attaching hooks, sinkers, and bobbers\", \"Selecting appropriate bait or lures for target fish\"]}, {\"node_id\": \"finding_and_approaching_fishing_spots\", \"title\": \"Finding and Approaching Fishing Spots\", \"rationale\": \"Knowing where to fish and how to approach a spot without disturbing the fish is essential for a relaxing and productive outing. This module focuses on practical location skills.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Identifying promising fishing locations (e.g., near structures, weed beds)\", \"Understanding local fishing regulations and licenses\", \" stealthy approach to avoid scaring fish\", \"Reading the water for signs of fish activity\", \"Considering accessibility and comfort of fishing spots\"]}, {\"node_id\": \"casting_and_retrieving_techniques\", \"title\": \"Casting and Retrieving Techniques\", \"rationale\": \"Mastering basic casting and retrieving techniques allows a beginner to effectively present their bait or lure, increasing their chances of catching fish and making the process more engaging and less frustrating.\", \"prerequisites\": [\"selecting_and_setting_up_gear\"], \"suggested_micro_topics\": [\"Basic overhead casting\", \"Underhand casting for accuracy\", \"Varying retrieval speeds and patterns\", \"Detecting bites and setting the hook\", \"Practicing casting in open areas\"]}, {\"node_id\": \"handling_and_releasing_fish\", \"title\": \"Handling and Releasing Fish\", \"rationale\": \"Learning how to properly handle and release fish is important for ethical fishing practices and ensures the well-being of the fish, contributing to a sustainable and enjoyable hobby.\", \"prerequisites\": [\"casting_and_retrieving_techniques\"], \"suggested_micro_topics\": [\"Safe handling of fish (e.g., wet hands, supporting body)\", \"Removing hooks safely\", \"Understanding catch and release principles\", \"Minimizing stress on the fish\", \"Photography tips for fish (optional)\"]}, {\"node_id\": \"fishing_for_relaxation_mindset\", \"title\": \"Fishing for Relaxation Mindset\", \"rationale\": \"Since the user's goal is to relax, this module focuses on cultivating a mindful approach to fishing, emphasizing patience, observation, and enjoying the natural surroundings.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Patience and observation in fishing\", \"Connecting with nature during fishing\", \"Mindfulness techniques while by the water\", \"Enjoying the process over the catch\", \"Dealing with slow fishing days\"]}, {\"node_id\": \"beginner_fishing_podcasts\", \"title\": \"Beginner Fishing Podcasts\", \"rationale\": \"To address the user's desire for podcasts, this module provides resources for listening to fishing-related content, offering an alternative and convenient way to learn and relax.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Identifying beginner-friendly fishing podcasts\", \"Topics covered in popular fishing podcasts (e.g., gear reviews, fishing stories)\", \"How podcasts can enhance the fishing experience\", \"Finding podcasts focused on relaxation and nature\", \"Using podcasts for continued learning and inspiration\"]}]}",
   "tasks_output": [
     {
-      "raw": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"functions_and_graphs\",\n      \"title\": \"Functions and Graphs\",\n      \"rationale\": \"To understand calculus, a strong foundation in functions and their graphical representation is essential. This module covers how variables relate to each other.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Definition of a function\",\n        \"Domain and range\",\n        \"Graphing basic functions (linear, quadratic, polynomial)\",\n        \"Function notation\",\n        \"Inverse functions\"\n      ]\n    },\n    {\n      \"node_id\": \"limits_and_continuity\",\n      \"title\": \"Limits and Continuity\",\n      \"rationale\": \"Limits are the fundamental building blocks of calculus. Understanding limits is crucial for grasping the concepts of derivatives and integrals.\",\n      \"prerequisites\": [\n        \"functions_and_graphs\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to limits\",\n        \"Evaluating limits numerically and graphically\",\n        \"Properties of limits\",\n        \"One-sided limits\",\n        \"Continuity of a function\"\n      ]\n    },\n    {\n      \"node_id\": \"introduction_to_derivatives\",\n      \"title\": \"Introduction to Derivatives\",\n      \"rationale\": \"The derivative is a core concept in calculus, representing the rate of change of a function. This module introduces what a derivative is and how to calculate it from first principles.\",\n      \"prerequisites\": [\n        \"limits_and_continuity\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Secant and tangent lines\",\n        \"Definition of the derivative\",\n        \"Calculating derivatives using the limit definition\",\n        \"Geometric interpretation of the derivative\",\n        \"Instantaneous rate of change\"\n      ]\n    },\n    {\n      \"node_id\": \"differentiation_rules\",\n      \"title\": \"Basic Differentiation Rules\",\n      \"rationale\": \"After understanding the concept of a derivative, learning standard rules allows for efficient calculation of derivatives for various types of functions.\",\n      \"prerequisites\": [\n        \"introduction_to_derivatives\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Power rule\",\n        \"Constant multiple rule\",\n        \"Sum and difference rules\",\n        \"Product rule\",\n        \"Quotient rule\",\n        \"Derivatives of trigonometric functions\"\n      ]\n    },\n    {\n      \"node_id\": \"chain_rule\",\n      \"title\": \"The Chain Rule\",\n      \"rationale\": \"The Chain Rule is essential for differentiating composite functions, which are very common in real-world applications and advanced calculus topics.\",\n      \"prerequisites\": [\n        \"differentiation_rules\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Understanding composite functions\",\n        \"Statement of the Chain Rule\",\n        \"Applying the Chain Rule to various functions\",\n        \"Chain Rule with multiple layers\",\n        \"Derivatives of exponential and logarithmic functions using Chain Rule\"\n      ]\n    },\n    {\n      \"node_id\": \"implicit_differentiation\",\n      \"title\": \"Implicit Differentiation\",\n      \"rationale\": \"This module introduces a technique to find the derivative of functions where y is not explicitly defined as a function of x, which is crucial for many geometric and physical problems.\",\n      \"prerequisites\": [\n        \"chain_rule\"\n      ],\n      \"suggested_micro_topics\": [\n        \"What is an implicit function?\",\n        \"Steps for implicit differentiation\",\n        \"Differentiating terms involving y with respect to x\",\n        \"Finding dy/dx for implicit equations\",\n        \"Implicit differentiation with product and quotient rules\"\n      ]\n    },\n    {\n      \"node_id\": \"applications_of_implicit_differentiation\",\n      \"title\": \"Applications of Implicit Differentiation\",\n      \"rationale\": \"Understanding the practical uses of implicit differentiation solidifies the concept and demonstrates its importance in solving real-world problems.\",\n      \"prerequisites\": [\n        \"implicit_differentiation\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Finding the slope of a tangent line to an implicitly defined curve\",\n        \"Related rates problems\",\n        \"Second derivatives using implicit differentiation\",\n        \"Applications in physics and engineering\",\n        \"Optimization problems with implicit relations\"\n      ]\n    }\n  ]\n}\n```",
+      "raw": "{\"nodes\": [{\"node_id\": \"understanding_fishing_basics\", \"title\": \"Understanding Fishing Basics\", \"rationale\": \"To relax by the water with fishing, a beginner needs to understand the fundamental concepts of fishing, including basic gear and fish behavior. This foundation will prevent frustration and allow for a more enjoyable experience.\", \"prerequisites\": [], \"suggested_micro_topics\": [\"Types of fishing (e.g., bait fishing, lure fishing)\", \"Basic fishing gear (rod, reel, line, hooks, sinkers, bobbers)\", \"Understanding common freshwater fish (e.g., sunfish, perch)\", \"Basic fish behavior and feeding patterns\", \"Safety considerations near water\"]}, {\"node_id\": \"selecting_and_setting_up_gear\", \"title\": \"Selecting and Setting Up Gear\", \"rationale\": \"Properly selecting and setting up fishing gear is crucial for a beginner to have a successful and relaxing experience. Ill-suited or incorrectly assembled gear can lead to tangles, lost fish, and overall frustration.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Choosing a beginner-friendly rod and reel combo\", \"Spooling fishing line\", \"Tying basic fishing knots (e.g., clinch knot, palomar knot)\", \"Attaching hooks, sinkers, and bobbers\", \"Selecting appropriate bait or lures for target fish\"]}, {\"node_id\": \"finding_and_approaching_fishing_spots\", \"title\": \"Finding and Approaching Fishing Spots\", \"rationale\": \"Knowing where to fish and how to approach a spot without disturbing the fish is essential for a relaxing and productive outing. This module focuses on practical location skills.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Identifying promising fishing locations (e.g., near structures, weed beds)\", \"Understanding local fishing regulations and licenses\", \" stealthy approach to avoid scaring fish\", \"Reading the water for signs of fish activity\", \"Considering accessibility and comfort of fishing spots\"]}, {\"node_id\": \"casting_and_retrieving_techniques\", \"title\": \"Casting and Retrieving Techniques\", \"rationale\": \"Mastering basic casting and retrieving techniques allows a beginner to effectively present their bait or lure, increasing their chances of catching fish and making the process more engaging and less frustrating.\", \"prerequisites\": [\"selecting_and_setting_up_gear\"], \"suggested_micro_topics\": [\"Basic overhead casting\", \"Underhand casting for accuracy\", \"Varying retrieval speeds and patterns\", \"Detecting bites and setting the hook\", \"Practicing casting in open areas\"]}, {\"node_id\": \"handling_and_releasing_fish\", \"title\": \"Handling and Releasing Fish\", \"rationale\": \"Learning how to properly handle and release fish is important for ethical fishing practices and ensures the well-being of the fish, contributing to a sustainable and enjoyable hobby.\", \"prerequisites\": [\"casting_and_retrieving_techniques\"], \"suggested_micro_topics\": [\"Safe handling of fish (e.g., wet hands, supporting body)\", \"Removing hooks safely\", \"Understanding catch and release principles\", \"Minimizing stress on the fish\", \"Photography tips for fish (optional)\"]}, {\"node_id\": \"fishing_for_relaxation_mindset\", \"title\": \"Fishing for Relaxation Mindset\", \"rationale\": \"Since the user's goal is to relax, this module focuses on cultivating a mindful approach to fishing, emphasizing patience, observation, and enjoying the natural surroundings.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Patience and observation in fishing\", \"Connecting with nature during fishing\", \"Mindfulness techniques while by the water\", \"Enjoying the process over the catch\", \"Dealing with slow fishing days\"]}, {\"node_id\": \"beginner_fishing_podcasts\", \"title\": \"Beginner Fishing Podcasts\", \"rationale\": \"To address the user's desire for podcasts, this module provides resources for listening to fishing-related content, offering an alternative and convenient way to learn and relax.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Identifying beginner-friendly fishing podcasts\", \"Topics covered in popular fishing podcasts (e.g., gear reviews, fishing stories)\", \"How podcasts can enhance the fishing experience\", \"Finding podcasts focused on relaxation and nature\", \"Using podcasts for continued learning and inspiration\"]}]}",
       "json_dict": null,
       "pydantic": {
         "nodes": [
           {
-            "node_id": "functions_and_graphs",
-            "title": "Functions and Graphs",
-            "rationale": "To understand calculus, a strong foundation in functions and their graphical representation is essential. This module covers how variables relate to each other.",
+            "node_id": "understanding_fishing_basics",
+            "title": "Understanding Fishing Basics",
+            "rationale": "To relax by the water with fishing, a beginner needs to understand the fundamental concepts of fishing, including basic gear and fish behavior. This foundation will prevent frustration and allow for a more enjoyable experience.",
             "prerequisites": [],
             "suggested_micro_topics": [
-              "Definition of a function",
-              "Domain and range",
-              "Graphing basic functions (linear, quadratic, polynomial)",
-              "Function notation",
-              "Inverse functions"
+              "Types of fishing (e.g., bait fishing, lure fishing)",
+              "Basic fishing gear (rod, reel, line, hooks, sinkers, bobbers)",
+              "Understanding common freshwater fish (e.g., sunfish, perch)",
+              "Basic fish behavior and feeding patterns",
+              "Safety considerations near water"
             ]
           },
           {
-            "node_id": "limits_and_continuity",
-            "title": "Limits and Continuity",
-            "rationale": "Limits are the fundamental building blocks of calculus. Understanding limits is crucial for grasping the concepts of derivatives and integrals.",
+            "node_id": "selecting_and_setting_up_gear",
+            "title": "Selecting and Setting Up Gear",
+            "rationale": "Properly selecting and setting up fishing gear is crucial for a beginner to have a successful and relaxing experience. Ill-suited or incorrectly assembled gear can lead to tangles, lost fish, and overall frustration.",
             "prerequisites": [
-              "functions_and_graphs"
+              "understanding_fishing_basics"
             ],
             "suggested_micro_topics": [
-              "Introduction to limits",
-              "Evaluating limits numerically and graphically",
-              "Properties of limits",
-              "One-sided limits",
-              "Continuity of a function"
+              "Choosing a beginner-friendly rod and reel combo",
+              "Spooling fishing line",
+              "Tying basic fishing knots (e.g., clinch knot, palomar knot)",
+              "Attaching hooks, sinkers, and bobbers",
+              "Selecting appropriate bait or lures for target fish"
             ]
           },
           {
-            "node_id": "introduction_to_derivatives",
-            "title": "Introduction to Derivatives",
-            "rationale": "The derivative is a core concept in calculus, representing the rate of change of a function. This module introduces what a derivative is and how to calculate it from first principles.",
+            "node_id": "finding_and_approaching_fishing_spots",
+            "title": "Finding and Approaching Fishing Spots",
+            "rationale": "Knowing where to fish and how to approach a spot without disturbing the fish is essential for a relaxing and productive outing. This module focuses on practical location skills.",
             "prerequisites": [
-              "limits_and_continuity"
+              "understanding_fishing_basics"
             ],
             "suggested_micro_topics": [
-              "Secant and tangent lines",
-              "Definition of the derivative",
-              "Calculating derivatives using the limit definition",
-              "Geometric interpretation of the derivative",
-              "Instantaneous rate of change"
+              "Identifying promising fishing locations (e.g., near structures, weed beds)",
+              "Understanding local fishing regulations and licenses",
+              " stealthy approach to avoid scaring fish",
+              "Reading the water for signs of fish activity",
+              "Considering accessibility and comfort of fishing spots"
             ]
           },
           {
-            "node_id": "differentiation_rules",
-            "title": "Basic Differentiation Rules",
-            "rationale": "After understanding the concept of a derivative, learning standard rules allows for efficient calculation of derivatives for various types of functions.",
+            "node_id": "casting_and_retrieving_techniques",
+            "title": "Casting and Retrieving Techniques",
+            "rationale": "Mastering basic casting and retrieving techniques allows a beginner to effectively present their bait or lure, increasing their chances of catching fish and making the process more engaging and less frustrating.",
             "prerequisites": [
-              "introduction_to_derivatives"
+              "selecting_and_setting_up_gear"
             ],
             "suggested_micro_topics": [
-              "Power rule",
-              "Constant multiple rule",
-              "Sum and difference rules",
-              "Product rule",
-              "Quotient rule",
-              "Derivatives of trigonometric functions"
+              "Basic overhead casting",
+              "Underhand casting for accuracy",
+              "Varying retrieval speeds and patterns",
+              "Detecting bites and setting the hook",
+              "Practicing casting in open areas"
             ]
           },
           {
-            "node_id": "chain_rule",
-            "title": "The Chain Rule",
-            "rationale": "The Chain Rule is essential for differentiating composite functions, which are very common in real-world applications and advanced calculus topics.",
+            "node_id": "handling_and_releasing_fish",
+            "title": "Handling and Releasing Fish",
+            "rationale": "Learning how to properly handle and release fish is important for ethical fishing practices and ensures the well-being of the fish, contributing to a sustainable and enjoyable hobby.",
             "prerequisites": [
-              "differentiation_rules"
+              "casting_and_retrieving_techniques"
             ],
             "suggested_micro_topics": [
-              "Understanding composite functions",
-              "Statement of the Chain Rule",
-              "Applying the Chain Rule to various functions",
-              "Chain Rule with multiple layers",
-              "Derivatives of exponential and logarithmic functions using Chain Rule"
+              "Safe handling of fish (e.g., wet hands, supporting body)",
+              "Removing hooks safely",
+              "Understanding catch and release principles",
+              "Minimizing stress on the fish",
+              "Photography tips for fish (optional)"
             ]
           },
           {
-            "node_id": "implicit_differentiation",
-            "title": "Implicit Differentiation",
-            "rationale": "This module introduces a technique to find the derivative of functions where y is not explicitly defined as a function of x, which is crucial for many geometric and physical problems.",
+            "node_id": "fishing_for_relaxation_mindset",
+            "title": "Fishing for Relaxation Mindset",
+            "rationale": "Since the user's goal is to relax, this module focuses on cultivating a mindful approach to fishing, emphasizing patience, observation, and enjoying the natural surroundings.",
             "prerequisites": [
-              "chain_rule"
+              "understanding_fishing_basics"
             ],
             "suggested_micro_topics": [
-              "What is an implicit function?",
-              "Steps for implicit differentiation",
-              "Differentiating terms involving y with respect to x",
-              "Finding dy/dx for implicit equations",
-              "Implicit differentiation with product and quotient rules"
+              "Patience and observation in fishing",
+              "Connecting with nature during fishing",
+              "Mindfulness techniques while by the water",
+              "Enjoying the process over the catch",
+              "Dealing with slow fishing days"
             ]
           },
           {
-            "node_id": "applications_of_implicit_differentiation",
-            "title": "Applications of Implicit Differentiation",
-            "rationale": "Understanding the practical uses of implicit differentiation solidifies the concept and demonstrates its importance in solving real-world problems.",
+            "node_id": "beginner_fishing_podcasts",
+            "title": "Beginner Fishing Podcasts",
+            "rationale": "To address the user's desire for podcasts, this module provides resources for listening to fishing-related content, offering an alternative and convenient way to learn and relax.",
             "prerequisites": [
-              "implicit_differentiation"
+              "understanding_fishing_basics"
             ],
             "suggested_micro_topics": [
-              "Finding the slope of a tangent line to an implicitly defined curve",
-              "Related rates problems",
-              "Second derivatives using implicit differentiation",
-              "Applications in physics and engineering",
-              "Optimization problems with implicit relations"
+              "Identifying beginner-friendly fishing podcasts",
+              "Topics covered in popular fishing podcasts (e.g., gear reviews, fishing stories)",
+              "How podcasts can enhance the fishing experience",
+              "Finding podcasts focused on relaxation and nature",
+              "Using podcasts for continued learning and inspiration"
             ]
           }
         ]
