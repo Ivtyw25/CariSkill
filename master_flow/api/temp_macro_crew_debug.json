@@ -1,0 +1,232 @@
+{
+  "pydantic_output": {
+    "nodes": [
+      {
+        "node_id": "baking_basics_equipment",
+        "title": "Essential Baking Equipment & Tools",
+        "rationale": "Understanding and having the right tools is foundational for any baking project, ensuring proper execution and consistent results. For a beginner, knowing what's essential prevents unnecessary purchases and frustration.",
+        "prerequisites": [],
+        "suggested_micro_topics": [
+          "Measuring cups and spoons (dry and liquid)",
+          "Mixing bowls (various sizes)",
+          "Whisks and spatulas",
+          "Baking pans (round, square, loaf)",
+          "Parchment paper and non-stick spray",
+          "Oven thermometer",
+          "Cooling racks"
+        ]
+      },
+      {
+        "node_id": "baking_basics_ingredients",
+        "title": "Understanding Basic Cake Ingredients",
+        "rationale": "Knowing the role of each ingredient (flour, sugar, eggs, butter, leavening agents) is crucial for successful baking. It helps beginners understand why recipes work and how to troubleshoot common issues.",
+        "prerequisites": [],
+        "suggested_micro_topics": [
+          "Types of flour and their uses",
+          "Sugars: granulated, powdered, brown",
+          "Fats: butter vs. oil",
+          "Eggs: function and size",
+          "Leavening agents: baking powder vs. baking soda",
+          "Liquids: milk, buttermilk, water",
+          "Flavorings: vanilla extract, cocoa powder"
+        ]
+      },
+      {
+        "node_id": "basic_baking_techniques",
+        "title": "Fundamental Baking Techniques",
+        "rationale": "Mastering basic techniques like measuring accurately, mixing methods, and oven temperature control is essential for consistent results and building confidence.",
+        "prerequisites": [
+          "baking_basics_equipment",
+          "baking_basics_ingredients"
+        ],
+        "suggested_micro_topics": [
+          "Accurate measuring techniques (dry and liquid)",
+          "Creaming method (butter and sugar)",
+          "Sifting dry ingredients",
+          "Folding wet into dry ingredients",
+          "Preparing baking pans",
+          "Oven preheating and temperature management",
+          "Testing for doneness"
+        ]
+      },
+      {
+        "node_id": "first_simple_cake",
+        "title": "Baking Your First Simple Cake (Vanilla/Chocolate)",
+        "rationale": "Applying learned knowledge to bake a straightforward, forgiving cake recipe builds confidence and provides immediate gratification, reinforcing basic skills. Focus on a simple, delicious outcome.",
+        "prerequisites": [
+          "basic_baking_techniques"
+        ],
+        "suggested_micro_topics": [
+          "Simple vanilla cake recipe walkthrough (video preferred)",
+          "Simple chocolate cake recipe walkthrough (video preferred)",
+          "Troubleshooting common beginner mistakes (sinking, dry cake)",
+          "Cooling and handling a baked cake"
+        ]
+      },
+      {
+        "node_id": "basic_frosting",
+        "title": "Mastering Basic Buttercream Frosting",
+        "rationale": "Frosting is a key component of most cakes. Learning a simple, stable buttercream allows beginners to finish their cakes beautifully and adds another layer of skill.",
+        "prerequisites": [
+          "first_simple_cake"
+        ],
+        "suggested_micro_topics": [
+          "American buttercream recipe and technique",
+          "Achieving desired frosting consistency",
+          "Basic frosting tools (offset spatula, piping bag)",
+          "Crumb coating technique",
+          "Simple frosting decorations (smooth finish)"
+        ]
+      },
+      {
+        "node_id": "cupcakes_variation",
+        "title": "Expanding to Cupcakes: A Fun Variation",
+        "rationale": "Cupcakes use similar techniques to cakes but offer a quicker bake time and individual portions, making them ideal for practicing and experimenting with flavors and decorations on a smaller scale.",
+        "prerequisites": [
+          "first_simple_cake",
+          "basic_frosting"
+        ],
+        "suggested_micro_topics": [
+          "Adapting cake recipes for cupcakes",
+          "Cupcake liners and baking times",
+          "Basic cupcake piping techniques",
+          "Flavor variations for cupcakes"
+        ]
+      },
+      {
+        "node_id": "exploring_simple_flavors",
+        "title": "Exploring Simple Flavor Variations",
+        "rationale": "Once comfortable with basic techniques, experimenting with different flavor profiles keeps baking fun and allows for personalization, enhancing the \"bake for fun\" goal.",
+        "prerequisites": [
+          "cupcakes_variation"
+        ],
+        "suggested_micro_topics": [
+          "Adding citrus zest and juice",
+          "Incorporating fruits (berries, bananas)",
+          "Using spices (cinnamon, nutmeg)",
+          "Chocolate variations (chips, different cocoa types)",
+          "Simple glazes and drizzles"
+        ]
+      }
+    ]
+  },
+  "json_dict_output": null,
+  "raw_output": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"baking_basics_equipment\",\n      \"title\": \"Essential Baking Equipment & Tools\",\n      \"rationale\": \"Understanding and having the right tools is foundational for any baking project, ensuring proper execution and consistent results. For a beginner, knowing what's essential prevents unnecessary purchases and frustration.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Measuring cups and spoons (dry and liquid)\",\n        \"Mixing bowls (various sizes)\",\n        \"Whisks and spatulas\",\n        \"Baking pans (round, square, loaf)\",\n        \"Parchment paper and non-stick spray\",\n        \"Oven thermometer\",\n        \"Cooling racks\"\n      ]\n    },\n    {\n      \"node_id\": \"baking_basics_ingredients\",\n      \"title\": \"Understanding Basic Cake Ingredients\",\n      \"rationale\": \"Knowing the role of each ingredient (flour, sugar, eggs, butter, leavening agents) is crucial for successful baking. It helps beginners understand why recipes work and how to troubleshoot common issues.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Types of flour and their uses\",\n        \"Sugars: granulated, powdered, brown\",\n        \"Fats: butter vs. oil\",\n        \"Eggs: function and size\",\n        \"Leavening agents: baking powder vs. baking soda\",\n        \"Liquids: milk, buttermilk, water\",\n        \"Flavorings: vanilla extract, cocoa powder\"\n      ]\n    },\n    {\n      \"node_id\": \"basic_baking_techniques\",\n      \"title\": \"Fundamental Baking Techniques\",\n      \"rationale\": \"Mastering basic techniques like measuring accurately, mixing methods, and oven temperature control is essential for consistent results and building confidence.\",\n      \"prerequisites\": [\n        \"baking_basics_equipment\",\n        \"baking_basics_ingredients\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Accurate measuring techniques (dry and liquid)\",\n        \"Creaming method (butter and sugar)\",\n        \"Sifting dry ingredients\",\n        \"Folding wet into dry ingredients\",\n        \"Preparing baking pans\",\n        \"Oven preheating and temperature management\",\n        \"Testing for doneness\"\n      ]\n    },\n    {\n      \"node_id\": \"first_simple_cake\",\n      \"title\": \"Baking Your First Simple Cake (Vanilla/Chocolate)\",\n      \"rationale\": \"Applying learned knowledge to bake a straightforward, forgiving cake recipe builds confidence and provides immediate gratification, reinforcing basic skills. Focus on a simple, delicious outcome.\",\n      \"prerequisites\": [\n        \"basic_baking_techniques\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Simple vanilla cake recipe walkthrough (video preferred)\",\n        \"Simple chocolate cake recipe walkthrough (video preferred)\",\n        \"Troubleshooting common beginner mistakes (sinking, dry cake)\",\n        \"Cooling and handling a baked cake\"\n      ]\n    },\n    {\n      \"node_id\": \"basic_frosting\",\n      \"title\": \"Mastering Basic Buttercream Frosting\",\n      \"rationale\": \"Frosting is a key component of most cakes. Learning a simple, stable buttercream allows beginners to finish their cakes beautifully and adds another layer of skill.\",\n      \"prerequisites\": [\n        \"first_simple_cake\"\n      ],\n      \"suggested_micro_topics\": [\n        \"American buttercream recipe and technique\",\n        \"Achieving desired frosting consistency\",\n        \"Basic frosting tools (offset spatula, piping bag)\",\n        \"Crumb coating technique\",\n        \"Simple frosting decorations (smooth finish)\"\n      ]\n    },\n    {\n      \"node_id\": \"cupcakes_variation\",\n      \"title\": \"Expanding to Cupcakes: A Fun Variation\",\n      \"rationale\": \"Cupcakes use similar techniques to cakes but offer a quicker bake time and individual portions, making them ideal for practicing and experimenting with flavors and decorations on a smaller scale.\",\n      \"prerequisites\": [\n        \"first_simple_cake\",\n        \"basic_frosting\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Adapting cake recipes for cupcakes\",\n        \"Cupcake liners and baking times\",\n        \"Basic cupcake piping techniques\",\n        \"Flavor variations for cupcakes\"\n      ]\n    },\n    {\n      \"node_id\": \"exploring_simple_flavors\",\n      \"title\": \"Exploring Simple Flavor Variations\",\n      \"rationale\": \"Once comfortable with basic techniques, experimenting with different flavor profiles keeps baking fun and allows for personalization, enhancing the \\\"bake for fun\\\" goal.\",\n      \"prerequisites\": [\n        \"cupcakes_variation\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Adding citrus zest and juice\",\n        \"Incorporating fruits (berries, bananas)\",\n        \"Using spices (cinnamon, nutmeg)\",\n        \"Chocolate variations (chips, different cocoa types)\",\n        \"Simple glazes and drizzles\"\n      ]\n    }\n  ]\n}\n```",
+  "tasks_output": [
+    {
+      "raw": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"baking_basics_equipment\",\n      \"title\": \"Essential Baking Equipment & Tools\",\n      \"rationale\": \"Understanding and having the right tools is foundational for any baking project, ensuring proper execution and consistent results. For a beginner, knowing what's essential prevents unnecessary purchases and frustration.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Measuring cups and spoons (dry and liquid)\",\n        \"Mixing bowls (various sizes)\",\n        \"Whisks and spatulas\",\n        \"Baking pans (round, square, loaf)\",\n        \"Parchment paper and non-stick spray\",\n        \"Oven thermometer\",\n        \"Cooling racks\"\n      ]\n    },\n    {\n      \"node_id\": \"baking_basics_ingredients\",\n      \"title\": \"Understanding Basic Cake Ingredients\",\n      \"rationale\": \"Knowing the role of each ingredient (flour, sugar, eggs, butter, leavening agents) is crucial for successful baking. It helps beginners understand why recipes work and how to troubleshoot common issues.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Types of flour and their uses\",\n        \"Sugars: granulated, powdered, brown\",\n        \"Fats: butter vs. oil\",\n        \"Eggs: function and size\",\n        \"Leavening agents: baking powder vs. baking soda\",\n        \"Liquids: milk, buttermilk, water\",\n        \"Flavorings: vanilla extract, cocoa powder\"\n      ]\n    },\n    {\n      \"node_id\": \"basic_baking_techniques\",\n      \"title\": \"Fundamental Baking Techniques\",\n      \"rationale\": \"Mastering basic techniques like measuring accurately, mixing methods, and oven temperature control is essential for consistent results and building confidence.\",\n      \"prerequisites\": [\n        \"baking_basics_equipment\",\n        \"baking_basics_ingredients\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Accurate measuring techniques (dry and liquid)\",\n        \"Creaming method (butter and sugar)\",\n        \"Sifting dry ingredients\",\n        \"Folding wet into dry ingredients\",\n        \"Preparing baking pans\",\n        \"Oven preheating and temperature management\",\n        \"Testing for doneness\"\n      ]\n    },\n    {\n      \"node_id\": \"first_simple_cake\",\n      \"title\": \"Baking Your First Simple Cake (Vanilla/Chocolate)\",\n      \"rationale\": \"Applying learned knowledge to bake a straightforward, forgiving cake recipe builds confidence and provides immediate gratification, reinforcing basic skills. Focus on a simple, delicious outcome.\",\n      \"prerequisites\": [\n        \"basic_baking_techniques\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Simple vanilla cake recipe walkthrough (video preferred)\",\n        \"Simple chocolate cake recipe walkthrough (video preferred)\",\n        \"Troubleshooting common beginner mistakes (sinking, dry cake)\",\n        \"Cooling and handling a baked cake\"\n      ]\n    },\n    {\n      \"node_id\": \"basic_frosting\",\n      \"title\": \"Mastering Basic Buttercream Frosting\",\n      \"rationale\": \"Frosting is a key component of most cakes. Learning a simple, stable buttercream allows beginners to finish their cakes beautifully and adds another layer of skill.\",\n      \"prerequisites\": [\n        \"first_simple_cake\"\n      ],\n      \"suggested_micro_topics\": [\n        \"American buttercream recipe and technique\",\n        \"Achieving desired frosting consistency\",\n        \"Basic frosting tools (offset spatula, piping bag)\",\n        \"Crumb coating technique\",\n        \"Simple frosting decorations (smooth finish)\"\n      ]\n    },\n    {\n      \"node_id\": \"cupcakes_variation\",\n      \"title\": \"Expanding to Cupcakes: A Fun Variation\",\n      \"rationale\": \"Cupcakes use similar techniques to cakes but offer a quicker bake time and individual portions, making them ideal for practicing and experimenting with flavors and decorations on a smaller scale.\",\n      \"prerequisites\": [\n        \"first_simple_cake\",\n        \"basic_frosting\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Adapting cake recipes for cupcakes\",\n        \"Cupcake liners and baking times\",\n        \"Basic cupcake piping techniques\",\n        \"Flavor variations for cupcakes\"\n      ]\n    },\n    {\n      \"node_id\": \"exploring_simple_flavors\",\n      \"title\": \"Exploring Simple Flavor Variations\",\n      \"rationale\": \"Once comfortable with basic techniques, experimenting with different flavor profiles keeps baking fun and allows for personalization, enhancing the \\\"bake for fun\\\" goal.\",\n      \"prerequisites\": [\n        \"cupcakes_variation\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Adding citrus zest and juice\",\n        \"Incorporating fruits (berries, bananas)\",\n        \"Using spices (cinnamon, nutmeg)\",\n        \"Chocolate variations (chips, different cocoa types)\",\n        \"Simple glazes and drizzles\"\n      ]\n    }\n  ]\n}\n```",
+      "json_dict": null,
+      "pydantic": {
+        "nodes": [
+          {
+            "node_id": "baking_basics_equipment",
+            "title": "Essential Baking Equipment & Tools",
+            "rationale": "Understanding and having the right tools is foundational for any baking project, ensuring proper execution and consistent results. For a beginner, knowing what's essential prevents unnecessary purchases and frustration.",
+            "prerequisites": [],
+            "suggested_micro_topics": [
+              "Measuring cups and spoons (dry and liquid)",
+              "Mixing bowls (various sizes)",
+              "Whisks and spatulas",
+              "Baking pans (round, square, loaf)",
+              "Parchment paper and non-stick spray",
+              "Oven thermometer",
+              "Cooling racks"
+            ]
+          },
+          {
+            "node_id": "baking_basics_ingredients",
+            "title": "Understanding Basic Cake Ingredients",
+            "rationale": "Knowing the role of each ingredient (flour, sugar, eggs, butter, leavening agents) is crucial for successful baking. It helps beginners understand why recipes work and how to troubleshoot common issues.",
+            "prerequisites": [],
+            "suggested_micro_topics": [
+              "Types of flour and their uses",
+              "Sugars: granulated, powdered, brown",
+              "Fats: butter vs. oil",
+              "Eggs: function and size",
+              "Leavening agents: baking powder vs. baking soda",
+              "Liquids: milk, buttermilk, water",
+              "Flavorings: vanilla extract, cocoa powder"
+            ]
+          },
+          {
+            "node_id": "basic_baking_techniques",
+            "title": "Fundamental Baking Techniques",
+            "rationale": "Mastering basic techniques like measuring accurately, mixing methods, and oven temperature control is essential for consistent results and building confidence.",
+            "prerequisites": [
+              "baking_basics_equipment",
+              "baking_basics_ingredients"
+            ],
+            "suggested_micro_topics": [
+              "Accurate measuring techniques (dry and liquid)",
+              "Creaming method (butter and sugar)",
+              "Sifting dry ingredients",
+              "Folding wet into dry ingredients",
+              "Preparing baking pans",
+              "Oven preheating and temperature management",
+              "Testing for doneness"
+            ]
+          },
+          {
+            "node_id": "first_simple_cake",
+            "title": "Baking Your First Simple Cake (Vanilla/Chocolate)",
+            "rationale": "Applying learned knowledge to bake a straightforward, forgiving cake recipe builds confidence and provides immediate gratification, reinforcing basic skills. Focus on a simple, delicious outcome.",
+            "prerequisites": [
+              "basic_baking_techniques"
+            ],
+            "suggested_micro_topics": [
+              "Simple vanilla cake recipe walkthrough (video preferred)",
+              "Simple chocolate cake recipe walkthrough (video preferred)",
+              "Troubleshooting common beginner mistakes (sinking, dry cake)",
+              "Cooling and handling a baked cake"
+            ]
+          },
+          {
+            "node_id": "basic_frosting",
+            "title": "Mastering Basic Buttercream Frosting",
+            "rationale": "Frosting is a key component of most cakes. Learning a simple, stable buttercream allows beginners to finish their cakes beautifully and adds another layer of skill.",
+            "prerequisites": [
+              "first_simple_cake"
+            ],
+            "suggested_micro_topics": [
+              "American buttercream recipe and technique",
+              "Achieving desired frosting consistency",
+              "Basic frosting tools (offset spatula, piping bag)",
+              "Crumb coating technique",
+              "Simple frosting decorations (smooth finish)"
+            ]
+          },
+          {
+            "node_id": "cupcakes_variation",
+            "title": "Expanding to Cupcakes: A Fun Variation",
+            "rationale": "Cupcakes use similar techniques to cakes but offer a quicker bake time and individual portions, making them ideal for practicing and experimenting with flavors and decorations on a smaller scale.",
+            "prerequisites": [
+              "first_simple_cake",
+              "basic_frosting"
+            ],
+            "suggested_micro_topics": [
+              "Adapting cake recipes for cupcakes",
+              "Cupcake liners and baking times",
+              "Basic cupcake piping techniques",
+              "Flavor variations for cupcakes"
+            ]
+          },
+          {
+            "node_id": "exploring_simple_flavors",
+            "title": "Exploring Simple Flavor Variations",
+            "rationale": "Once comfortable with basic techniques, experimenting with different flavor profiles keeps baking fun and allows for personalization, enhancing the \"bake for fun\" goal.",
+            "prerequisites": [
+              "cupcakes_variation"
+            ],
+            "suggested_micro_topics": [
+              "Adding citrus zest and juice",
+              "Incorporating fruits (berries, bananas)",
+              "Using spices (cinnamon, nutmeg)",
+              "Chocolate variations (chips, different cocoa types)",
+              "Simple glazes and drizzles"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
