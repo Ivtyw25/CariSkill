@@ -2,255 +2,267 @@
   "pydantic_output": {
     "nodes": [
       {
-        "node_id": "Marketing_Fundamentals",
-        "title": "Marketing Fundamentals for Business Promotion",
-        "rationale": "To effectively promote your business, it's essential to first grasp the core principles of marketing, including understanding market dynamics and how businesses interact with customers.",
+        "node_id": "understanding_business_audience",
+        "title": "Understanding Your Business & Audience",
+        "rationale": "Before any marketing efforts, it's crucial to have a clear understanding of your own business, its unique value proposition, and who your ideal customers are. This foundational knowledge will guide all subsequent marketing decisions.",
         "prerequisites": [],
         "suggested_micro_topics": [
-          "What is Marketing?",
-          "The Marketing Mix (4 Ps)",
-          "Understanding Market Segments",
-          "Introduction to Value Proposition",
-          "Marketing Ethics and Regulations"
+          "Defining your business model and offerings",
+          "Identifying your Unique Selling Proposition (USP)",
+          "Creating customer personas",
+          "Market research basics",
+          "Competitor analysis for small businesses"
         ]
       },
       {
-        "node_id": "Define_Your_Business_Goals_and_Audience",
-        "title": "Defining Business Goals & Target Audience",
-        "rationale": "Before creating any promotional content, especially videos, you must clearly define what you want to achieve and precisely who you want to reach. This ensures your efforts are focused and effective.",
+        "node_id": "building_online_presence",
+        "title": "Building a Basic Online Presence",
+        "rationale": "For a small business in today's world, an online presence is non-negotiable. This module focuses on establishing the essential digital touchpoints where potential customers can find and interact with your business.",
         "prerequisites": [
-          "Marketing_Fundamentals"
+          "understanding_business_audience"
         ],
         "suggested_micro_topics": [
-          "Setting SMART Business Goals",
-          "Developing Buyer Personas",
-          "Market Research Basics",
-          "Identifying Customer Needs and Pain Points",
-          "Competitor Analysis for Small Businesses"
+          "Choosing a domain name and web hosting",
+          "Setting up a simple website (e.g., using WordPress, Shopify, or a landing page builder)",
+          "Optimizing Google My Business profile",
+          "Creating essential website pages (About Us, Contact, Services/Products)",
+          "Ensuring mobile responsiveness"
         ]
       },
       {
-        "node_id": "Content_Strategy_for_Video_Promotion",
-        "title": "Content Strategy with a Video Focus",
-        "rationale": "Given your preference for videos, this module focuses on planning a content strategy that leverages video to engage your target audience and achieve your business promotion goals.",
+        "node_id": "introduction_content_marketing",
+        "title": "Introduction to Content Marketing",
+        "rationale": "Content is the fuel for almost all digital marketing strategies. Learning how to create valuable content will attract, engage, and retain your target audience, establishing your business as an authority.",
         "prerequisites": [
-          "Define_Your_Business_Goals_and_Audience"
+          "understanding_business_audience",
+          "building_online_presence"
         ],
         "suggested_micro_topics": [
-          "Brainstorming Video Content Ideas (e.g., tutorials, behind-the-scenes, testimonials)",
-          "Developing a Content Calendar",
-          "Storytelling Principles for Video",
-          "Call to Action (CTA) in Videos",
-          "Content Pillars and Themes for Your Business"
+          "Understanding different content formats (blog posts, images, videos, infographics)",
+          "Developing a basic content calendar",
+          "Principles of effective copywriting for small businesses",
+          "Crafting compelling calls-to-action (CTAs)",
+          "Content distribution basics"
         ]
       },
       {
-        "node_id": "Basic_Video_Production_and_Editing",
-        "title": "Basic Video Production and Editing Skills",
-        "rationale": "To create engaging videos for your business, you need fundamental skills in shooting and editing. This module will equip you with the practical knowledge to produce your own promotional video content.",
+        "node_id": "social_media_fundamentals",
+        "title": "Social Media Marketing Fundamentals",
+        "rationale": "Social media provides a direct channel to connect with your audience, build brand awareness, and drive traffic. This module covers the basics of using social platforms effectively for your business.",
         "prerequisites": [
-          "Content_Strategy_for_Video_Promotion"
+          "understanding_business_audience",
+          "introduction_content_marketing"
         ],
         "suggested_micro_topics": [
-          "Smartphone Videography Techniques",
-          "Basic Lighting and Audio Setup",
-          "Introduction to Simple Editing Software (e.g., CapCut, InShot, DaVinci Resolve Free)",
-          "Scripting and Storyboarding for Short Videos",
-          "Adding Text, Music, and Graphics"
+          "Choosing the right social media platforms for your business (e.g., Facebook, Instagram, LinkedIn)",
+          "Setting up and optimizing business profiles",
+          "Basic social media content creation and posting strategies",
+          "Engaging with your audience and community management",
+          "Understanding social media analytics basics"
         ]
       },
       {
-        "node_id": "Social_Media_Marketing_for_Beginners",
-        "title": "Social Media Marketing for Business Promotion",
-        "rationale": "Social media platforms are crucial for distributing your video content and connecting with potential customers. This module covers the basics of using social media to promote your business effectively.",
+        "node_id": "seo_basics",
+        "title": "Search Engine Optimization (SEO) Basics",
+        "rationale": "SEO helps your business appear higher in search engine results, making it easier for potential customers to find you organically when they search for products or services you offer.",
         "prerequisites": [
-          "Content_Strategy_for_Video_Promotion"
+          "building_online_presence",
+          "introduction_content_marketing"
         ],
         "suggested_micro_topics": [
-          "Choosing the Right Social Media Platforms (e.g., Instagram, TikTok, Facebook, YouTube)",
-          "Optimizing Social Media Profiles",
-          "Crafting Engaging Captions for Video Posts",
-          "Understanding Hashtags and Trends",
-          "Basic Engagement Strategies and Community Building"
+          "Introduction to how search engines work",
+          "Basic keyword research for small businesses",
+          "On-page SEO fundamentals (titles, meta descriptions, headings)",
+          "Local SEO strategies (e.g., Google My Business optimization)",
+          "Understanding Google Search Console"
         ]
       },
       {
-        "node_id": "Video_SEO_and_Discovery",
-        "title": "Video SEO and Maximizing Discoverability",
-        "rationale": "Even great videos won't promote your business if no one can find them. This module teaches you how to optimize your videos for search engines and platforms to increase their visibility and reach.",
+        "node_id": "paid_advertising_intro",
+        "title": "Paid Advertising Introduction (Google & Social)",
+        "rationale": "Paid advertising offers a faster way to gain visibility and drive targeted traffic to your business, complementing organic efforts. This module introduces the fundamentals of popular ad platforms.",
         "prerequisites": [
-          "Basic_Video_Production_and_Editing",
-          "Social_Media_Marketing_for_Beginners"
+          "building_online_presence",
+          "social_media_fundamentals",
+          "seo_basics"
         ],
         "suggested_micro_topics": [
-          "Keyword Research for Video Content",
-          "Optimizing Video Titles and Descriptions",
-          "Creating Engaging Thumbnails",
-          "Utilizing Tags and Categories",
-          "Understanding YouTube SEO Best Practices",
-          "Transcripts and Closed Captions for Accessibility and SEO"
+          "Introduction to Google Ads (Search Campaigns)",
+          "Setting up your first Facebook/Instagram Ad campaign",
+          "Understanding ad targeting options for small businesses",
+          "Basic ad copy and creative best practices",
+          "Setting and managing a small advertising budget"
         ]
       },
       {
-        "node_id": "Intro_to_Paid_Video_Advertising",
-        "title": "Introduction to Paid Video Advertising",
-        "rationale": "To quickly expand your reach and target specific audiences, understanding paid advertising for videos is essential. This module introduces you to the basics of running video ad campaigns.",
+        "node_id": "email_marketing_essentials",
+        "title": "Email Marketing Essentials",
+        "rationale": "Email marketing remains one of the most effective direct communication channels for nurturing leads, building customer relationships, and driving sales for small businesses.",
         "prerequisites": [
-          "Social_Media_Marketing_for_Beginners"
+          "building_online_presence",
+          "introduction_content_marketing"
         ],
         "suggested_micro_topics": [
-          "Overview of Major Ad Platforms (e.g., Facebook Ads, YouTube Ads)",
-          "Setting Ad Objectives (e.g., Brand Awareness, Leads)",
-          "Basic Audience Targeting",
-          "Understanding Ad Budgets and Bidding",
-          "Creating Simple Video Ad Creatives"
+          "Strategies for building an email list (e.g., website forms, lead magnets)",
+          "Choosing an email service provider (e.g., Mailchimp, Constant Contact)",
+          "Designing basic email newsletters and promotional emails",
+          "Writing compelling subject lines",
+          "Understanding email automation basics (e.g., welcome sequences)"
         ]
       },
       {
-        "node_id": "Measuring_Marketing_Success",
-        "title": "Measuring and Analyzing Marketing Performance",
-        "rationale": "To ensure your video promotion efforts are successful and continuously improve, you need to track their performance. This module covers how to measure results and make data-driven decisions.",
+        "node_id": "marketing_analytics_measurement",
+        "title": "Marketing Analytics & Measurement",
+        "rationale": "To ensure your marketing efforts are effective and to continuously improve, it's vital to track performance, understand what's working (and what isn't), and make data-driven decisions.",
         "prerequisites": [
-          "Video_SEO_and_Discovery",
-          "Intro_to_Paid_Video_Advertising"
+          "social_media_fundamentals",
+          "seo_basics",
+          "paid_advertising_intro",
+          "email_marketing_essentials"
         ],
         "suggested_micro_topics": [
-          "Key Performance Indicators (KPIs) for Video Marketing",
-          "Introduction to Analytics Tools (e.g., YouTube Analytics, Facebook Insights)",
-          "Understanding Video Engagement Metrics",
-          "Basic Conversion Tracking",
-          "Interpreting Data for Optimization"
+          "Introduction to Google Analytics 4 (GA4) for website tracking",
+          "Interpreting social media insights and reports",
+          "Analyzing paid ad campaign performance",
+          "Tracking email marketing metrics (open rates, click-through rates)",
+          "Defining key performance indicators (KPIs) for your business"
         ]
       }
     ]
   },
   "json_dict_output": null,
-  "raw_output": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"Marketing_Fundamentals\",\n      \"title\": \"Marketing Fundamentals for Business Promotion\",\n      \"rationale\": \"To effectively promote your business, it's essential to first grasp the core principles of marketing, including understanding market dynamics and how businesses interact with customers.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"What is Marketing?\",\n        \"The Marketing Mix (4 Ps)\",\n        \"Understanding Market Segments\",\n        \"Introduction to Value Proposition\",\n        \"Marketing Ethics and Regulations\"\n      ]\n    },\n    {\n      \"node_id\": \"Define_Your_Business_Goals_and_Audience\",\n      \"title\": \"Defining Business Goals & Target Audience\",\n      \"rationale\": \"Before creating any promotional content, especially videos, you must clearly define what you want to achieve and precisely who you want to reach. This ensures your efforts are focused and effective.\",\n      \"prerequisites\": [\n        \"Marketing_Fundamentals\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Setting SMART Business Goals\",\n        \"Developing Buyer Personas\",\n        \"Market Research Basics\",\n        \"Identifying Customer Needs and Pain Points\",\n        \"Competitor Analysis for Small Businesses\"\n      ]\n    },\n    {\n      \"node_id\": \"Content_Strategy_for_Video_Promotion\",\n      \"title\": \"Content Strategy with a Video Focus\",\n      \"rationale\": \"Given your preference for videos, this module focuses on planning a content strategy that leverages video to engage your target audience and achieve your business promotion goals.\",\n      \"prerequisites\": [\n        \"Define_Your_Business_Goals_and_Audience\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Brainstorming Video Content Ideas (e.g., tutorials, behind-the-scenes, testimonials)\",\n        \"Developing a Content Calendar\",\n        \"Storytelling Principles for Video\",\n        \"Call to Action (CTA) in Videos\",\n        \"Content Pillars and Themes for Your Business\"\n      ]\n    },\n    {\n      \"node_id\": \"Basic_Video_Production_and_Editing\",\n      \"title\": \"Basic Video Production and Editing Skills\",\n      \"rationale\": \"To create engaging videos for your business, you need fundamental skills in shooting and editing. This module will equip you with the practical knowledge to produce your own promotional video content.\",\n      \"prerequisites\": [\n        \"Content_Strategy_for_Video_Promotion\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Smartphone Videography Techniques\",\n        \"Basic Lighting and Audio Setup\",\n        \"Introduction to Simple Editing Software (e.g., CapCut, InShot, DaVinci Resolve Free)\",\n        \"Scripting and Storyboarding for Short Videos\",\n        \"Adding Text, Music, and Graphics\"\n      ]\n    },\n    {\n      \"node_id\": \"Social_Media_Marketing_for_Beginners\",\n      \"title\": \"Social Media Marketing for Business Promotion\",\n      \"rationale\": \"Social media platforms are crucial for distributing your video content and connecting with potential customers. This module covers the basics of using social media to promote your business effectively.\",\n      \"prerequisites\": [\n        \"Content_Strategy_for_Video_Promotion\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Choosing the Right Social Media Platforms (e.g., Instagram, TikTok, Facebook, YouTube)\",\n        \"Optimizing Social Media Profiles\",\n        \"Crafting Engaging Captions for Video Posts\",\n        \"Understanding Hashtags and Trends\",\n        \"Basic Engagement Strategies and Community Building\"\n      ]\n    },\n    {\n      \"node_id\": \"Video_SEO_and_Discovery\",\n      \"title\": \"Video SEO and Maximizing Discoverability\",\n      \"rationale\": \"Even great videos won't promote your business if no one can find them. This module teaches you how to optimize your videos for search engines and platforms to increase their visibility and reach.\",\n      \"prerequisites\": [\n        \"Basic_Video_Production_and_Editing\",\n        \"Social_Media_Marketing_for_Beginners\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Keyword Research for Video Content\",\n        \"Optimizing Video Titles and Descriptions\",\n        \"Creating Engaging Thumbnails\",\n        \"Utilizing Tags and Categories\",\n        \"Understanding YouTube SEO Best Practices\",\n        \"Transcripts and Closed Captions for Accessibility and SEO\"\n      ]\n    },\n    {\n      \"node_id\": \"Intro_to_Paid_Video_Advertising\",\n      \"title\": \"Introduction to Paid Video Advertising\",\n      \"rationale\": \"To quickly expand your reach and target specific audiences, understanding paid advertising for videos is essential. This module introduces you to the basics of running video ad campaigns.\",\n      \"prerequisites\": [\n        \"Social_Media_Marketing_for_Beginners\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Overview of Major Ad Platforms (e.g., Facebook Ads, YouTube Ads)\",\n        \"Setting Ad Objectives (e.g., Brand Awareness, Leads)\",\n        \"Basic Audience Targeting\",\n        \"Understanding Ad Budgets and Bidding\",\n        \"Creating Simple Video Ad Creatives\"\n      ]\n    },\n    {\n      \"node_id\": \"Measuring_Marketing_Success\",\n      \"title\": \"Measuring and Analyzing Marketing Performance\",\n      \"rationale\": \"To ensure your video promotion efforts are successful and continuously improve, you need to track their performance. This module covers how to measure results and make data-driven decisions.\",\n      \"prerequisites\": [\n        \"Video_SEO_and_Discovery\",\n        \"Intro_to_Paid_Video_Advertising\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Key Performance Indicators (KPIs) for Video Marketing\",\n        \"Introduction to Analytics Tools (e.g., YouTube Analytics, Facebook Insights)\",\n        \"Understanding Video Engagement Metrics\",\n        \"Basic Conversion Tracking\",\n        \"Interpreting Data for Optimization\"\n      ]\n    }\n  ]\n}\n```",
+  "raw_output": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"understanding_business_audience\",\n      \"title\": \"Understanding Your Business & Audience\",\n      \"rationale\": \"Before any marketing efforts, it's crucial to have a clear understanding of your own business, its unique value proposition, and who your ideal customers are. This foundational knowledge will guide all subsequent marketing decisions.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Defining your business model and offerings\",\n        \"Identifying your Unique Selling Proposition (USP)\",\n        \"Creating customer personas\",\n        \"Market research basics\",\n        \"Competitor analysis for small businesses\"\n      ]\n    },\n    {\n      \"node_id\": \"building_online_presence\",\n      \"title\": \"Building a Basic Online Presence\",\n      \"rationale\": \"For a small business in today's world, an online presence is non-negotiable. This module focuses on establishing the essential digital touchpoints where potential customers can find and interact with your business.\",\n      \"prerequisites\": [\n        \"understanding_business_audience\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Choosing a domain name and web hosting\",\n        \"Setting up a simple website (e.g., using WordPress, Shopify, or a landing page builder)\",\n        \"Optimizing Google My Business profile\",\n        \"Creating essential website pages (About Us, Contact, Services/Products)\",\n        \"Ensuring mobile responsiveness\"\n      ]\n    },\n    {\n      \"node_id\": \"introduction_content_marketing\",\n      \"title\": \"Introduction to Content Marketing\",\n      \"rationale\": \"Content is the fuel for almost all digital marketing strategies. Learning how to create valuable content will attract, engage, and retain your target audience, establishing your business as an authority.\",\n      \"prerequisites\": [\n        \"understanding_business_audience\",\n        \"building_online_presence\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Understanding different content formats (blog posts, images, videos, infographics)\",\n        \"Developing a basic content calendar\",\n        \"Principles of effective copywriting for small businesses\",\n        \"Crafting compelling calls-to-action (CTAs)\",\n        \"Content distribution basics\"\n      ]\n    },\n    {\n      \"node_id\": \"social_media_fundamentals\",\n      \"title\": \"Social Media Marketing Fundamentals\",\n      \"rationale\": \"Social media provides a direct channel to connect with your audience, build brand awareness, and drive traffic. This module covers the basics of using social platforms effectively for your business.\",\n      \"prerequisites\": [\n        \"understanding_business_audience\",\n        \"introduction_content_marketing\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Choosing the right social media platforms for your business (e.g., Facebook, Instagram, LinkedIn)\",\n        \"Setting up and optimizing business profiles\",\n        \"Basic social media content creation and posting strategies\",\n        \"Engaging with your audience and community management\",\n        \"Understanding social media analytics basics\"\n      ]\n    },\n    {\n      \"node_id\": \"seo_basics\",\n      \"title\": \"Search Engine Optimization (SEO) Basics\",\n      \"rationale\": \"SEO helps your business appear higher in search engine results, making it easier for potential customers to find you organically when they search for products or services you offer.\",\n      \"prerequisites\": [\n        \"building_online_presence\",\n        \"introduction_content_marketing\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to how search engines work\",\n        \"Basic keyword research for small businesses\",\n        \"On-page SEO fundamentals (titles, meta descriptions, headings)\",\n        \"Local SEO strategies (e.g., Google My Business optimization)\",\n        \"Understanding Google Search Console\"\n      ]\n    },\n    {\n      \"node_id\": \"paid_advertising_intro\",\n      \"title\": \"Paid Advertising Introduction (Google & Social)\",\n      \"rationale\": \"Paid advertising offers a faster way to gain visibility and drive targeted traffic to your business, complementing organic efforts. This module introduces the fundamentals of popular ad platforms.\",\n      \"prerequisites\": [\n        \"building_online_presence\",\n        \"social_media_fundamentals\",\n        \"seo_basics\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to Google Ads (Search Campaigns)\",\n        \"Setting up your first Facebook/Instagram Ad campaign\",\n        \"Understanding ad targeting options for small businesses\",\n        \"Basic ad copy and creative best practices\",\n        \"Setting and managing a small advertising budget\"\n      ]\n    },\n    {\n      \"node_id\": \"email_marketing_essentials\",\n      \"title\": \"Email Marketing Essentials\",\n      \"rationale\": \"Email marketing remains one of the most effective direct communication channels for nurturing leads, building customer relationships, and driving sales for small businesses.\",\n      \"prerequisites\": [\n        \"building_online_presence\",\n        \"introduction_content_marketing\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Strategies for building an email list (e.g., website forms, lead magnets)\",\n        \"Choosing an email service provider (e.g., Mailchimp, Constant Contact)\",\n        \"Designing basic email newsletters and promotional emails\",\n        \"Writing compelling subject lines\",\n        \"Understanding email automation basics (e.g., welcome sequences)\"\n      ]\n    },\n    {\n      \"node_id\": \"marketing_analytics_measurement\",\n      \"title\": \"Marketing Analytics & Measurement\",\n      \"rationale\": \"To ensure your marketing efforts are effective and to continuously improve, it's vital to track performance, understand what's working (and what isn't), and make data-driven decisions.\",\n      \"prerequisites\": [\n        \"social_media_fundamentals\",\n        \"seo_basics\",\n        \"paid_advertising_intro\",\n        \"email_marketing_essentials\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to Google Analytics 4 (GA4) for website tracking\",\n        \"Interpreting social media insights and reports\",\n        \"Analyzing paid ad campaign performance\",\n        \"Tracking email marketing metrics (open rates, click-through rates)\",\n        \"Defining key performance indicators (KPIs) for your business\"\n      ]\n    }\n  ]\n}\n```",
   "tasks_output": [
     {
-      "raw": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"Marketing_Fundamentals\",\n      \"title\": \"Marketing Fundamentals for Business Promotion\",\n      \"rationale\": \"To effectively promote your business, it's essential to first grasp the core principles of marketing, including understanding market dynamics and how businesses interact with customers.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"What is Marketing?\",\n        \"The Marketing Mix (4 Ps)\",\n        \"Understanding Market Segments\",\n        \"Introduction to Value Proposition\",\n        \"Marketing Ethics and Regulations\"\n      ]\n    },\n    {\n      \"node_id\": \"Define_Your_Business_Goals_and_Audience\",\n      \"title\": \"Defining Business Goals & Target Audience\",\n      \"rationale\": \"Before creating any promotional content, especially videos, you must clearly define what you want to achieve and precisely who you want to reach. This ensures your efforts are focused and effective.\",\n      \"prerequisites\": [\n        \"Marketing_Fundamentals\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Setting SMART Business Goals\",\n        \"Developing Buyer Personas\",\n        \"Market Research Basics\",\n        \"Identifying Customer Needs and Pain Points\",\n        \"Competitor Analysis for Small Businesses\"\n      ]\n    },\n    {\n      \"node_id\": \"Content_Strategy_for_Video_Promotion\",\n      \"title\": \"Content Strategy with a Video Focus\",\n      \"rationale\": \"Given your preference for videos, this module focuses on planning a content strategy that leverages video to engage your target audience and achieve your business promotion goals.\",\n      \"prerequisites\": [\n        \"Define_Your_Business_Goals_and_Audience\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Brainstorming Video Content Ideas (e.g., tutorials, behind-the-scenes, testimonials)\",\n        \"Developing a Content Calendar\",\n        \"Storytelling Principles for Video\",\n        \"Call to Action (CTA) in Videos\",\n        \"Content Pillars and Themes for Your Business\"\n      ]\n    },\n    {\n      \"node_id\": \"Basic_Video_Production_and_Editing\",\n      \"title\": \"Basic Video Production and Editing Skills\",\n      \"rationale\": \"To create engaging videos for your business, you need fundamental skills in shooting and editing. This module will equip you with the practical knowledge to produce your own promotional video content.\",\n      \"prerequisites\": [\n        \"Content_Strategy_for_Video_Promotion\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Smartphone Videography Techniques\",\n        \"Basic Lighting and Audio Setup\",\n        \"Introduction to Simple Editing Software (e.g., CapCut, InShot, DaVinci Resolve Free)\",\n        \"Scripting and Storyboarding for Short Videos\",\n        \"Adding Text, Music, and Graphics\"\n      ]\n    },\n    {\n      \"node_id\": \"Social_Media_Marketing_for_Beginners\",\n      \"title\": \"Social Media Marketing for Business Promotion\",\n      \"rationale\": \"Social media platforms are crucial for distributing your video content and connecting with potential customers. This module covers the basics of using social media to promote your business effectively.\",\n      \"prerequisites\": [\n        \"Content_Strategy_for_Video_Promotion\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Choosing the Right Social Media Platforms (e.g., Instagram, TikTok, Facebook, YouTube)\",\n        \"Optimizing Social Media Profiles\",\n        \"Crafting Engaging Captions for Video Posts\",\n        \"Understanding Hashtags and Trends\",\n        \"Basic Engagement Strategies and Community Building\"\n      ]\n    },\n    {\n      \"node_id\": \"Video_SEO_and_Discovery\",\n      \"title\": \"Video SEO and Maximizing Discoverability\",\n      \"rationale\": \"Even great videos won't promote your business if no one can find them. This module teaches you how to optimize your videos for search engines and platforms to increase their visibility and reach.\",\n      \"prerequisites\": [\n        \"Basic_Video_Production_and_Editing\",\n        \"Social_Media_Marketing_for_Beginners\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Keyword Research for Video Content\",\n        \"Optimizing Video Titles and Descriptions\",\n        \"Creating Engaging Thumbnails\",\n        \"Utilizing Tags and Categories\",\n        \"Understanding YouTube SEO Best Practices\",\n        \"Transcripts and Closed Captions for Accessibility and SEO\"\n      ]\n    },\n    {\n      \"node_id\": \"Intro_to_Paid_Video_Advertising\",\n      \"title\": \"Introduction to Paid Video Advertising\",\n      \"rationale\": \"To quickly expand your reach and target specific audiences, understanding paid advertising for videos is essential. This module introduces you to the basics of running video ad campaigns.\",\n      \"prerequisites\": [\n        \"Social_Media_Marketing_for_Beginners\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Overview of Major Ad Platforms (e.g., Facebook Ads, YouTube Ads)\",\n        \"Setting Ad Objectives (e.g., Brand Awareness, Leads)\",\n        \"Basic Audience Targeting\",\n        \"Understanding Ad Budgets and Bidding\",\n        \"Creating Simple Video Ad Creatives\"\n      ]\n    },\n    {\n      \"node_id\": \"Measuring_Marketing_Success\",\n      \"title\": \"Measuring and Analyzing Marketing Performance\",\n      \"rationale\": \"To ensure your video promotion efforts are successful and continuously improve, you need to track their performance. This module covers how to measure results and make data-driven decisions.\",\n      \"prerequisites\": [\n        \"Video_SEO_and_Discovery\",\n        \"Intro_to_Paid_Video_Advertising\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Key Performance Indicators (KPIs) for Video Marketing\",\n        \"Introduction to Analytics Tools (e.g., YouTube Analytics, Facebook Insights)\",\n        \"Understanding Video Engagement Metrics\",\n        \"Basic Conversion Tracking\",\n        \"Interpreting Data for Optimization\"\n      ]\n    }\n  ]\n}\n```",
+      "raw": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"understanding_business_audience\",\n      \"title\": \"Understanding Your Business & Audience\",\n      \"rationale\": \"Before any marketing efforts, it's crucial to have a clear understanding of your own business, its unique value proposition, and who your ideal customers are. This foundational knowledge will guide all subsequent marketing decisions.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Defining your business model and offerings\",\n        \"Identifying your Unique Selling Proposition (USP)\",\n        \"Creating customer personas\",\n        \"Market research basics\",\n        \"Competitor analysis for small businesses\"\n      ]\n    },\n    {\n      \"node_id\": \"building_online_presence\",\n      \"title\": \"Building a Basic Online Presence\",\n      \"rationale\": \"For a small business in today's world, an online presence is non-negotiable. This module focuses on establishing the essential digital touchpoints where potential customers can find and interact with your business.\",\n      \"prerequisites\": [\n        \"understanding_business_audience\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Choosing a domain name and web hosting\",\n        \"Setting up a simple website (e.g., using WordPress, Shopify, or a landing page builder)\",\n        \"Optimizing Google My Business profile\",\n        \"Creating essential website pages (About Us, Contact, Services/Products)\",\n        \"Ensuring mobile responsiveness\"\n      ]\n    },\n    {\n      \"node_id\": \"introduction_content_marketing\",\n      \"title\": \"Introduction to Content Marketing\",\n      \"rationale\": \"Content is the fuel for almost all digital marketing strategies. Learning how to create valuable content will attract, engage, and retain your target audience, establishing your business as an authority.\",\n      \"prerequisites\": [\n        \"understanding_business_audience\",\n        \"building_online_presence\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Understanding different content formats (blog posts, images, videos, infographics)\",\n        \"Developing a basic content calendar\",\n        \"Principles of effective copywriting for small businesses\",\n        \"Crafting compelling calls-to-action (CTAs)\",\n        \"Content distribution basics\"\n      ]\n    },\n    {\n      \"node_id\": \"social_media_fundamentals\",\n      \"title\": \"Social Media Marketing Fundamentals\",\n      \"rationale\": \"Social media provides a direct channel to connect with your audience, build brand awareness, and drive traffic. This module covers the basics of using social platforms effectively for your business.\",\n      \"prerequisites\": [\n        \"understanding_business_audience\",\n        \"introduction_content_marketing\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Choosing the right social media platforms for your business (e.g., Facebook, Instagram, LinkedIn)\",\n        \"Setting up and optimizing business profiles\",\n        \"Basic social media content creation and posting strategies\",\n        \"Engaging with your audience and community management\",\n        \"Understanding social media analytics basics\"\n      ]\n    },\n    {\n      \"node_id\": \"seo_basics\",\n      \"title\": \"Search Engine Optimization (SEO) Basics\",\n      \"rationale\": \"SEO helps your business appear higher in search engine results, making it easier for potential customers to find you organically when they search for products or services you offer.\",\n      \"prerequisites\": [\n        \"building_online_presence\",\n        \"introduction_content_marketing\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to how search engines work\",\n        \"Basic keyword research for small businesses\",\n        \"On-page SEO fundamentals (titles, meta descriptions, headings)\",\n        \"Local SEO strategies (e.g., Google My Business optimization)\",\n        \"Understanding Google Search Console\"\n      ]\n    },\n    {\n      \"node_id\": \"paid_advertising_intro\",\n      \"title\": \"Paid Advertising Introduction (Google & Social)\",\n      \"rationale\": \"Paid advertising offers a faster way to gain visibility and drive targeted traffic to your business, complementing organic efforts. This module introduces the fundamentals of popular ad platforms.\",\n      \"prerequisites\": [\n        \"building_online_presence\",\n        \"social_media_fundamentals\",\n        \"seo_basics\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to Google Ads (Search Campaigns)\",\n        \"Setting up your first Facebook/Instagram Ad campaign\",\n        \"Understanding ad targeting options for small businesses\",\n        \"Basic ad copy and creative best practices\",\n        \"Setting and managing a small advertising budget\"\n      ]\n    },\n    {\n      \"node_id\": \"email_marketing_essentials\",\n      \"title\": \"Email Marketing Essentials\",\n      \"rationale\": \"Email marketing remains one of the most effective direct communication channels for nurturing leads, building customer relationships, and driving sales for small businesses.\",\n      \"prerequisites\": [\n        \"building_online_presence\",\n        \"introduction_content_marketing\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Strategies for building an email list (e.g., website forms, lead magnets)\",\n        \"Choosing an email service provider (e.g., Mailchimp, Constant Contact)\",\n        \"Designing basic email newsletters and promotional emails\",\n        \"Writing compelling subject lines\",\n        \"Understanding email automation basics (e.g., welcome sequences)\"\n      ]\n    },\n    {\n      \"node_id\": \"marketing_analytics_measurement\",\n      \"title\": \"Marketing Analytics & Measurement\",\n      \"rationale\": \"To ensure your marketing efforts are effective and to continuously improve, it's vital to track performance, understand what's working (and what isn't), and make data-driven decisions.\",\n      \"prerequisites\": [\n        \"social_media_fundamentals\",\n        \"seo_basics\",\n        \"paid_advertising_intro\",\n        \"email_marketing_essentials\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Introduction to Google Analytics 4 (GA4) for website tracking\",\n        \"Interpreting social media insights and reports\",\n        \"Analyzing paid ad campaign performance\",\n        \"Tracking email marketing metrics (open rates, click-through rates)\",\n        \"Defining key performance indicators (KPIs) for your business\"\n      ]\n    }\n  ]\n}\n```",
       "json_dict": null,
       "pydantic": {
         "nodes": [
           {
-            "node_id": "Marketing_Fundamentals",
-            "title": "Marketing Fundamentals for Business Promotion",
-            "rationale": "To effectively promote your business, it's essential to first grasp the core principles of marketing, including understanding market dynamics and how businesses interact with customers.",
+            "node_id": "understanding_business_audience",
+            "title": "Understanding Your Business & Audience",
+            "rationale": "Before any marketing efforts, it's crucial to have a clear understanding of your own business, its unique value proposition, and who your ideal customers are. This foundational knowledge will guide all subsequent marketing decisions.",
             "prerequisites": [],
             "suggested_micro_topics": [
-              "What is Marketing?",
-              "The Marketing Mix (4 Ps)",
-              "Understanding Market Segments",
-              "Introduction to Value Proposition",
-              "Marketing Ethics and Regulations"
+              "Defining your business model and offerings",
+              "Identifying your Unique Selling Proposition (USP)",
+              "Creating customer personas",
+              "Market research basics",
+              "Competitor analysis for small businesses"
             ]
           },
           {
-            "node_id": "Define_Your_Business_Goals_and_Audience",
-            "title": "Defining Business Goals & Target Audience",
-            "rationale": "Before creating any promotional content, especially videos, you must clearly define what you want to achieve and precisely who you want to reach. This ensures your efforts are focused and effective.",
+            "node_id": "building_online_presence",
+            "title": "Building a Basic Online Presence",
+            "rationale": "For a small business in today's world, an online presence is non-negotiable. This module focuses on establishing the essential digital touchpoints where potential customers can find and interact with your business.",
             "prerequisites": [
-              "Marketing_Fundamentals"
+              "understanding_business_audience"
             ],
             "suggested_micro_topics": [
-              "Setting SMART Business Goals",
-              "Developing Buyer Personas",
-              "Market Research Basics",
-              "Identifying Customer Needs and Pain Points",
-              "Competitor Analysis for Small Businesses"
+              "Choosing a domain name and web hosting",
+              "Setting up a simple website (e.g., using WordPress, Shopify, or a landing page builder)",
+              "Optimizing Google My Business profile",
+              "Creating essential website pages (About Us, Contact, Services/Products)",
+              "Ensuring mobile responsiveness"
             ]
           },
           {
-            "node_id": "Content_Strategy_for_Video_Promotion",
-            "title": "Content Strategy with a Video Focus",
-            "rationale": "Given your preference for videos, this module focuses on planning a content strategy that leverages video to engage your target audience and achieve your business promotion goals.",
+            "node_id": "introduction_content_marketing",
+            "title": "Introduction to Content Marketing",
+            "rationale": "Content is the fuel for almost all digital marketing strategies. Learning how to create valuable content will attract, engage, and retain your target audience, establishing your business as an authority.",
             "prerequisites": [
-              "Define_Your_Business_Goals_and_Audience"
+              "understanding_business_audience",
+              "building_online_presence"
             ],
             "suggested_micro_topics": [
-              "Brainstorming Video Content Ideas (e.g., tutorials, behind-the-scenes, testimonials)",
-              "Developing a Content Calendar",
-              "Storytelling Principles for Video",
-              "Call to Action (CTA) in Videos",
-              "Content Pillars and Themes for Your Business"
+              "Understanding different content formats (blog posts, images, videos, infographics)",
+              "Developing a basic content calendar",
+              "Principles of effective copywriting for small businesses",
+              "Crafting compelling calls-to-action (CTAs)",
+              "Content distribution basics"
             ]
           },
           {
-            "node_id": "Basic_Video_Production_and_Editing",
-            "title": "Basic Video Production and Editing Skills",
-            "rationale": "To create engaging videos for your business, you need fundamental skills in shooting and editing. This module will equip you with the practical knowledge to produce your own promotional video content.",
+            "node_id": "social_media_fundamentals",
+            "title": "Social Media Marketing Fundamentals",
+            "rationale": "Social media provides a direct channel to connect with your audience, build brand awareness, and drive traffic. This module covers the basics of using social platforms effectively for your business.",
             "prerequisites": [
-              "Content_Strategy_for_Video_Promotion"
+              "understanding_business_audience",
+              "introduction_content_marketing"
             ],
             "suggested_micro_topics": [
-              "Smartphone Videography Techniques",
-              "Basic Lighting and Audio Setup",
-              "Introduction to Simple Editing Software (e.g., CapCut, InShot, DaVinci Resolve Free)",
-              "Scripting and Storyboarding for Short Videos",
-              "Adding Text, Music, and Graphics"
+              "Choosing the right social media platforms for your business (e.g., Facebook, Instagram, LinkedIn)",
+              "Setting up and optimizing business profiles",
+              "Basic social media content creation and posting strategies",
+              "Engaging with your audience and community management",
+              "Understanding social media analytics basics"
             ]
           },
           {
-            "node_id": "Social_Media_Marketing_for_Beginners",
-            "title": "Social Media Marketing for Business Promotion",
-            "rationale": "Social media platforms are crucial for distributing your video content and connecting with potential customers. This module covers the basics of using social media to promote your business effectively.",
+            "node_id": "seo_basics",
+            "title": "Search Engine Optimization (SEO) Basics",
+            "rationale": "SEO helps your business appear higher in search engine results, making it easier for potential customers to find you organically when they search for products or services you offer.",
             "prerequisites": [
-              "Content_Strategy_for_Video_Promotion"
+              "building_online_presence",
+              "introduction_content_marketing"
             ],
             "suggested_micro_topics": [
-              "Choosing the Right Social Media Platforms (e.g., Instagram, TikTok, Facebook, YouTube)",
-              "Optimizing Social Media Profiles",
-              "Crafting Engaging Captions for Video Posts",
-              "Understanding Hashtags and Trends",
-              "Basic Engagement Strategies and Community Building"
+              "Introduction to how search engines work",
+              "Basic keyword research for small businesses",
+              "On-page SEO fundamentals (titles, meta descriptions, headings)",
+              "Local SEO strategies (e.g., Google My Business optimization)",
+              "Understanding Google Search Console"
             ]
           },
           {
-            "node_id": "Video_SEO_and_Discovery",
-            "title": "Video SEO and Maximizing Discoverability",
-            "rationale": "Even great videos won't promote your business if no one can find them. This module teaches you how to optimize your videos for search engines and platforms to increase their visibility and reach.",
+            "node_id": "paid_advertising_intro",
+            "title": "Paid Advertising Introduction (Google & Social)",
+            "rationale": "Paid advertising offers a faster way to gain visibility and drive targeted traffic to your business, complementing organic efforts. This module introduces the fundamentals of popular ad platforms.",
             "prerequisites": [
-              "Basic_Video_Production_and_Editing",
-              "Social_Media_Marketing_for_Beginners"
+              "building_online_presence",
+              "social_media_fundamentals",
+              "seo_basics"
             ],
             "suggested_micro_topics": [
-              "Keyword Research for Video Content",
-              "Optimizing Video Titles and Descriptions",
-              "Creating Engaging Thumbnails",
-              "Utilizing Tags and Categories",
-              "Understanding YouTube SEO Best Practices",
-              "Transcripts and Closed Captions for Accessibility and SEO"
+              "Introduction to Google Ads (Search Campaigns)",
+              "Setting up your first Facebook/Instagram Ad campaign",
+              "Understanding ad targeting options for small businesses",
+              "Basic ad copy and creative best practices",
+              "Setting and managing a small advertising budget"
             ]
           },
           {
-            "node_id": "Intro_to_Paid_Video_Advertising",
-            "title": "Introduction to Paid Video Advertising",
-            "rationale": "To quickly expand your reach and target specific audiences, understanding paid advertising for videos is essential. This module introduces you to the basics of running video ad campaigns.",
+            "node_id": "email_marketing_essentials",
+            "title": "Email Marketing Essentials",
+            "rationale": "Email marketing remains one of the most effective direct communication channels for nurturing leads, building customer relationships, and driving sales for small businesses.",
             "prerequisites": [
-              "Social_Media_Marketing_for_Beginners"
+              "building_online_presence",
+              "introduction_content_marketing"
             ],
             "suggested_micro_topics": [
-              "Overview of Major Ad Platforms (e.g., Facebook Ads, YouTube Ads)",
-              "Setting Ad Objectives (e.g., Brand Awareness, Leads)",
-              "Basic Audience Targeting",
-              "Understanding Ad Budgets and Bidding",
-              "Creating Simple Video Ad Creatives"
+              "Strategies for building an email list (e.g., website forms, lead magnets)",
+              "Choosing an email service provider (e.g., Mailchimp, Constant Contact)",
+              "Designing basic email newsletters and promotional emails",
+              "Writing compelling subject lines",
+              "Understanding email automation basics (e.g., welcome sequences)"
             ]
           },
           {
-            "node_id": "Measuring_Marketing_Success",
-            "title": "Measuring and Analyzing Marketing Performance",
-            "rationale": "To ensure your video promotion efforts are successful and continuously improve, you need to track their performance. This module covers how to measure results and make data-driven decisions.",
+            "node_id": "marketing_analytics_measurement",
+            "title": "Marketing Analytics & Measurement",
+            "rationale": "To ensure your marketing efforts are effective and to continuously improve, it's vital to track performance, understand what's working (and what isn't), and make data-driven decisions.",
             "prerequisites": [
-              "Video_SEO_and_Discovery",
-              "Intro_to_Paid_Video_Advertising"
+              "social_media_fundamentals",
+              "seo_basics",
+              "paid_advertising_intro",
+              "email_marketing_essentials"
             ],
             "suggested_micro_topics": [
-              "Key Performance Indicators (KPIs) for Video Marketing",
-              "Introduction to Analytics Tools (e.g., YouTube Analytics, Facebook Insights)",
-              "Understanding Video Engagement Metrics",
-              "Basic Conversion Tracking",
-              "Interpreting Data for Optimization"
+              "Introduction to Google Analytics 4 (GA4) for website tracking",
+              "Interpreting social media insights and reports",
+              "Analyzing paid ad campaign performance",
+              "Tracking email marketing metrics (open rates, click-through rates)",
+              "Defining key performance indicators (KPIs) for your business"
             ]
           }
         ]

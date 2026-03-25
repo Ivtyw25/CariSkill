@@ -23,3 +23,7 @@ class SystemState(BaseModel):
     pending_nodes: list = []
     completed_modules: list = []
     chat_history: list = []
+
+    # --- PERFORMANCE TRACKING ---
+    macro_duration: float = 0.0
+    micro_duration: float = 0.0

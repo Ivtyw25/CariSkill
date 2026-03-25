@@ -1343,3 +1343,143 @@ Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step
   ]
 }
 ```"
+2026-03-25 14:04:46: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Marketing Experience: Beginner Goal: Promote own business Constraints/Worries: None specified
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-25 14:05:11: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Marketing Experience: Beginner Goal: Promote own business Constraints/Worries: None specified
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="```json
+{
+  "nodes": [
+    {
+      "node_id": "understanding_business_audience",
+      "title": "Understanding Your Business & Audience",
+      "rationale": "Before any marketing efforts, it's crucial to have a clear understanding of your own business, its unique value proposition, and who your ideal customers are. This foundational knowledge will guide all subsequent marketing decisions.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Defining your business model and offerings",
+        "Identifying your Unique Selling Proposition (USP)",
+        "Creating customer personas",
+        "Market research basics",
+        "Competitor analysis for small businesses"
+      ]
+    },
+    {
+      "node_id": "building_online_presence",
+      "title": "Building a Basic Online Presence",
+      "rationale": "For a small business in today's world, an online presence is non-negotiable. This module focuses on establishing the essential digital touchpoints where potential customers can find and interact with your business.",
+      "prerequisites": [
+        "understanding_business_audience"
+      ],
+      "suggested_micro_topics": [
+        "Choosing a domain name and web hosting",
+        "Setting up a simple website (e.g., using WordPress, Shopify, or a landing page builder)",
+        "Optimizing Google My Business profile",
+        "Creating essential website pages (About Us, Contact, Services/Products)",
+        "Ensuring mobile responsiveness"
+      ]
+    },
+    {
+      "node_id": "introduction_content_marketing",
+      "title": "Introduction to Content Marketing",
+      "rationale": "Content is the fuel for almost all digital marketing strategies. Learning how to create valuable content will attract, engage, and retain your target audience, establishing your business as an authority.",
+      "prerequisites": [
+        "understanding_business_audience",
+        "building_online_presence"
+      ],
+      "suggested_micro_topics": [
+        "Understanding different content formats (blog posts, images, videos, infographics)",
+        "Developing a basic content calendar",
+        "Principles of effective copywriting for small businesses",
+        "Crafting compelling calls-to-action (CTAs)",
+        "Content distribution basics"
+      ]
+    },
+    {
+      "node_id": "social_media_fundamentals",
+      "title": "Social Media Marketing Fundamentals",
+      "rationale": "Social media provides a direct channel to connect with your audience, build brand awareness, and drive traffic. This module covers the basics of using social platforms effectively for your business.",
+      "prerequisites": [
+        "understanding_business_audience",
+        "introduction_content_marketing"
+      ],
+      "suggested_micro_topics": [
+        "Choosing the right social media platforms for your business (e.g., Facebook, Instagram, LinkedIn)",
+        "Setting up and optimizing business profiles",
+        "Basic social media content creation and posting strategies",
+        "Engaging with your audience and community management",
+        "Understanding social media analytics basics"
+      ]
+    },
+    {
+      "node_id": "seo_basics",
+      "title": "Search Engine Optimization (SEO) Basics",
+      "rationale": "SEO helps your business appear higher in search engine results, making it easier for potential customers to find you organically when they search for products or services you offer.",
+      "prerequisites": [
+        "building_online_presence",
+        "introduction_content_marketing"
+      ],
+      "suggested_micro_topics": [
+        "Introduction to how search engines work",
+        "Basic keyword research for small businesses",
+        "On-page SEO fundamentals (titles, meta descriptions, headings)",
+        "Local SEO strategies (e.g., Google My Business optimization)",
+        "Understanding Google Search Console"
+      ]
+    },
+    {
+      "node_id": "paid_advertising_intro",
+      "title": "Paid Advertising Introduction (Google & Social)",
+      "rationale": "Paid advertising offers a faster way to gain visibility and drive targeted traffic to your business, complementing organic efforts. This module introduces the fundamentals of popular ad platforms.",
+      "prerequisites": [
+        "building_online_presence",
+        "social_media_fundamentals",
+        "seo_basics"
+      ],
+      "suggested_micro_topics": [
+        "Introduction to Google Ads (Search Campaigns)",
+        "Setting up your first Facebook/Instagram Ad campaign",
+        "Understanding ad targeting options for small businesses",
+        "Basic ad copy and creative best practices",
+        "Setting and managing a small advertising budget"
+      ]
+    },
+    {
+      "node_id": "email_marketing_essentials",
+      "title": "Email Marketing Essentials",
+      "rationale": "Email marketing remains one of the most effective direct communication channels for nurturing leads, building customer relationships, and driving sales for small businesses.",
+      "prerequisites": [
+        "building_online_presence",
+        "introduction_content_marketing"
+      ],
+      "suggested_micro_topics": [
+        "Strategies for building an email list (e.g., website forms, lead magnets)",
+        "Choosing an email service provider (e.g., Mailchimp, Constant Contact)",
+        "Designing basic email newsletters and promotional emails",
+        "Writing compelling subject lines",
+        "Understanding email automation basics (e.g., welcome sequences)"
+      ]
+    },
+    {
+      "node_id": "marketing_analytics_measurement",
+      "title": "Marketing Analytics & Measurement",
+      "rationale": "To ensure your marketing efforts are effective and to continuously improve, it's vital to track performance, understand what's working (and what isn't), and make data-driven decisions.",
+      "prerequisites": [
+        "social_media_fundamentals",
+        "seo_basics",
+        "paid_advertising_intro",
+        "email_marketing_essentials"
+      ],
+      "suggested_micro_topics": [
+        "Introduction to Google Analytics 4 (GA4) for website tracking",
+        "Interpreting social media insights and reports",
+        "Analyzing paid ad campaign performance",
+        "Tracking email marketing metrics (open rates, click-through rates)",
+        "Defining key performance indicators (KPIs) for your business"
+      ]
+    }
+  ]
+}
+```"

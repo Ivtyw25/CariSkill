@@ -107,8 +107,19 @@ async def generate_podcast_endpoint(req: PodcastRequest):
                 "file_path": str(final_path),
                 "session_id": req.session_id
             }
+            podcast_duration = time.time() - start_time
             print(f"Podcast {task_id} generated successfully: {final_path}")
-            print(f"\n⏳ [DURATION TRACKER] Podcast Phase completed in: {time.time() - start_time:.2f} seconds\n")
+            print(f"\n⏳ [DURATION TRACKER] Podcast Phase completed in: {podcast_duration:.2f} seconds\n")
+            
+            print('\n=========================================')
+            print(' 📊 CARISKILL GENERATION TIME REPORT 📊')
+            print('=========================================')
+            print(f' 1️⃣ Macro Syllabus Phase: N/A')
+            print(f' 2️⃣ Micro Theory & Scrape: N/A')
+            print(f' 3️⃣ Podcast Generation: {podcast_duration:.2f}s')
+            print('-----------------------------------------')
+            print(f' 🏆 TOTAL PIPELINE TIME: {podcast_duration:.2f}s')
+            print('=========================================\n')
 
         except Exception as e:
             print(f"Podcast generation error: {str(e)}")
@@ -257,7 +268,19 @@ async def start_macro_endpoint(req: StartMacroRequest):
             with open("temp_master_flow_output.json", "w", encoding="utf-8") as f:
                 json.dump(final_response, f, indent=2)
             
-            print(f"\n⏳ [DURATION TRACKER] Overall Generation completed in: {time.time() - overall_start:.2f} seconds\n")
+            total_time = time.time() - overall_start
+            macro_duration = flow.state.macro_duration
+            micro_duration = flow.state.micro_duration
+
+            print('\n=========================================')
+            print(' 📊 CARISKILL GENERATION TIME REPORT 📊')
+            print('=========================================')
+            print(f' 1️⃣ Macro Syllabus Phase: {macro_duration:.2f}s')
+            print(f' 2️⃣ Micro Theory & Scrape: {micro_duration:.2f}s')
+            print(f' 3️⃣ Podcast Generation: N/A')
+            print('-----------------------------------------')
+            print(f' 🏆 TOTAL PIPELINE TIME: {total_time:.2f}s')
+            print('=========================================\n')
                 
         except Exception as e:
             print(f"Error during CrewAI execution: {str(e)}")
