@@ -22,10 +22,10 @@
     "roadmap": null,
     "critic_feedback": null,
     "is_approved": false,
-    "topic": "Starting a small bakery business",
+    "topic": "Bakery",
     "experience": "Beginner",
-    "goal": "Start a small bakery business within 6 months",
-    "constraints": "6 months, Wants podcast",
+    "goal": "Hobby",
+    "constraints": "No time limit, No audio podcast",
     "blueprint": {
       "nodes": [
         {
@@ -71,9 +71,13 @@
       {
         "role": "assistant",
         "content": "Your complete, personalized micro-learning course is ready!"
+      },
+      {
+        "role": "assistant",
+        "content": "Your complete, personalized micro-learning course is ready!"
       }
     ],
-    "macro_duration": 8.001530408859253,
+    "macro_duration": 8.000917673110962,
     "micro_duration": 0.0
   },
   "session_id": "26e45a75-3a48-4b35-b460-7a4827232497"
