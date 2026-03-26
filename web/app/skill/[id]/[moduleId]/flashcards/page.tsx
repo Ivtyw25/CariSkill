@@ -386,7 +386,7 @@ export default function FlashcardsPage({ params }: { params: Promise<{ id: strin
                   transition={{ delay: 0.1 }}
                 >
                   <button
-                    onClick={() => router.push(`/skill/${id}/${moduleId}/quiz`)}
+                    onClick={() => router.push(`/skill/${id}/${moduleId}/quiz/setup`)}
                     className="flex items-center gap-3 px-8 py-3.5 bg-[#FFD700] hover:bg-[#E6C200] text-gray-900 rounded-full font-bold shadow-lg hover:shadow-xl transition-all active:scale-95"
                   >
                     Take the Quiz

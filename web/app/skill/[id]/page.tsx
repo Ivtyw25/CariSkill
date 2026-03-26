@@ -464,7 +464,7 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
                   <ToolButton
                     icon={CheckSquare}
                     label="Quiz"
-                    href={`/skill/${id}/${module.id}/quiz`}
+                    href={`/skill/${id}/${module.id}/quiz/setup`}
                   />
                   <ToolButton
                     icon={FileText}

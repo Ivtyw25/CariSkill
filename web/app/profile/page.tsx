@@ -14,8 +14,10 @@ const LanguageTag = ({ lang }: { lang: string }) => {
     en: { label: 'EN', color: 'text-blue-600', bg: 'bg-blue-50' },
     zh: { label: '中文', color: 'text-red-600', bg: 'bg-red-50' },
     ms: { label: 'BM', color: 'text-green-600', bg: 'bg-green-50' },
+    ta: { label: 'TA', color: 'text-orange-600', bg: 'bg-orange-50' },
+    es: { label: 'ES', color: 'text-purple-600', bg: 'bg-purple-50' },
   };
-  const config = configs[lang.toLowerCase()] || configs.en;
+  const config = configs[lang.toLowerCase()] || { label: lang.toUpperCase(), color: 'text-gray-600', bg: 'bg-gray-50' };
   return (
     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${config.bg} ${config.color} border-current opacity-90 uppercase tracking-wider`}>
       {config.label}
@@ -50,7 +52,7 @@ export default function ProfilePage() {
         .from('user_roadmap_preferences')
         .select('roadmap_id, preferred_language')
         .eq('user_id', user.id);
-      
+
       const prefMap = new Map(prefs?.map(p => [p.roadmap_id, p.preferred_language]));
 
       // For each roadmap, compute progress from node_progress
@@ -109,7 +111,7 @@ export default function ProfilePage() {
   const handleAddToResume = async (e: React.MouseEvent, skill: any) => {
     e.stopPropagation();
     setSyncingSkillId(skill.id);
-    
+
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
@@ -136,7 +138,7 @@ export default function ProfilePage() {
         .eq('id', user.id);
 
       setSyncedSkills(prev => new Set(prev).add(skill.id));
-      
+
       // Feedback duration
       setTimeout(() => {
         setSyncingSkillId(null);
@@ -216,67 +218,73 @@ export default function ProfilePage() {
                         transition={{ duration: 0.35, delay: idx * 0.07, ease: 'easeOut' }}
                         whileHover={{ y: -6, transition: { duration: 0.2 } }}
                         onClick={() => window.location.href = `/skill/${skill.slug}`}
-                        className="bg-white rounded-[24px] p-6 shadow-sm hover:shadow-xl border border-gray-100 flex flex-col transition-shadow duration-300 group cursor-pointer min-h-[260px] h-auto"
+                        className="relative bg-white rounded-[24px] p-6 shadow-sm hover:shadow-xl border border-gray-100 flex flex-col transition-all duration-300 group cursor-pointer min-h-[260px] h-auto overflow-hidden text-left"
                       >
-                        <div className="flex justify-between items-start mb-5">
-                          <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#FEF9C3] text-[#CA8A04] group-hover:scale-110 transition-transform">
-                            <PlayCircle className="w-6 h-6" />
-                          </div>
-                          
-                          {/* Language Tag replacing the three dots */}
-                          <div className="flex items-center" onClick={(e) => e.stopPropagation()}>
-                            <LanguageTag lang={skill.language} />
-                          </div>
-                        </div>
+                        {/* Interactive Yellow Glow on Hover */}
+                        <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400/20 via-yellow-400/40 to-[#FFD700]/20 rounded-[28px] blur-xl opacity-0 group-hover:opacity-100 transition duration-500 group-hover:duration-200 pointer-events-none" />
 
-                        {/* Topic title — e.g. "Next.js", "Python" */}
-                        <h3 className="font-bold text-xl text-gray-900 mb-1 leading-tight capitalize line-clamp-2" title={skill.title}>{skill.title}</h3>
-                        <p className="text-sm text-gray-400 mb-4">{skill.category}</p>
-
-                        <div className="mt-auto">
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="text-sm font-medium text-gray-600">Progress</span>
-                            <span className="text-sm font-bold text-gray-900">{skill.progress}%</span>
-                          </div>
-                          <div className="w-full bg-gray-100 rounded-full h-2.5 mb-5 overflow-hidden">
-                            <motion.div
-                              className={`h-2.5 rounded-full ${skill.progress === 100 ? 'bg-green-500' : 'bg-[#FFD700]'}`}
-                              initial={{ width: 0 }}
-                              animate={{ width: `${skill.progress}%` }}
-                              transition={{ duration: 1, delay: idx * 0.07 + 0.3, ease: 'easeOut' }}
-                            />
-                          </div>
-                          <div className="flex justify-between items-center pt-4 border-t border-gray-50">
-                            <div className="flex items-center gap-1.5 text-gray-500">
-                              <Clock className="w-4 h-4" />
-                              {/* Shows 0 min until study_sessions table is created and populated */}
-                              <span className="text-xs font-medium">{skill.total_time_spent} min</span>
+                        {/* Inner Content Wrapper to keep it above the glow */}
+                        <div className="relative z-10 flex flex-col h-full">
+                          <div className="flex justify-between items-start mb-5">
+                            <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#FEF9C3] text-[#CA8A04] group-hover:scale-110 transition-transform">
+                              <PlayCircle className="w-6 h-6" />
                             </div>
-                            
-                            {skill.status === 'Done' ? (
-                              <button
-                                onClick={(e) => handleAddToResume(e, skill)}
-                                disabled={syncingSkillId === skill.id || syncedSkills.has(skill.id)}
-                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all
-                                  ${syncedSkills.has(skill.id) 
-                                    ? 'bg-green-100 text-green-700 pointer-events-none' 
-                                    : 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200 active:scale-95'}`}
-                              >
-                                {syncingSkillId === skill.id ? (
-                                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                                ) : syncedSkills.has(skill.id) ? (
-                                  <FileCheck className="w-3.5 h-3.5" />
-                                ) : (
-                                  <Plus className="w-3.5 h-3.5" />
-                                )}
-                                {syncedSkills.has(skill.id) ? 'Added to Resume' : 'Add to Resume'}
-                              </button>
-                            ) : (
-                              <span className={`text-sm font-bold flex items-center gap-1 ${skill.status === 'Done' ? 'text-green-600' : 'text-[#CA8A04]'}`}>
-                                {skill.status === 'Ongoing' && <PlayCircle className="w-4 h-4" />}
-                                {skill.status === 'Ongoing' ? 'Continue' : 'Review'}
-                              </span>
-                            )}
+
+                            {/* Language Tag replacing the three dots */}
+                            <div className="flex items-center" onClick={(e) => e.stopPropagation()}>
+                              <LanguageTag lang={skill.language} />
+                            </div>
+                          </div>
+
+                          {/* Topic title — e.g. "Next.js", "Python" */}
+                          <h3 className="font-bold text-xl text-gray-900 mb-1 leading-tight capitalize line-clamp-2" title={skill.title}>{skill.title}</h3>
+                          <p className="text-sm text-gray-400 mb-4">{skill.category}</p>
+
+                          <div className="mt-auto">
+                            <div className="flex justify-between items-center mb-2">
+                              <span className="text-sm font-medium text-gray-600">Progress</span>
+                              <span className="text-sm font-bold text-gray-900">{skill.progress}%</span>
+                            </div>
+                            <div className="w-full bg-gray-100 rounded-full h-2.5 mb-5 overflow-hidden">
+                              <motion.div
+                                className={`h-2.5 rounded-full ${skill.progress === 100 ? 'bg-green-500' : 'bg-[#FFD700]'}`}
+                                initial={{ width: 0 }}
+                                animate={{ width: `${skill.progress}%` }}
+                                transition={{ duration: 1, delay: idx * 0.07 + 0.3, ease: 'easeOut' }}
+                              />
+                            </div>
+                            <div className="flex justify-between items-center pt-4 border-t border-gray-50">
+                              <div className="flex items-center gap-1.5 text-gray-500">
+                                <Clock className="w-4 h-4" />
+                                {/* Shows 0 min until study_sessions table is created and populated */}
+                                <span className="text-xs font-medium">{skill.total_time_spent} min</span>
+                              </div>
+
+                              {skill.status === 'Done' ? (
+                                <button
+                                  onClick={(e) => handleAddToResume(e, skill)}
+                                  disabled={syncingSkillId === skill.id || syncedSkills.has(skill.id)}
+                                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all
+                                  ${syncedSkills.has(skill.id)
+                                      ? 'bg-green-100 text-green-700 pointer-events-none'
+                                      : 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200 active:scale-95'}`}
+                                >
+                                  {syncingSkillId === skill.id ? (
+                                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                  ) : syncedSkills.has(skill.id) ? (
+                                    <FileCheck className="w-3.5 h-3.5" />
+                                  ) : (
+                                    <Plus className="w-3.5 h-3.5" />
+                                  )}
+                                  {syncedSkills.has(skill.id) ? 'Added to Resume' : 'Add to Resume'}
+                                </button>
+                              ) : (
+                                <span className={`text-sm font-bold flex items-center gap-1 ${skill.status === 'Done' ? 'text-green-600' : 'text-[#CA8A04]'}`}>
+                                  {skill.status === 'Ongoing' && <PlayCircle className="w-4 h-4" />}
+                                  {skill.status === 'Ongoing' ? 'Continue' : 'Review'}
+                                </span>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </motion.div>
