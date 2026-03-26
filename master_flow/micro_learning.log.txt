@@ -26470,3 +26470,83 @@ Search on your favorite podcast platform using terms like "small business financ
   "node_total_time_minutes": 47
 }
 ```"
+2026-03-26 16:27:48: task_name="scrape_task", task="We are building content for the Macro Node: "Product Development & Niche Identification". The specific sub-topics to research are: Recipe testing and iteration, Identifying a target customer demographic, Market research for bakery trends, Competitive analysis in local market, Developing a unique selling proposition (USP), Menu design and pricing strategy (initial thoughts).
+Your job is to perform a deep research dive using the `AsyncDeepSearchTool`.
+For EACH sub-topic: 1. SEARCH: Fire a query into the `AsyncDeepSearchTool` to find documentation and video links. 2. ANALYZE: Review the extracted markdown content provided by the tool. Identify high-signal facts, 
+   technical architectures, and specific code examples that are relevant to the user's experience level (Beginner) and goal (Start a small business).
+3. COMPILE: Gather the best URLs and their titles, ensuring you prioritize sources that returned clean, readable markdown content.
+IMPORTANT RULES: - You are now a DEEP RESEARCHER. You must leverage the markdown content returned by your tool. - Extract code snippets and detailed explanations from the sources to pass to the Educator. - If a tool returns no content or irrelevant results for a specific search, SKIP IT. - Do not hallucinate or make up URLs or content.
+", agent="Deep Web Researcher
+", status="started"
+2026-03-26 16:27:52: task_name="scrape_task", task="We are building content for the Macro Node: "Introduction to Small Business Concepts". The specific sub-topics to research are: What is a business model?, Revenue vs. Profit vs. Cost, Basic financial statements overview (income, balance sheet), Entrepreneurial mindset and resilience, Understanding supply and demand basics, Lean startup principles for food businesses.
+Your job is to perform a deep research dive using the `AsyncDeepSearchTool`.
+For EACH sub-topic: 1. SEARCH: Fire a query into the `AsyncDeepSearchTool` to find documentation and video links. 2. ANALYZE: Review the extracted markdown content provided by the tool. Identify high-signal facts, 
+   technical architectures, and specific code examples that are relevant to the user's experience level (Beginner) and goal (Start a small business).
+3. COMPILE: Gather the best URLs and their titles, ensuring you prioritize sources that returned clean, readable markdown content.
+IMPORTANT RULES: - You are now a DEEP RESEARCHER. You must leverage the markdown content returned by your tool. - Extract code snippets and detailed explanations from the sources to pass to the Educator. - If a tool returns no content or irrelevant results for a specific search, SKIP IT. - Do not hallucinate or make up URLs or content.
+", agent="Deep Web Researcher
+", status="started"
+2026-03-26 16:27:57: task_name="scrape_task", task="We are building content for the Macro Node: "Baking Fundamentals & Recipe Scaling". The specific sub-topics to research are: Mastering basic doughs (bread, pastry, cookie), Understanding ingredient functions (flour, sugar, fat, leavening), Recipe conversion and scaling techniques, Quality control and consistency, Troubleshooting common baking issues, Introduction to specialty diets (gluten-free, vegan) if applicable.
+Your job is to perform a deep research dive using the `AsyncDeepSearchTool`.
+For EACH sub-topic: 1. SEARCH: Fire a query into the `AsyncDeepSearchTool` to find documentation and video links. 2. ANALYZE: Review the extracted markdown content provided by the tool. Identify high-signal facts, 
+   technical architectures, and specific code examples that are relevant to the user's experience level (Beginner) and goal (Start a small business).
+3. COMPILE: Gather the best URLs and their titles, ensuring you prioritize sources that returned clean, readable markdown content.
+IMPORTANT RULES: - You are now a DEEP RESEARCHER. You must leverage the markdown content returned by your tool. - Extract code snippets and detailed explanations from the sources to pass to the Educator. - If a tool returns no content or irrelevant results for a specific search, SKIP IT. - Do not hallucinate or make up URLs or content.
+", agent="Deep Web Researcher
+", status="started"
+2026-03-26 16:28:01: task_name="scrape_task", task="We are building content for the Macro Node: "Developing Your Bakery Business Plan". The specific sub-topics to research are: Components of a business plan (executive summary, company description), Market analysis and competitive landscape, Operations plan (production, distribution), Management team and organizational structure, Financial projections (startup costs, sales forecast), Funding request and investor pitch (if applicable).
+Your job is to perform a deep research dive using the `AsyncDeepSearchTool`.
+For EACH sub-topic: 1. SEARCH: Fire a query into the `AsyncDeepSearchTool` to find documentation and video links. 2. ANALYZE: Review the extracted markdown content provided by the tool. Identify high-signal facts, 
+   technical architectures, and specific code examples that are relevant to the user's experience level (Beginner) and goal (Start a small business).
+3. COMPILE: Gather the best URLs and their titles, ensuring you prioritize sources that returned clean, readable markdown content.
+IMPORTANT RULES: - You are now a DEEP RESEARCHER. You must leverage the markdown content returned by your tool. - Extract code snippets and detailed explanations from the sources to pass to the Educator. - If a tool returns no content or irrelevant results for a specific search, SKIP IT. - Do not hallucinate or make up URLs or content.
+", agent="Deep Web Researcher
+", status="started"
+2026-03-26 16:28:06: task_name="scrape_task", task="We are building content for the Macro Node: "Legal & Regulatory Framework for Food Businesses". The specific sub-topics to research are: Business registration and legal structure (sole proprietorship, LLC), Local health department permits and inspections, Food handler certifications and requirements, Zoning laws for home-based vs. commercial kitchens, Business insurance (liability, property), Understanding food labeling requirements.
+Your job is to perform a deep research dive using the `AsyncDeepSearchTool`.
+For EACH sub-topic: 1. SEARCH: Fire a query into the `AsyncDeepSearchTool` to find documentation and video links. 2. ANALYZE: Review the extracted markdown content provided by the tool. Identify high-signal facts, 
+   technical architectures, and specific code examples that are relevant to the user's experience level (Beginner) and goal (Start a small business).
+3. COMPILE: Gather the best URLs and their titles, ensuring you prioritize sources that returned clean, readable markdown content.
+IMPORTANT RULES: - You are now a DEEP RESEARCHER. You must leverage the markdown content returned by your tool. - Extract code snippets and detailed explanations from the sources to pass to the Educator. - If a tool returns no content or irrelevant results for a specific search, SKIP IT. - Do not hallucinate or make up URLs or content.
+", agent="Deep Web Researcher
+", status="started"
+2026-03-26 16:28:10: task_name="scrape_task", task="We are building content for the Macro Node: "Financial Management & Pricing Strategies". The specific sub-topics to research are: Calculating startup costs and operating expenses, Cost of goods sold (COGS) for bakery items, Pricing models (cost-plus, value-based, competitive), Basic bookkeeping and record-keeping systems, Cash flow management for small businesses, Understanding profit margins and break-even analysis.
+Your job is to perform a deep research dive using the `AsyncDeepSearchTool`.
+For EACH sub-topic: 1. SEARCH: Fire a query into the `AsyncDeepSearchTool` to find documentation and video links. 2. ANALYZE: Review the extracted markdown content provided by the tool. Identify high-signal facts, 
+   technical architectures, and specific code examples that are relevant to the user's experience level (Beginner) and goal (Start a small business).
+3. COMPILE: Gather the best URLs and their titles, ensuring you prioritize sources that returned clean, readable markdown content.
+IMPORTANT RULES: - You are now a DEEP RESEARCHER. You must leverage the markdown content returned by your tool. - Extract code snippets and detailed explanations from the sources to pass to the Educator. - If a tool returns no content or irrelevant results for a specific search, SKIP IT. - Do not hallucinate or make up URLs or content.
+", agent="Deep Web Researcher
+", status="started"
+2026-03-26 16:28:15: task_name="scrape_task", task="We are building content for the Macro Node: "Efficient Kitchen Operations & Advanced Food Safety". The specific sub-topics to research are: Kitchen layout and workflow optimization, Essential bakery equipment selection and maintenance, Inventory rotation methods (FIFO), Advanced HACCP principles for bakeries, Allergen control and cross-contamination prevention, Waste reduction strategies and sustainable practices.
+Your job is to perform a deep research dive using the `AsyncDeepSearchTool`.
+For EACH sub-topic: 1. SEARCH: Fire a query into the `AsyncDeepSearchTool` to find documentation and video links. 2. ANALYZE: Review the extracted markdown content provided by the tool. Identify high-signal facts, 
+   technical architectures, and specific code examples that are relevant to the user's experience level (Beginner) and goal (Start a small business).
+3. COMPILE: Gather the best URLs and their titles, ensuring you prioritize sources that returned clean, readable markdown content.
+IMPORTANT RULES: - You are now a DEEP RESEARCHER. You must leverage the markdown content returned by your tool. - Extract code snippets and detailed explanations from the sources to pass to the Educator. - If a tool returns no content or irrelevant results for a specific search, SKIP IT. - Do not hallucinate or make up URLs or content.
+", agent="Deep Web Researcher
+", status="started"
+2026-03-26 16:28:20: task_name="scrape_task", task="We are building content for the Macro Node: "Marketing & Sales Strategies for Your Bakery". The specific sub-topics to research are: Developing a bakery brand identity and story, Social media marketing for food businesses (Instagram, TikTok), Local SEO and online presence (Google My Business), Customer service best practices, Sales channels (farmers markets, online store, local cafes), Food photography and visual merchandising.
+Your job is to perform a deep research dive using the `AsyncDeepSearchTool`.
+For EACH sub-topic: 1. SEARCH: Fire a query into the `AsyncDeepSearchTool` to find documentation and video links. 2. ANALYZE: Review the extracted markdown content provided by the tool. Identify high-signal facts, 
+   technical architectures, and specific code examples that are relevant to the user's experience level (Beginner) and goal (Start a small business).
+3. COMPILE: Gather the best URLs and their titles, ensuring you prioritize sources that returned clean, readable markdown content.
+IMPORTANT RULES: - You are now a DEEP RESEARCHER. You must leverage the markdown content returned by your tool. - Extract code snippets and detailed explanations from the sources to pass to the Educator. - If a tool returns no content or irrelevant results for a specific search, SKIP IT. - Do not hallucinate or make up URLs or content.
+", agent="Deep Web Researcher
+", status="started"
+2026-03-26 16:28:24: task_name="scrape_task", task="We are building content for the Macro Node: "Sourcing, Supply Chain & Inventory Management". The specific sub-topics to research are: Identifying reliable ingredient suppliers (local vs. wholesale), Negotiating supplier contracts and bulk purchasing, Quality control for incoming ingredients, Inventory tracking systems (manual vs. digital), Minimizing spoilage and waste, Understanding lead times and delivery logistics.
+Your job is to perform a deep research dive using the `AsyncDeepSearchTool`.
+For EACH sub-topic: 1. SEARCH: Fire a query into the `AsyncDeepSearchTool` to find documentation and video links. 2. ANALYZE: Review the extracted markdown content provided by the tool. Identify high-signal facts, 
+   technical architectures, and specific code examples that are relevant to the user's experience level (Beginner) and goal (Start a small business).
+3. COMPILE: Gather the best URLs and their titles, ensuring you prioritize sources that returned clean, readable markdown content.
+IMPORTANT RULES: - You are now a DEEP RESEARCHER. You must leverage the markdown content returned by your tool. - Extract code snippets and detailed explanations from the sources to pass to the Educator. - If a tool returns no content or irrelevant results for a specific search, SKIP IT. - Do not hallucinate or make up URLs or content.
+", agent="Deep Web Researcher
+", status="started"
+2026-03-26 16:28:29: task_name="scrape_task", task="We are building content for the Macro Node: "Launch Strategies & Early Growth Hacking". The specific sub-topics to research are: Soft launch vs. Grand opening planning, Collecting and acting on customer feedback, Building customer loyalty programs, Basic scaling strategies for production, Hiring your first team members (if applicable), Continuous improvement and adaptation.
+Your job is to perform a deep research dive using the `AsyncDeepSearchTool`.
+For EACH sub-topic: 1. SEARCH: Fire a query into the `AsyncDeepSearchTool` to find documentation and video links. 2. ANALYZE: Review the extracted markdown content provided by the tool. Identify high-signal facts, 
+   technical architectures, and specific code examples that are relevant to the user's experience level (Beginner) and goal (Start a small business).
+3. COMPILE: Gather the best URLs and their titles, ensuring you prioritize sources that returned clean, readable markdown content.
+IMPORTANT RULES: - You are now a DEEP RESEARCHER. You must leverage the markdown content returned by your tool. - Extract code snippets and detailed explanations from the sources to pass to the Educator. - If a tool returns no content or irrelevant results for a specific search, SKIP IT. - Do not hallucinate or make up URLs or content.
+", agent="Deep Web Researcher
+", status="started"

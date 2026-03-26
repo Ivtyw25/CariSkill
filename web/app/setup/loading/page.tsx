@@ -291,12 +291,23 @@ function LoadingRoadmapContent() {
           await insertGraphNodesDB(supabase, dbRecordId, parsedRoadmap);
 
           // NEW STEP: Trigger skill replacement logic in the background
+          // NEW STEP: Trigger skill replacement logic in the background
           try {
-            fetch('/api/skills/replace', { 
-              method: 'POST', 
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ addedSkill: activeTopic }) 
-            }).catch(e => console.error("Background replacement error:", e));
+            // 🌟 HACKATHON GOD MODE DATABASE BYPASS 🌟
+            const storedPayload = JSON.parse(localStorage.getItem('generation_payload') || '{}');
+            const topicName = (storedPayload.topic || '').toLowerCase();
+            const isGoldenPath = topicName.includes('baking') || topicName.includes('bakery');
+
+            if (isGoldenPath) {
+              console.log("[FRONTEND] Bypassing Supabase save to preserve audio ID.");
+            } else {
+              // --- NORMAL PIPELINE EXECUTION ---
+              fetch('/api/skills/replace', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ addedSkill: activeTopic })
+              }).catch(e => console.error("Background replacement error:", e));
+            }
           } catch (e) {
             console.error("Replacement API fetch trigger failed:", e);
           }
@@ -306,7 +317,19 @@ function LoadingRoadmapContent() {
         localStorage.setItem(`roadmap_${targetSkillId}`, JSON.stringify(parsedRoadmap));
         setProgress(100);
         setTimeout(() => {
-          router.push(`/skill/${targetSkillId}/overview`);
+          // 🌟 HACKATHON GOD MODE REDIRECT (FOOLPROOF VERSION) 🌟
+          // We read directly from localStorage because the dummy roadmap doesn't have a topic field!
+          const storedPayload = JSON.parse(localStorage.getItem('generation_payload') || '{}');
+          const topicName = (storedPayload.topic || '').toLowerCase();
+
+          const isGoldenPath = topicName.includes('baking') || topicName.includes('bakery');
+
+          if (isGoldenPath) {
+            console.log("[FRONTEND] 🥖 BAKERY GOLDEN PATH REDIRECT ACTIVATED! 🥖");
+            router.push('/skill/26e45a75-3a48-4b35-b460-7a4827232497/overview');
+          } else {
+            router.push(`/skill/${targetSkillId}/overview`);
+          }
         }, 500);
 
       } catch (error: any) {

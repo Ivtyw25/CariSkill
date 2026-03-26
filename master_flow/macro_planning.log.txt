@@ -2292,3 +2292,619 @@ Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step
   ]
 }
 ```"
+2026-03-26 15:20:40: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Bakery Experience: Beginner Goal: For business Constraints/Worries: Wants podcast, No time limit
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-26 15:21:00: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Bakery Experience: Beginner Goal: For business Constraints/Worries: Wants podcast, No time limit
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="{"nodes": [{"node_id": "bakery_business_fundamentals", "title": "Bakery Business Fundamentals", "rationale": "To transition from a hobby baker to a professional business owner, understanding the core principles of running a bakery is essential to avoid common pitfalls and build a solid foundation.", "prerequisites": [], "suggested_micro_topics": ["Business planning for bakeries", "Legal structures for small food businesses", "Initial capital and funding options", "Market research for bakery products", "Developing a unique selling proposition (USP)"]}, {"node_id": "baking_science_and_techniques", "title": "Baking Science and Techniques", "rationale": "A strong understanding of baking science and essential techniques is crucial for producing consistent, high-quality products, which is a cornerstone of a successful bakery business.", "prerequisites": [], "suggested_micro_topics": ["Ingredient functions (flour, sugar, fat, leavening)", "Dough development and fermentation", "Temperature and humidity control in baking", "Common baking methods (creaming, foaming, rubbing)", "Troubleshooting baking issues"]}, {"node_id": "food_safety_and_hygiene", "title": "Food Safety and Hygiene", "rationale": "Ensuring food safety and maintaining high hygiene standards are non-negotiable for any food business to protect customers, comply with regulations, and maintain a positive reputation.", "prerequisites": [], "suggested_micro_topics": ["HACCP principles for bakeries", "Cross-contamination prevention", "Temperature danger zones", "Personal hygiene for food handlers", "Allergen management"]}, {"node_id": "bakery_operations_and_management", "title": "Bakery Operations and Management", "rationale": "Efficient daily operations and effective management are key to profitability and smooth running of the business, covering everything from production to staffing.", "prerequisites": ["bakery_business_fundamentals", "baking_science_and_techniques", "food_safety_and_hygiene"], "suggested_micro_topics": ["Inventory management for ingredients", "Production scheduling and workflow", "Equipment selection and maintenance", "Staffing and training", "Customer service in a bakery setting"]}, {"node_id": "marketing_and_sales_for_bakeries", "title": "Marketing and Sales for Bakeries", "rationale": "Attracting and retaining customers is vital for business growth. This module focuses on strategies to promote the bakery and drive sales.", "prerequisites": ["bakery_business_fundamentals"], "suggested_micro_topics": ["Branding and visual identity", "Social media marketing for food businesses", "Pricing strategies for baked goods", "Online ordering and delivery platforms", "Local marketing and community engagement"]}, {"node_id": "financial_management_for_bakeries", "title": "Financial Management for Bakeries", "rationale": "Understanding the financial aspects of the business is critical for profitability, managing cash flow, and making informed business decisions.", "prerequisites": ["bakery_business_fundamentals"], "suggested_micro_topics": ["Costing baked goods", "Profit and loss statements", "Budgeting and forecasting", "Managing expenses and overhead", "Tax considerations for small businesses"]}, {"node_id": "product_development_and_creativity", "title": "Product Development and Creativity", "rationale": "To stay competitive and cater to evolving customer preferences, continuous product development and a creative approach to baking are essential.", "prerequisites": ["baking_science_and_techniques"], "suggested_micro_topics": ["Recipe development and scaling", "Seasonal product offerings", "Catering to dietary restrictions (gluten-free, vegan)", "Decorating techniques and presentation", "Innovation in flavor combinations"]}, {"node_id": "growth_and_expansion_strategies", "title": "Growth and Expansion Strategies", "rationale": "Once the bakery is established, understanding how to strategically grow and expand the business will ensure long-term success and increased revenue.", "prerequisites": ["bakery_operations_and_management", "marketing_and_sales_for_bakeries", "financial_management_for_bakeries", "product_development_and_creativity"], "suggested_micro_topics": ["Scaling production", "Opening new locations", "Wholesale opportunities", "Franchising considerations", "Diversifying product lines"]}]}"
+2026-03-26 15:47:29: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Bakery Experience: Beginner Goal: Start a bakery business Constraints/Worries: 6 months limit, No audio podcast
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-26 15:47:53: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Bakery Experience: Beginner Goal: Start a bakery business Constraints/Worries: 6 months limit, No audio podcast
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="```json
+{
+  "nodes": [
+    {
+      "node_id": "bakery_concept_dev",
+      "title": "Bakery Concept Development",
+      "rationale": "Understanding your bakery's unique selling proposition is crucial for differentiation and attracting customers. This foundational step helps define your vision.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Niche identification (e.g., artisanal, gluten-free, custom cakes)",
+        "Target audience analysis",
+        "Menu planning and product offerings",
+        "Brand identity and storytelling",
+        "Competitive analysis"
+      ]
+    },
+    {
+      "node_id": "business_plan_essentials",
+      "title": "Business Plan Essentials",
+      "rationale": "A solid business plan is your roadmap to success, outlining your strategies, financial projections, and operational details. It's also vital for securing funding.",
+      "prerequisites": [
+        "bakery_concept_dev"
+      ],
+      "suggested_micro_topics": [
+        "Executive summary writing",
+        "Company description",
+        "Market analysis (SWOT)",
+        "Organization and management structure",
+        "Service or product line details"
+      ]
+    },
+    {
+      "node_id": "financial_planning_funding",
+      "title": "Financial Planning & Funding",
+      "rationale": "Understanding the financial aspects of your bakery, from startup costs to profitability, is critical for long-term viability. Securing funding is often the first major hurdle.",
+      "prerequisites": [
+        "business_plan_essentials"
+      ],
+      "suggested_micro_topics": [
+        "Startup cost estimation",
+        "Operating budget creation",
+        "Pricing strategies for baked goods",
+        "Sales forecasting and revenue projections",
+        "Funding sources (loans, grants, personal savings)",
+        "Basic accounting principles for small businesses"
+      ]
+    },
+    {
+      "node_id": "legal_regulatory_compliance",
+      "title": "Legal & Regulatory Compliance",
+      "rationale": "Navigating the legal landscape is essential to operate your bakery legally and safely, avoiding costly fines and ensuring customer trust.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Business structure (sole proprietorship, LLC)",
+        "Business registration and licenses (local, state, federal)",
+        "Food safety regulations (health permits, HACCP basics)",
+        "Insurance requirements (liability, property)",
+        "Trademarking and intellectual property basics"
+      ]
+    },
+    {
+      "node_id": "location_equipment_setup",
+      "title": "Location & Equipment Setup",
+      "rationale": "Choosing the right location and acquiring the necessary equipment are fundamental operational steps that directly impact efficiency, customer access, and product quality.",
+      "prerequisites": [
+        "bakery_concept_dev",
+        "financial_planning_funding"
+      ],
+      "suggested_micro_topics": [
+        "Location scouting and lease negotiation",
+        "Kitchen layout and design principles",
+        "Essential bakery equipment (ovens, mixers, display cases)",
+        "Supplier identification and procurement",
+        "Utilities and infrastructure considerations"
+      ]
+    },
+    {
+      "node_id": "menu_recipe_development",
+      "title": "Menu & Recipe Development",
+      "rationale": "The heart of any bakery is its products. Developing a strong, consistent menu with appealing recipes is key to customer satisfaction and repeat business.",
+      "prerequisites": [
+        "bakery_concept_dev"
+      ],
+      "suggested_micro_topics": [
+        "Recipe formulation and standardization",
+        "Ingredient sourcing and cost analysis",
+        "Quality control and consistency",
+        "Allergen management and labeling",
+        "Seasonal menu planning"
+      ]
+    },
+    {
+      "node_id": "marketing_branding_strategies",
+      "title": "Marketing & Branding Strategies",
+      "rationale": "Even the best bakery needs customers. Effective marketing and a strong brand help attract and retain your target audience, driving sales and growth.",
+      "prerequisites": [
+        "bakery_concept_dev",
+        "business_plan_essentials"
+      ],
+      "suggested_micro_topics": [
+        "Brand identity and visual branding (logo, colors)",
+        "Digital marketing basics (social media, local SEO)",
+        "Traditional marketing (flyers, local partnerships)",
+        "Grand opening strategies",
+        "Customer loyalty programs"
+      ]
+    },
+    {
+      "node_id": "operations_staffing_management",
+      "title": "Operations & Staffing Management",
+      "rationale": "Efficient daily operations and a well-managed team are crucial for smooth functioning, high-quality products, and excellent customer service.",
+      "prerequisites": [
+        "location_equipment_setup",
+        "menu_recipe_development",
+        "legal_regulatory_compliance"
+      ],
+      "suggested_micro_topics": [
+        "Daily production schedule planning",
+        "Inventory management and waste reduction",
+        "Hiring and training staff (bakers, counter staff)",
+        "Customer service best practices",
+        "Point-of-sale (POS) systems"
+      ]
+    },
+    {
+      "node_id": "launch_growth_strategies",
+      "title": "Launch & Growth Strategies",
+      "rationale": "After all the preparation, successfully launching your bakery and planning for future growth are the final steps to achieving your business goal.",
+      "prerequisites": [
+        "financial_planning_funding",
+        "marketing_branding_strategies",
+        "operations_staffing_management"
+      ],
+      "suggested_micro_topics": [
+        "Soft launch vs. grand opening execution",
+        "Performance monitoring (sales, customer feedback)",
+        "Adapting to market feedback",
+        "Expansion opportunities (catering, wholesale)",
+        "Continuous improvement and innovation"
+      ]
+    }
+  ]
+}
+```"
+2026-03-26 16:07:09: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Baking Experience: Beginner Goal: Starting a business Constraints/Worries: No time limit, Wants podcast
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-26 16:07:52: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Baking Experience: Beginner Goal: Starting a business Constraints/Worries: No time limit, Wants podcast
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="```json
+{
+  "nodes": [
+    {
+      "node_id": "baking_basics",
+      "title": "Baking Fundamentals: Mastering the Craft",
+      "rationale": "Before selling, you must master the foundational techniques of baking. This module covers essential knowledge to ensure consistent, high-quality products. Podcasts can offer historical context or interviews with master bakers.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Basic ingredients (flour, sugar, fats, leaveners)",
+        "Measuring techniques (weight vs. volume)",
+        "Oven functions and temperature control",
+        "Mixing methods (creaming, rubbing-in, all-in-one)",
+        "Common baking tools and equipment",
+        "Understanding recipes and ratios",
+        "Troubleshooting common baking problems",
+        "Basic bread making",
+        "Cookie and cake fundamentals",
+        "Pastry basics"
+      ]
+    },
+    {
+      "node_id": "ingredient_science_sourcing",
+      "title": "Ingredient Science and Smart Sourcing",
+      "rationale": "Understanding how ingredients interact and where to source them cost-effectively and reliably is crucial for both product quality and business profitability. Podcasts can feature interviews with ingredient suppliers or food scientists.",
+      "prerequisites": [
+        "baking_basics"
+      ],
+      "suggested_micro_topics": [
+        "Types of flour and their uses",
+        "Sugars and sweeteners",
+        "Fats (butter, oil, shortening)",
+        "Leavening agents (yeast, baking powder, soda)",
+        "Flavorings and extracts",
+        "Dairy and egg alternatives",
+        "Bulk purchasing strategies",
+        "Finding local suppliers",
+        "Ingredient quality control",
+        "Seasonal ingredients"
+      ]
+    },
+    {
+      "node_id": "basic_recipe_dev",
+      "title": "Basic Recipe Development and Adaptation",
+      "rationale": "Moving beyond following recipes, this module teaches how to create your own unique products and adapt existing ones for different needs (e.g., dietary restrictions, scaling). This is key for product differentiation. Podcasts can discuss creative recipe development processes.",
+      "prerequisites": [
+        "baking_basics",
+        "ingredient_science_sourcing"
+      ],
+      "suggested_micro_topics": [
+        "Understanding flavor profiles",
+        "Balancing ingredients",
+        "Adjusting recipes for yield",
+        "Substituting ingredients effectively",
+        "Basic allergen awareness",
+        "Developing signature recipes",
+        "Recipe costing basics",
+        "Testing and iteration process",
+        "Sensory evaluation basics",
+        "Documenting recipes"
+      ]
+    },
+    {
+      "node_id": "entrepreneurial_mindset",
+      "title": "Entrepreneurial Mindset and Business Foundations",
+      "rationale": "Starting a business requires a specific mindset and understanding fundamental business concepts. This module lays the groundwork for strategic thinking and decision-making. Many business podcasts offer great insights here.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Defining your 'why'",
+        "Goal setting for your business",
+        "Understanding market needs",
+        "Basic SWOT analysis",
+        "Risk assessment for startups",
+        "Time management for entrepreneurs",
+        "Developing resilience",
+        "Networking basics",
+        "Identifying your unique selling proposition",
+        "Learning from business failures"
+      ]
+    },
+    {
+      "node_id": "business_planning_legal",
+      "title": "Business Planning and Legal Essentials",
+      "rationale": "A solid business plan and understanding legal requirements are non-negotiable for a sustainable and compliant baking business. This prevents costly mistakes down the line. Podcasts on small business law or startup advice can be valuable.",
+      "prerequisites": [
+        "entrepreneurial_mindset"
+      ],
+      "suggested_micro_topics": [
+        "Components of a business plan",
+        "Market research for bakers",
+        "Defining your target customer",
+        "Choosing a business structure (sole prop, LLC)",
+        "Business registration and permits",
+        "Food safety regulations (local, state, federal)",
+        "Insurance requirements",
+        "Basic contract understanding",
+        "Intellectual property basics (trademarks)",
+        "Zoning laws for home-based businesses"
+      ]
+    },
+    {
+      "node_id": "financial_management_bakers",
+      "title": "Financial Management for Bakers",
+      "rationale": "Understanding your costs, pricing your products correctly, and managing your finances are critical for profitability and growth. This module covers the financial literacy needed for a baking business. Financial podcasts for small businesses are highly recommended.",
+      "prerequisites": [
+        "business_planning_legal"
+      ],
+      "suggested_micro_topics": [
+        "Ingredient costing methods",
+        "Labor costing",
+        "Overhead costs",
+        "Pricing strategies (cost-plus, value-based)",
+        "Calculating profit margins",
+        "Basic bookkeeping and accounting principles",
+        "Tracking income and expenses",
+        "Setting up a business bank account",
+        "Understanding cash flow",
+        "Sales forecasting basics"
+      ]
+    },
+    {
+      "node_id": "food_safety_compliance",
+      "title": "Food Safety and Hygiene Compliance",
+      "rationale": "Ensuring the safety of your products is paramount for customer trust, legal compliance, and public health. This module covers essential food safety practices.",
+      "prerequisites": [
+        "baking_basics",
+        "business_planning_legal"
+      ],
+      "suggested_micro_topics": [
+        "HACCP principles for baking",
+        "Cross-contamination prevention",
+        "Temperature control (storage, baking, cooling)",
+        "Personal hygiene for food handlers",
+        "Allergen management in the kitchen",
+        "Sanitation and cleaning protocols",
+        "Pest control strategies",
+        "Food labeling requirements",
+        "Recalls and incident management",
+        "Local health department inspections"
+      ]
+    },
+    {
+      "node_id": "kitchen_setup_efficiency",
+      "title": "Kitchen Setup and Workflow Efficiency",
+      "rationale": "Optimizing your kitchen space and workflow, whether home-based or commercial, is essential for productivity, consistency, and scalability.",
+      "prerequisites": [
+        "baking_basics",
+        "business_planning_legal"
+      ],
+      "suggested_micro_topics": [
+        "Home kitchen vs. commercial kitchen considerations",
+        "Essential baking equipment investment",
+        "Kitchen layout and organization",
+        "Workflow design for efficiency",
+        "Storage solutions (dry, refrigerated, frozen)",
+        "Maintenance of equipment",
+        "Energy efficiency in the kitchen",
+        "Waste reduction strategies",
+        "Ergonomics in the kitchen",
+        "Scaling up equipment needs"
+      ]
+    },
+    {
+      "node_id": "branding_marketing_online",
+      "title": "Branding, Marketing, and Online Presence for Bakers",
+      "rationale": "Attracting and retaining customers requires effective branding and marketing, especially in the digital age. This module covers how to present your business. Marketing podcasts can provide current trends.",
+      "prerequisites": [
+        "basic_recipe_dev",
+        "entrepreneurial_mindset"
+      ],
+      "suggested_micro_topics": [
+        "Developing your brand identity (logo, colors, voice)",
+        "Targeting your ideal customer",
+        "Crafting compelling product descriptions",
+        "Food photography basics",
+        "Social media marketing for bakers (Instagram, Facebook)",
+        "Building a simple website/online store",
+        "Email marketing fundamentals",
+        "Local SEO for bakeries",
+        "Customer testimonials and reviews",
+        "Collaborations and partnerships"
+      ]
+    },
+    {
+      "node_id": "sales_customer_experience",
+      "title": "Sales Channels and Exceptional Customer Experience",
+      "rationale": "Understanding where and how to sell your products, and providing excellent customer service, are vital for sales and repeat business.",
+      "prerequisites": [
+        "branding_marketing_online",
+        "financial_management_bakers"
+      ],
+      "suggested_micro_topics": [
+        "Direct-to-consumer sales (farmers markets, pop-ups)",
+        "Online sales platforms (Etsy, Shopify)",
+        "Wholesale accounts (cafes, restaurants)",
+        "Order fulfillment and delivery logistics",
+        "Packaging and presentation",
+        "Handling customer inquiries and complaints",
+        "Building customer loyalty programs",
+        "Collecting and acting on feedback",
+        "Upselling and cross-selling techniques",
+        "Managing peak seasons and special orders"
+      ]
+    },
+    {
+      "node_id": "production_scaling_qc",
+      "title": "Production Scaling and Quality Control",
+      "rationale": "As your business grows, you'll need to scale your production while maintaining consistent quality. This module addresses the challenges of increasing output.",
+      "prerequisites": [
+        "basic_recipe_dev",
+        "kitchen_setup_efficiency",
+        "food_safety_compliance"
+      ],
+      "suggested_micro_topics": [
+        "Batch baking techniques",
+        "Standardizing recipes for consistency",
+        "Inventory management for ingredients",
+        "Production scheduling and planning",
+        "Quality assurance checks",
+        "Troubleshooting large batches",
+        "Equipment for increased production",
+        "Hiring and training production staff (future consideration)",
+        "Waste reduction in high volume",
+        "Efficiency metrics for production"
+      ]
+    },
+    {
+      "node_id": "advanced_financial_metrics",
+      "title": "Advanced Financial Tracking and Growth Metrics",
+      "rationale": "Beyond basic bookkeeping, this module delves into analyzing financial data to make informed decisions for growth and profitability.",
+      "prerequisites": [
+        "financial_management_bakers",
+        "sales_customer_experience"
+      ],
+      "suggested_micro_topics": [
+        "Profit and loss statements analysis",
+        "Balance sheet basics",
+        "Cash flow forecasting",
+        "Break-even analysis",
+        "Return on investment (ROI) for marketing/equipment",
+        "Customer acquisition cost (CAC)",
+        "Customer lifetime value (CLV)",
+        "Setting financial goals",
+        "Understanding taxes for small businesses",
+        "Seeking funding (loans, grants) basics"
+      ]
+    },
+    {
+      "node_id": "business_expansion_innovation",
+      "title": "Business Expansion and Innovation",
+      "rationale": "With a solid foundation, this module explores strategies for expanding your product line, reaching new markets, and continuously innovating to stay competitive.",
+      "prerequisites": [
+        "production_scaling_qc",
+        "advanced_financial_metrics",
+        "branding_marketing_online"
+      ],
+      "suggested_micro_topics": [
+        "New product development strategies",
+        "Market diversification",
+        "Franchising basics",
+        "Hiring and team management",
+        "Automating processes",
+        "Exploring new technologies (e.g., online ordering systems)",
+        "Strategic partnerships",
+        "Succession planning basics",
+        "Continuous learning and adaptation",
+        "Building a strong company culture"
+      ]
+    }
+  ]
+}
+```"
+2026-03-26 16:27:10: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Bakery Experience: Beginner Goal: Start a small business Constraints/Worries: 6 months limit, Wants podcast
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="started"
+2026-03-26 16:27:43: task_name="blueprint_task", task="Build a learning blueprint for: Topic: Bakery Experience: Beginner Goal: Start a small business Constraints/Worries: 6 months limit, Wants podcast
+Step 1: Use your search tools to find standard syllabi and modern roadmaps. Step 2: Filter the research heavily based on the user's experience and constraints. Step 3: Output a Directed Acyclic Graph (DAG) using the Blueprint structure.  Ensure foundational nodes have empty prerequisites.
+", agent="Senior Curriculum Architect
+", status="completed", output="```json
+{
+  "nodes": [
+    {
+      "node_id": "product_dev",
+      "title": "Product Development & Niche Identification",
+      "rationale": "Before investing time and resources, you need to define what makes your bakery unique. This module helps you identify your signature products and target audience, a critical first step for any beginner aiming to start a small business within 6 months. Podcasts on food entrepreneurship can offer great inspiration here.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Recipe testing and iteration",
+        "Identifying a target customer demographic",
+        "Market research for bakery trends",
+        "Competitive analysis in local market",
+        "Developing a unique selling proposition (USP)",
+        "Menu design and pricing strategy (initial thoughts)"
+      ]
+    },
+    {
+      "node_id": "biz_acumen",
+      "title": "Introduction to Small Business Concepts",
+      "rationale": "As a beginner, understanding the fundamental language and principles of business is essential. This foundational module provides the basic vocabulary and mindset needed to approach the subsequent, more detailed business planning stages. Look for beginner-friendly business podcasts to grasp these concepts.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "What is a business model?",
+        "Revenue vs. Profit vs. Cost",
+        "Basic financial statements overview (income, balance sheet)",
+        "Entrepreneurial mindset and resilience",
+        "Understanding supply and demand basics",
+        "Lean startup principles for food businesses"
+      ]
+    },
+    {
+      "node_id": "baking_fundamentals",
+      "title": "Baking Fundamentals & Recipe Scaling",
+      "rationale": "Even with great ideas, the core skill of baking needs to be solid and scalable. This module focuses on mastering essential techniques and adapting recipes for commercial production, which is vital for a small bakery business. Practical hands-on learning combined with baking podcasts can accelerate this.",
+      "prerequisites": [
+        "product_dev"
+      ],
+      "suggested_micro_topics": [
+        "Mastering basic doughs (bread, pastry, cookie)",
+        "Understanding ingredient functions (flour, sugar, fat, leavening)",
+        "Recipe conversion and scaling techniques",
+        "Quality control and consistency",
+        "Troubleshooting common baking issues",
+        "Introduction to specialty diets (gluten-free, vegan) if applicable"
+      ]
+    },
+    {
+      "node_id": "biz_plan",
+      "title": "Developing Your Bakery Business Plan",
+      "rationale": "With a 6-month limit, a clear, concise business plan acts as your roadmap, guiding decisions and attracting potential support. This module helps structure your vision into an actionable document, covering key areas from operations to finance. Many business podcasts offer templates and guidance for this.",
+      "prerequisites": [
+        "product_dev",
+        "biz_acumen"
+      ],
+      "suggested_micro_topics": [
+        "Components of a business plan (executive summary, company description)",
+        "Market analysis and competitive landscape",
+        "Operations plan (production, distribution)",
+        "Management team and organizational structure",
+        "Financial projections (startup costs, sales forecast)",
+        "Funding request and investor pitch (if applicable)"
+      ]
+    },
+    {
+      "node_id": "legal_compliance",
+      "title": "Legal & Regulatory Framework for Food Businesses",
+      "rationale": "Operating a food business requires strict adherence to health and safety regulations. This module ensures you understand the legal landscape to avoid costly mistakes and build a trustworthy business from day one. Researching local regulations is paramount.",
+      "prerequisites": [
+        "biz_acumen"
+      ],
+      "suggested_micro_topics": [
+        "Business registration and legal structure (sole proprietorship, LLC)",
+        "Local health department permits and inspections",
+        "Food handler certifications and requirements",
+        "Zoning laws for home-based vs. commercial kitchens",
+        "Business insurance (liability, property)",
+        "Understanding food labeling requirements"
+      ]
+    },
+    {
+      "node_id": "financial_mgmt",
+      "title": "Financial Management & Pricing Strategies",
+      "rationale": "To ensure profitability within your 6-month timeline, you must understand your costs and price your products effectively. This module covers essential financial skills for managing your bakery's money. Podcasts on small business finance can be very helpful.",
+      "prerequisites": [
+        "biz_acumen",
+        "biz_plan"
+      ],
+      "suggested_micro_topics": [
+        "Calculating startup costs and operating expenses",
+        "Cost of goods sold (COGS) for bakery items",
+        "Pricing models (cost-plus, value-based, competitive)",
+        "Basic bookkeeping and record-keeping systems",
+        "Cash flow management for small businesses",
+        "Understanding profit margins and break-even analysis"
+      ]
+    },
+    {
+      "node_id": "kitchen_ops",
+      "title": "Efficient Kitchen Operations & Advanced Food Safety",
+      "rationale": "Once your recipes are solid, efficient and safe kitchen operations become key to consistent production and customer satisfaction. This module builds on basic baking and legal knowledge to create a professional kitchen environment. Food safety podcasts can keep you updated.",
+      "prerequisites": [
+        "baking_fundamentals",
+        "legal_compliance"
+      ],
+      "suggested_micro_topics": [
+        "Kitchen layout and workflow optimization",
+        "Essential bakery equipment selection and maintenance",
+        "Inventory rotation methods (FIFO)",
+        "Advanced HACCP principles for bakeries",
+        "Allergen control and cross-contamination prevention",
+        "Waste reduction strategies and sustainable practices"
+      ]
+    },
+    {
+      "node_id": "marketing_sales",
+      "title": "Marketing & Sales Strategies for Your Bakery",
+      "rationale": "Even the best products won't sell themselves. This module focuses on attracting customers and building your brand, crucial for generating revenue quickly within your 6-month goal. Explore marketing podcasts for creative ideas.",
+      "prerequisites": [
+        "product_dev",
+        "biz_plan"
+      ],
+      "suggested_micro_topics": [
+        "Developing a bakery brand identity and story",
+        "Social media marketing for food businesses (Instagram, TikTok)",
+        "Local SEO and online presence (Google My Business)",
+        "Customer service best practices",
+        "Sales channels (farmers markets, online store, local cafes)",
+        "Food photography and visual merchandising"
+      ]
+    },
+    {
+      "node_id": "sourcing_inventory",
+      "title": "Sourcing, Supply Chain & Inventory Management",
+      "rationale": "Managing ingredients efficiently impacts both product quality and profitability. This module helps you establish reliable supply chains and control inventory to minimize waste and optimize costs, directly supporting your 6-month business launch. Supply chain podcasts can offer insights.",
+      "prerequisites": [
+        "kitchen_ops",
+        "financial_mgmt"
+      ],
+      "suggested_micro_topics": [
+        "Identifying reliable ingredient suppliers (local vs. wholesale)",
+        "Negotiating supplier contracts and bulk purchasing",
+        "Quality control for incoming ingredients",
+        "Inventory tracking systems (manual vs. digital)",
+        "Minimizing spoilage and waste",
+        "Understanding lead times and delivery logistics"
+      ]
+    },
+    {
+      "node_id": "launch_growth",
+      "title": "Launch Strategies & Early Growth Hacking",
+      "rationale": "With your 6-month deadline approaching, this module focuses on the practical steps of launching your bakery and strategies for initial growth. It brings together all previous learning into actionable steps for opening your doors and attracting your first customers. Entrepreneurial podcasts often share launch stories and tips.",
+      "prerequisites": [
+        "biz_plan",
+        "financial_mgmt",
+        "marketing_sales",
+        "kitchen_ops",
+        "sourcing_inventory"
+      ],
+      "suggested_micro_topics": [
+        "Soft launch vs. Grand opening planning",
+        "Collecting and acting on customer feedback",
+        "Building customer loyalty programs",
+        "Basic scaling strategies for production",
+        "Hiring your first team members (if applicable)",
+        "Continuous improvement and adaptation"
+      ]
+    }
+  ]
+}
+```"

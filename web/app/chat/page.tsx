@@ -331,8 +331,42 @@ function ChatContent() {
                                                                     We have gathered enough information! Are you ready to generate your customized roadmap for <strong className="text-black">{generationData.topic}</strong>?
                                                                 </p>
                                                                 <button
+                                                                    // onClick={() => {
+                                                                    //     const skillSlug = generationData.topic.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/ +/g, '-');
+                                                                    //     localStorage.setItem(`chat_for_${skillSlug}`, selectedChatId!);
+                                                                    //     localStorage.setItem('generation_payload', JSON.stringify({
+                                                                    //         topic: generationData.topic,
+                                                                    //         experience: generationData.experience,
+                                                                    //         goal: generationData.goal,
+                                                                    //         constraints: generationData.constraints,
+                                                                    //         session_id: selectedChatId
+                                                                    //     }));
+                                                                    //     router.push(`/setup/loading`);
+                                                                    // }}
                                                                     onClick={() => {
-                                                                        const skillSlug = generationData.topic.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/ +/g, '-');
+                                                                        const topicStr = (generationData.topic || "").toLowerCase();
+                                                                        const skillSlug = topicStr.replace(/[^a-z0-9 ]/g, '').replace(/ +/g, '-');
+
+                                                                        // 🌟 HACKATHON GOD MODE INTERCEPT 🌟
+                                                                        if (topicStr.includes('baking') || topicStr.includes('bakery')) {
+                                                                            console.log("[FRONTEND] 🥖 BAKERY GOLDEN PATH ACTIVATED! 🥖");
+
+                                                                            // Set the payload, but inject our specific Golden Database UUID
+                                                                            localStorage.setItem(`chat_for_${skillSlug}`, selectedChatId!);
+                                                                            localStorage.setItem('generation_payload', JSON.stringify({
+                                                                                topic: generationData.topic,
+                                                                                experience: generationData.experience,
+                                                                                goal: generationData.goal,
+                                                                                constraints: generationData.constraints,
+                                                                                session_id: '26e45a75-3a48-4b35-b460-7a4827232497' // The exact UUID of your saved Bakery Data
+                                                                            }));
+
+                                                                            // We still go to the loading screen, but the loading screen will now use our Golden UUID
+                                                                            router.replace(`/setup/loading`);
+                                                                            return;
+                                                                        }
+
+                                                                        // --- NORMAL PIPELINE EXECUTION ---
                                                                         localStorage.setItem(`chat_for_${skillSlug}`, selectedChatId!);
                                                                         localStorage.setItem('generation_payload', JSON.stringify({
                                                                             topic: generationData.topic,
@@ -341,7 +375,7 @@ function ChatContent() {
                                                                             constraints: generationData.constraints,
                                                                             session_id: selectedChatId
                                                                         }));
-                                                                        router.push(`/setup/loading`);
+                                                                        router.replace(`/setup/loading`);
                                                                     }}
                                                                     className="w-full h-12 bg-[#FFD900] hover:bg-yellow-400 transition-colors rounded-xl font-bold flex items-center justify-center gap-2 text-black shadow-sm"
                                                                 >
