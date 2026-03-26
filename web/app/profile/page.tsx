@@ -248,6 +248,8 @@ export default function ProfilePage() {
             <h2 className="font-display text-2xl font-bold text-gray-900 mt-12 mb-6">Course Path</h2>
 
             {/* Loading skeletons — show immediately, no layout shift */}
+
+            {/* Loading skeletons */}
             {isLoading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {[...Array(3)].map((_, i) => (
