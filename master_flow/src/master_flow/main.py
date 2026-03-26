@@ -31,6 +31,8 @@ class MasterFlow(Flow[SystemState]):
         if 'baking' in topic_lower or 'bakery' in topic_lower:
             print('\n[BACKEND] 🥖 BAKERY GOLDEN PATH ACTIVATED (MACRO PHASE)! 🥖')
             print('[BACKEND] Bypassing Gemini API and Macro Crew...')
+
+            time.sleep(8)
             
             # Feed it a dummy blueprint so Phase 2 doesn't crash!
             self.state.blueprint = {
@@ -122,7 +124,7 @@ class MasterFlow(Flow[SystemState]):
             print('\n[BACKEND] 🥖 BAKERY GOLDEN PATH ACTIVATED! 🥖')
             print('[BACKEND] Bypassing live web scraper for instant demo loading...')
             
-            await asyncio.sleep(1.5) # Simulate processing time
+            await asyncio.sleep(10) # Simulate processing time
             
             print('[BACKEND] Golden Path Data loaded successfully. UI Unlocked.')
             return

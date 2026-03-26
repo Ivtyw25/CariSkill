@@ -13,6 +13,7 @@ from pydantic import BaseModel
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 from master_flow.main import MasterFlow
 from master_flow.model.system_state import SystemState
+from supabase import create_client
 
 # Import the video generation pipeline
 try:
@@ -97,18 +98,18 @@ async def generate_podcast_endpoint(req: PodcastRequest):
             if not input_text and req.urls:
                 input_text = f"Content from URLs: {', '.join(req.urls)}"
                 
-            final_path = await run_custom_podcast_pipeline(input_text)
-            
-            if not final_path:
-                raise Exception("Podcast generation failed to produce a result.")
+            # 1. Generate the local file
+            public_url = await run_custom_podcast_pipeline(input_text)
 
+            # 2. Tell the frontend the job is done AND give it the cloud URL
             active_podcasts[task_id] = {
                 "status": "completed",
-                "file_path": str(final_path),
+                "file_path": public_url, # Keep for local debugging
+                "public_url": public_url,     # 🚀 THE NEW REAL URL
                 "session_id": req.session_id
             }
             podcast_duration = time.time() - start_time
-            print(f"Podcast {task_id} generated successfully: {final_path}")
+            print(f"Podcast {task_id} generated successfully: {public_url}")
             print(f"\n⏳ [DURATION TRACKER] Podcast Phase completed in: {podcast_duration:.2f} seconds\n")
             
             print('\n=========================================')

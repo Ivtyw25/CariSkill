@@ -120,16 +120,18 @@ async def generate_podcast_audio(script_text: str, task_id: str) -> Path:
             ]
         )
     )
+
+    tts_prompt = f"CRITICAL INSTRUCTION: You are a pure Text-to-Speech engine. You MUST output ONLY audio. Do NOT generate any text, preamble, or markdown. Read the following transcript exactly as written:\n\n{script_text}"
     
     # Generate the content with AUDIO modality
     response = client.models.generate_content(
-        model="gemini-2.5-flash-preview-tts",
-        contents=script_text,
-        config=types.GenerateContentConfig(
-            response_modalities=["AUDIO"],
-            speech_config=speech_config
+            model="gemini-2.5-flash-preview-tts",
+            contents=tts_prompt,
+            config=types.GenerateContentConfig(
+                response_modalities=["AUDIO"],
+                speech_config=speech_config
+            )
         )
-    )
     
     # Extract raw PCM bytes from the response
     try:
