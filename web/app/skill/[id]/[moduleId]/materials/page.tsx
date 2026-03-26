@@ -10,6 +10,7 @@ import { createClient } from '@/utils/supabase/client';
 import BookmarkButton from '@/components/BookmarkButton';
 import PodcastPlayer from '@/components/PodcastPlayer';
 import ContextChatbot from '@/components/ContextChatbot';
+import { useSkillLanguage } from '@/components/SkillLanguageProvider';
 
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -20,6 +21,7 @@ import 'katex/dist/katex.min.css';
 export default function MaterialsPage({ params }: { params: Promise<{ id: string, moduleId: string }> }) {
   const { id, moduleId } = use(params);
   const router = useRouter();
+  const { currentLanguage, translateText } = useSkillLanguage();
 
   const [loading, setLoading] = useState(true);
   const [isFinishing, setIsFinishing] = useState(false);
@@ -101,7 +103,8 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
           .limit(1);
 
         if (nodeData && nodeData.length > 0) {
-          setModuleTitle(nodeData[0].title);
+          const t = currentLanguage === 'en' ? nodeData[0].title : await translateText(nodeData[0].title, currentLanguage);
+          setModuleTitle(t);
           setAudioUrl(nodeData[0].audio_url);
         }
 
@@ -123,6 +126,24 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
             }
           }).filter(Boolean); // Drop failed parses
 
+          if (currentLanguage !== 'en') {
+             for (let i = 0; i < parsedTopics.length; i++) {
+                if (parsedTopics[i].topic_title) {
+                   parsedTopics[i].topic_title = await translateText(parsedTopics[i].topic_title, currentLanguage);
+                }
+                if (parsedTopics[i].theory_explanation) {
+                   parsedTopics[i].theory_explanation = await translateText(parsedTopics[i].theory_explanation, currentLanguage);
+                }
+                if (parsedTopics[i].resources) {
+                   for (let j = 0; j < parsedTopics[i].resources.length; j++) {
+                      if (parsedTopics[i].resources[j].title) {
+                         parsedTopics[i].resources[j].title = await translateText(parsedTopics[i].resources[j].title, currentLanguage);
+                      }
+                   }
+                }
+             }
+          }
+
           setTopicIds(topicsData.map(topic => topic.id));
           setMicroTopics(parsedTopics);
         }
@@ -135,7 +156,7 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
     };
 
     fetchMaterials();
-  }, [moduleId]);
+  }, [moduleId, currentLanguage]);
 
   // Writes node completion, study session, and badge checks to DB
   const handleFinish = async () => {

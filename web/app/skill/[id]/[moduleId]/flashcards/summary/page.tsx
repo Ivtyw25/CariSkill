@@ -93,7 +93,7 @@ export default function FlashcardSummaryPage({ params }: { params: Promise<{ id:
           className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-2xl mx-auto mb-8 z-10"
         >
           <button 
-            onClick={() => router.push(`/skill/${id}/${moduleId}/quiz`)}
+            onClick={() => router.push(`/skill/${id}/${moduleId}/quiz/setup`)}
             className="w-full sm:w-auto px-8 py-4 bg-[#FFD700] hover:bg-[#E6C200] text-gray-900 font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 group active:scale-95"
           >
             <HelpCircle className="w-6 h-6 group-hover:scale-110 transition-transform" />

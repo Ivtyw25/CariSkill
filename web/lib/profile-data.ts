@@ -96,6 +96,6 @@ export const sidebarNav = [
   { name: 'My Skills', icon: BookOpen, href: '/profile' },
   { name: 'Calendar', icon: Calendar, href: '/calendar' },
   { name: 'My Resume', icon: FileText, href: '/resume' },
-  { name: 'Target Job', icon: Target, href: '/target-job' },
+  // { name: 'Target Job', icon: Target, href: '/target-job' },
   { name: 'Learning Report', icon: BarChart2, href: '/report' },
 ];

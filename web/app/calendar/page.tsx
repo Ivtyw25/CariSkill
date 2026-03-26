@@ -311,8 +311,8 @@ export default function CalendarPage() {
           ))}
         </div>
         {/* Grid */}
-        <div className="grid grid-cols-7 flex-1 border-l border-t border-gray-100">
-          {blanks.map((_, i) => <div key={`b${i}`} className="border-r border-b border-gray-100 min-h-[110px] bg-gray-50/30" />)}
+        <div className="grid grid-cols-7 flex-1 border-l border-t border-gray-100 overflow-y-auto auto-rows-minmax min-h-0">
+          {blanks.map((_, i) => <div key={`b${i}`} className="border-r border-b border-gray-100 min-h-[90px] bg-gray-50/30" />)}
           {days.map(day => {
             const ymd = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             const dayEvents = eventsOnDate(ymd);
@@ -321,7 +321,7 @@ export default function CalendarPage() {
               <div
                 key={day}
                 onClick={() => openCreate(ymd)}
-                className="border-r border-b border-gray-100 min-h-[110px] p-1.5 cursor-pointer hover:bg-yellow-50/50 transition-colors group"
+                className="border-r border-b border-gray-100 min-h-[90px] p-1.5 cursor-pointer hover:bg-yellow-50/50 transition-colors group relative"
               >
                 <div className={`w-7 h-7 flex items-center justify-center rounded-full text-sm font-medium mb-1 transition-colors
                   ${isToday ? 'bg-[#FFD700] text-gray-900 font-bold' : 'text-gray-700 group-hover:bg-yellow-100'}`}>
@@ -506,7 +506,7 @@ export default function CalendarPage() {
               </motion.button>
             </div>
 
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col overflow-hidden" style={{ height: 'calc(100vh - 220px)' }}>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col overflow-hidden min-h-[600px] flex-1">
               {/* Calendar toolbar */}
               <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100 shrink-0">
                 <div className="flex items-center gap-2">

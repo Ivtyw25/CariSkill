@@ -6,89 +6,165 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"];
 
 export async function POST(req: Request) {
-    try {
-        const { microTopicId, topicTitle, theoryExplanation } = await req.json();
+  try {
+    const {
+      microTopicId,       // kept for caching (single-topic legacy)
+      topicTitle,         // primary topic title / module title
+      theoryExplanation,  // combined theory content
+      questionType = 'multiple-choice',
+      numQuestions = 10,
+    } = await req.json();
 
-        if (!microTopicId || !topicTitle) {
-            return NextResponse.json({ error: "microTopicId and topicTitle are required" }, { status: 400 });
-        }
+    if (!topicTitle) {
+      return NextResponse.json({ error: "topicTitle is required" }, { status: 400 });
+    }
 
-        // Check if already generated (cache hit)
-        const supabase = createAdminClient();
-        const { data: existing } = await supabase
-            .from("micro_topics_contents")
-            .select("quiz_data")
-            .eq("id", microTopicId)
-            .single();
+    // Check cache for multiple-choice single-topic (legacy)
+    const supabase = createAdminClient();
+    if (microTopicId && questionType === 'multiple-choice' && numQuestions === 10) {
+      const { data: existing } = await supabase
+        .from("micro_topics_contents")
+        .select("quiz_data")
+        .eq("id", microTopicId)
+        .single();
 
-        if (existing?.quiz_data) {
-            return NextResponse.json({ quiz: existing.quiz_data, cached: true });
-        }
+      if (existing && existing.quiz_data?.questions?.length === numQuestions) {
+        return NextResponse.json({ quiz: existing.quiz_data, cached: true });
+      }
+    }
 
-        const prompt = `You are a quiz generator for a learning platform. Generate exactly 5 multiple-choice questions for the topic: "${topicTitle}".
+    const n = Math.min(Math.max(numQuestions, 1), 20);
+    const theorySnippet = (theoryExplanation || "").slice(0, 3000);
 
-Context from study material:
-${(theoryExplanation || "").slice(0, 1500)}
+    let prompt = "";
 
-Return a JSON object with this exact structure:
+    if (questionType === 'multiple-choice') {
+      prompt = `You are a quiz generator. Generate exactly ${n} multiple-choice questions for the topic: "${topicTitle}".
+      
+Study material context:
+${theorySnippet}
+
+Return a JSON object:
 {
   "questions": [
     {
       "id": "1",
-      "question": "A clear, unambiguous question",
-      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "type": "multiple-choice",
+      "question": "Clear, unambiguous question",
+      "options": ["A", "B", "C", "D"],
       "correctAnswerIndex": 0,
-      "hint": "A subtle directional clue without giving away the answer",
-      "explanation": "A 1-2 sentence explanation of why the correct answer is right"
+      "hint": "Subtle clue (max 20 words)",
+      "explanation": "Why correct answer is right (max 40 words)",
+      "sourceMaterial": "Title of the subtopic this is from (max 5 words)"
     }
   ]
 }
 
 Rules:
-- Exactly 5 questions
-- Each question has exactly 4 options
-- correctAnswerIndex is 0-based (0, 1, 2, or 3)
-- Vary the correct answer position across questions
-- hint: max 20 words, should guide without revealing
-- explanation: max 40 words, educational tone
+- Exactly ${n} questions, 4 options each
+- correctAnswerIndex is 0-based
+- sourceMaterial: Identify the specific concept or subtopic name from the context
 - Return only valid JSON, no markdown`;
+    } else if (questionType === 'open-ended') {
+      prompt = `You are a quiz generator. Generate exactly ${n} open-ended questions for: "${topicTitle}".
 
-        let lastError: any;
-        for (const modelName of MODELS) {
-            try {
-                const response = await ai.models.generateContent({
-                    model: modelName,
-                    contents: prompt,
-                    config: { responseMimeType: "application/json" },
-                });
+Study material context:
+${theorySnippet}
 
-                if (!response.text) throw new Error("No text returned from model");
+Return a JSON object:
+{
+  "questions": [
+    {
+      "id": "1",
+      "type": "open-ended",
+      "question": "Thought-provoking question",
+      "modelAnswer": "Comprehensive model answer (2-4 sentences)",
+      "hint": "Subtle clue (max 20 words)",
+      "keyPoints": ["Key point 1", "Key point 2", "Key point 3"],
+      "sourceMaterial": "Title of the subtopic this is from (max 5 words)"
+    }
+  ]
+}
 
-                const parsed = JSON.parse(response.text);
-                if (!parsed.questions || !Array.isArray(parsed.questions)) {
-                    throw new Error("Invalid quiz structure returned");
-                }
+Rules:
+- Exactly ${n} questions
+- keyPoints: 2-4 points
+- sourceMaterial: Identify the specific concept or subtopic name from the context
+- Return only valid JSON, no markdown`;
+    } else {
+      // mixed: roughly half/half
+      const mcqCount = Math.ceil(n / 2);
+      const oeCount = n - mcqCount;
+      prompt = `You are a quiz generator. Generate exactly ${n} questions (${mcqCount} multiple-choice + ${oeCount} open-ended) for: "${topicTitle}".
 
-                // Save to DB for future visits
-                const { error: saveError } = await supabase
-                    .from("micro_topics_contents")
-                    .update({ quiz_data: parsed })
-                    .eq("id", microTopicId);
+Study material context:
+${theorySnippet}
 
-                if (saveError) {
-                    console.error(`[Generate Quiz] DB save error:`, saveError.message);
-                }
+Return a JSON object:
+{
+  "questions": [
+    {
+      "id": "1",
+      "type": "multiple-choice",
+      "question": "MCQ question",
+      "options": ["A", "B", "C", "D"],
+      "correctAnswerIndex": 0,
+      "hint": "Hint (max 20 words)",
+      "explanation": "Explanation (max 40 words)",
+      "sourceMaterial": "Subtopic title"
+    },
+    {
+      "id": "${mcqCount + 1}",
+      "type": "open-ended",
+      "question": "Open-ended question",
+      "modelAnswer": "Model answer (2-4 sentences)",
+      "hint": "Hint (max 20 words)",
+      "keyPoints": ["Key point 1", "Key point 2"],
+      "sourceMaterial": "Subtopic title"
+    }
+  ]
+}
 
-                return NextResponse.json({ quiz: parsed, cached: false });
-            } catch (e: any) {
-                console.warn(`[Generate Quiz] Model ${modelName} failed: ${e.message}`);
-                lastError = e;
-            }
+Rules:
+- Exactly ${mcqCount} MCQ then ${oeCount} open-ended
+- MCQ: 4 options, 0-based correctAnswerIndex
+- sourceMaterial: Identify the subtopic title for every question
+- Return only valid JSON, no markdown`;
+    }
+
+    let lastError: any;
+    for (const modelName of MODELS) {
+      try {
+        const response = await ai.models.generateContent({
+          model: modelName,
+          contents: prompt,
+          config: { responseMimeType: "application/json" },
+        });
+
+        if (!response.text) throw new Error("No text returned");
+        const parsed = JSON.parse(response.text);
+        if (!parsed.questions || !Array.isArray(parsed.questions)) {
+          throw new Error("Invalid quiz structure");
         }
 
-        throw lastError;
-    } catch (error: any) {
-        console.error("[Generate Quiz] Error:", error?.message);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        // Cache only for single-topic multiple-choice 10-question case
+        if (microTopicId && questionType === 'multiple-choice' && n === 10) {
+          await supabase
+            .from("micro_topics_contents")
+            .update({ quiz_data: parsed })
+            .eq("id", microTopicId);
+        }
+
+        return NextResponse.json({ quiz: parsed, cached: false });
+      } catch (e: any) {
+        console.warn(`[Generate Quiz] Model ${modelName} failed: ${e.message}`);
+        lastError = e;
+      }
     }
+
+    throw lastError;
+  } catch (error: any) {
+    console.error("[Generate Quiz] Error:", error?.message);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }

@@ -13,7 +13,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { messages, contextText } = await req.json();
+    const { messages, contextText, preferredLanguage = 'en' } = await req.json();
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return NextResponse.json({ error: "Messages array is required." }, { status: 400 });
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
 
     const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash",
-      systemInstruction: `You are an expert reading assistant. A user is reading the following study material:\n\n---\n${contextText}\n---\n\nAnswer the user's questions specifically using the provided material as context. Explain concepts clearly and concisely.`,
+      systemInstruction: `You are an expert reading assistant. A user is reading the following study material:\n\n---\n${contextText}\n---\n\nAnswer the user's questions specifically using the provided material as context. Explain concepts clearly and concisely.\n\nIMPORTANT: The user prefers to communicate in language code: ${preferredLanguage}. You MUST read the English database context but natively comprehend and respond strictly in ${preferredLanguage}.`,
     });
 
     // Format all messages except the very last one as conversation history
