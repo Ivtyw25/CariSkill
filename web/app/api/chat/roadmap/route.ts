@@ -13,7 +13,7 @@ interface MessageRecord {
 
 export async function POST(req: Request) {
     try {
-        const { message, history = [], roadmap_context, current_roadmap } = await req.json();
+        const { message, history = [], roadmap_context, current_roadmap, preferredLanguage = 'en' } = await req.json();
 
         if (!message) return NextResponse.json({ error: "Message is required" }, { status: 400 });
         const recentHistory = (history as MessageRecord[]).slice(-10);
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "roadmap_context is required for roadmap Q&A" }, { status: 400 });
         }
 
-        const systemPrompt = getRoadmapPrompt(roadmap_context, current_roadmap, conversationHistory, message);
+        const systemPrompt = getRoadmapPrompt(roadmap_context, current_roadmap, conversationHistory, message, preferredLanguage);
 
         let lastError: any;
         for (const modelName of MODELS) {

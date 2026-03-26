@@ -62,7 +62,7 @@ function MarkdownText({ content }: { content: string }) {
     return <>{elements}</>;
 }
 
-export default function FloatingChat({ chatId, roadmapTopic, roadmapId }: { chatId: string; roadmapTopic?: string; roadmapId?: string }) {
+export default function FloatingChat({ chatId, roadmapTopic, roadmapId, preferredLanguage = 'en' }: { chatId: string; roadmapTopic?: string; roadmapId?: string; preferredLanguage?: string }) {
     const { user, isLoading: authLoading } = useAuth();
     const supabase = createClient();
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -152,7 +152,8 @@ export default function FloatingChat({ chatId, roadmapTopic, roadmapId }: { chat
                     message: currentMsg,
                     history: messages,
                     roadmap_context: roadmapTopic || null,
-                    current_roadmap: currentRoadmap || null
+                    current_roadmap: currentRoadmap || null,
+                    preferredLanguage
                 })
             });
 

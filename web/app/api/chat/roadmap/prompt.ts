@@ -10,7 +10,8 @@ export function getRoadmapPrompt(
     roadmapContext: string,
     currentRoadmap: any,
     conversationHistory: string,
-    message: string
+    message: string,
+    preferredLanguage: string = 'en'
 ) {
     const isEditRequest = /add|remove|delete|change|update|modify|include|insert|put|replace|rename|move|create|make it|reorder/i.test(message);
     const roadmapJsonString = currentRoadmap ? JSON.stringify(currentRoadmap).substring(0, 2000) : 'Not available';
@@ -29,7 +30,7 @@ ${conversationHistory || 'No previous messages.'}
 
 ## YOUR TASK:
 Apply the student's requested changes to the roadmap JSON. Keep the same overall structure. Only change what was requested.
-Set "edit_roadmap" to true, "reply" to "Done! I've updated your roadmap...", and provide the full JSON in "updated_roadmap".`;
+Set "edit_roadmap" to true, "reply" to "Done! I've updated your roadmap..." (translate this reply into language code: ${preferredLanguage}), and provide the full JSON in "updated_roadmap".`;
     } else {
         return `You are a helpful AI tutor assistant for CariSkill. The student is viewing their **${roadmapContext}** learning roadmap.
 
@@ -46,6 +47,8 @@ ${conversationHistory || 'No previous messages.'}
 "${message}"
 
 ## YOUR TASK:
-Set "edit_roadmap" to false, "updated_roadmap" to null, and write your markdown answer in "reply".`;
+Set "edit_roadmap" to false, "updated_roadmap" to null, and write your markdown answer in "reply".
+
+IMPORTANT: The student prefers to communicate in language code: ${preferredLanguage}. You MUST comprehend and respond strictly in ${preferredLanguage}.`;
     }
 }

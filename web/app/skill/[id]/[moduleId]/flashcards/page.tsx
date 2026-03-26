@@ -11,10 +11,12 @@ import {
 } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import BookmarkButton from '@/components/BookmarkButton';
+import { useSkillLanguage } from '@/components/SkillLanguageProvider';
 
 export default function FlashcardsPage({ params }: { params: Promise<{ id: string, moduleId: string }> }) {
   const { id, moduleId } = use(params);
   const router = useRouter();
+  const { currentLanguage, translateText } = useSkillLanguage();
 
   // Loading states
   const [loading, setLoading] = useState(true);
@@ -43,7 +45,10 @@ export default function FlashcardsPage({ params }: { params: Promise<{ id: strin
           .eq('node_id', moduleId)
           .limit(1);
 
-        if (nodeData && nodeData.length > 0) setModuleTitle(nodeData[0].title);
+        if (nodeData && nodeData.length > 0) {
+          const t = currentLanguage === 'en' ? nodeData[0].title : await translateText(nodeData[0].title, currentLanguage);
+          setModuleTitle(t);
+        }
 
         const { data: topicsData } = await supabase
           .from('micro_topics_contents')
@@ -57,6 +62,15 @@ export default function FlashcardsPage({ params }: { params: Promise<{ id: strin
             flashcards_data: t.flashcards_data,
             ...(typeof t.content === 'string' ? JSON.parse(t.content) : t.content),
           })).filter(Boolean);
+
+          if (currentLanguage !== 'en') {
+             for (let i = 0; i < parsed.length; i++) {
+                if (parsed[i].topic_title) {
+                   parsed[i].topic_title = await translateText(parsed[i].topic_title, currentLanguage);
+                }
+             }
+          }
+
           setMicroTopics(parsed);
         }
       } catch (err) {
@@ -67,7 +81,7 @@ export default function FlashcardsPage({ params }: { params: Promise<{ id: strin
       }
     };
     fetchTopics();
-  }, [moduleId]);
+  }, [moduleId, currentLanguage]);
 
   // When topicIndex changes, load or generate flashcards
   useEffect(() => {
@@ -80,8 +94,29 @@ export default function FlashcardsPage({ params }: { params: Promise<{ id: strin
       setCurrentIndex(0);
       setIsFlipped(false);
 
+      let finalCards = [];
+
+      const applyTranslationToCards = async (cardsData: any[]) => {
+         if (currentLanguage === 'en') return cardsData;
+         const translatedCards = [];
+         for (const c of cardsData) {
+            let translatedBack = [];
+            const backArr = Array.isArray(c.back) ? c.back : [c.back];
+            for (const b of backArr) {
+               translatedBack.push(await translateText(b, currentLanguage));
+            }
+            translatedCards.push({
+               ...c,
+               front: await translateText(c.front, currentLanguage),
+               back: translatedBack
+            });
+         }
+         return translatedCards;
+      };
+
       if (topic.flashcards_data?.cards) {
-        setCards(topic.flashcards_data.cards);
+        finalCards = await applyTranslationToCards(topic.flashcards_data.cards);
+        setCards(finalCards);
         return;
       }
 
@@ -99,7 +134,8 @@ export default function FlashcardsPage({ params }: { params: Promise<{ id: strin
         });
         const data = await res.json();
         if (data.flashcards?.cards) {
-          setCards(data.flashcards.cards);
+          finalCards = await applyTranslationToCards(data.flashcards.cards);
+          setCards(finalCards);
           // Update local cache so switching tabs doesn't re-generate
           setMicroTopics(prev => prev.map((t, i) =>
             i === topicIndex ? { ...t, flashcards_data: data.flashcards } : t
@@ -115,7 +151,7 @@ export default function FlashcardsPage({ params }: { params: Promise<{ id: strin
     };
 
     loadCards();
-  }, [topicIndex, microTopics.length]);
+  }, [topicIndex, microTopics.length, currentLanguage]);
 
   const handleNext = () => {
     if (currentIndex < cards.length - 1) {

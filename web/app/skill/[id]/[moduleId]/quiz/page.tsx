@@ -11,11 +11,13 @@ import {
 } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import BookmarkButton from '@/components/BookmarkButton';
+import { useSkillLanguage } from '@/components/SkillLanguageProvider';
 
 function QuizContent({ id, moduleId }: { id: string, moduleId: string }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isReviewMode = searchParams.get('mode') === 'review';
+  const { currentLanguage, translateText } = useSkillLanguage();
 
   // Loading states
   const [loading, setLoading] = useState(true);
@@ -40,7 +42,10 @@ function QuizContent({ id, moduleId }: { id: string, moduleId: string }) {
       try {
         const supabase = createClient();
         const { data: nodeData } = await supabase.from('roadmap_nodes').select('title').eq('node_id', moduleId).limit(1);
-        if (nodeData && nodeData.length > 0) setModuleTitle(nodeData[0].title);
+        if (nodeData && nodeData.length > 0) {
+          const t = currentLanguage === 'en' ? nodeData[0].title : await translateText(nodeData[0].title, currentLanguage);
+          setModuleTitle(t);
+        }
 
         const { data: topicsData } = await supabase
           .from('micro_topics_contents')
@@ -54,6 +59,15 @@ function QuizContent({ id, moduleId }: { id: string, moduleId: string }) {
             quiz_data: t.quiz_data,
             ...(typeof t.content === 'string' ? JSON.parse(t.content) : t.content),
           })).filter(Boolean);
+
+          if (currentLanguage !== 'en') {
+             for (let i = 0; i < parsed.length; i++) {
+                if (parsed[i].topic_title) {
+                   parsed[i].topic_title = await translateText(parsed[i].topic_title, currentLanguage);
+                }
+             }
+          }
+
           setMicroTopics(parsed);
         }
       } catch (err) {
@@ -63,7 +77,7 @@ function QuizContent({ id, moduleId }: { id: string, moduleId: string }) {
       }
     };
     fetchTopics();
-  }, [moduleId]);
+  }, [moduleId, currentLanguage]);
 
   useEffect(() => {
     if (microTopics.length === 0) return;
@@ -78,8 +92,30 @@ function QuizContent({ id, moduleId }: { id: string, moduleId: string }) {
       setScore(0);
       setShowHint(false);
 
+      let finalQuestions = [];
+
+      const applyTranslationToQuiz = async (quizData: any) => {
+         if (currentLanguage === 'en') return quizData.questions;
+         const translatedQs = [];
+         for (const q of quizData.questions) {
+            const translatedOptions = [];
+            for (const opt of q.options) {
+               translatedOptions.push(await translateText(opt, currentLanguage));
+            }
+            translatedQs.push({
+               ...q,
+               question: await translateText(q.question, currentLanguage),
+               options: translatedOptions,
+               explanation: await translateText(q.explanation, currentLanguage),
+               hint: await translateText(q.hint, currentLanguage),
+            });
+         }
+         return translatedQs;
+      };
+
       if (topic.quiz_data?.questions) {
-        setQuestions(topic.quiz_data.questions);
+        finalQuestions = await applyTranslationToQuiz(topic.quiz_data);
+        setQuestions(finalQuestions);
         return;
       }
 
@@ -96,7 +132,8 @@ function QuizContent({ id, moduleId }: { id: string, moduleId: string }) {
         });
         const data = await res.json();
         if (data.quiz?.questions) {
-          setQuestions(data.quiz.questions);
+          finalQuestions = await applyTranslationToQuiz(data.quiz);
+          setQuestions(finalQuestions);
           setMicroTopics(prev => prev.map((t, i) => i === topicIndex ? { ...t, quiz_data: data.quiz } : t));
         } else {
           setError('Failed to generate quiz. Please try again.');
@@ -109,7 +146,7 @@ function QuizContent({ id, moduleId }: { id: string, moduleId: string }) {
     };
 
     loadQuiz();
-  }, [topicIndex, microTopics.length]);
+  }, [topicIndex, microTopics.length, currentLanguage]);
 
   const totalQuestions = questions.length;
   const currentQuestion = questions[currentIndex];

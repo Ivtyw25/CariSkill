@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import CalendarEventModal from '@/components/CalendarEventModal';
+import SkillLanguageSelector from '@/components/SkillLanguageSelector';
+import { useSkillLanguage } from '@/components/SkillLanguageProvider';
 
 export interface SkillModule {
   id: string;
@@ -37,10 +39,12 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
   const highlightId = searchParams.get('highlight');
 
   const [data, setData] = useState<DetailedRoadmap | null>(null);
+  const [localizedData, setLocalizedData] = useState<DetailedRoadmap | null>(null);
   const [currentLevel, setCurrentLevel] = useState(1);
   const [loading, setLoading] = useState(true);
   const [highlightedModuleId, setHighlightedModuleId] = useState<string | null>(null);
   const [calendarModule, setCalendarModule] = useState<{ id: string; title: string } | null>(null);
+  const { currentLanguage, translateText } = useSkillLanguage();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -254,10 +258,40 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
     fetchData();
   }, [id]);
 
+  // Translate Data
+  useEffect(() => {
+    const localize = async () => {
+      if (!data) return;
+      if (currentLanguage === 'en') {
+        setLocalizedData(data);
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const tTitle = await translateText(data.title, currentLanguage);
+        const tModules = await Promise.all(
+          data.modules.map(async m => {
+            const mTitle = await translateText(m.title, currentLanguage);
+            const mDesc = await translateText(m.description, currentLanguage);
+            return { ...m, title: mTitle, description: mDesc };
+          })
+        );
+        setLocalizedData({ ...data, title: tTitle, modules: tModules });
+      } catch (e) {
+        console.error("Translation UI Error:", e);
+        setLocalizedData(data); // fallback to english
+      } finally {
+        setLoading(false);
+      }
+    };
+    localize();
+  }, [data, currentLanguage]);
+
   // When data loads and we have a highlight param, jump to the right level
   useEffect(() => {
-    if (!data || !highlightId) return;
-    const targetModule = data.modules.find(m => m.id === highlightId);
+    if (!localizedData || !highlightId) return;
+    const targetModule = localizedData.modules.find(m => m.id === highlightId);
     if (targetModule) {
       setCurrentLevel(targetModule.level);
       setHighlightedModuleId(highlightId);
@@ -267,9 +301,9 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 300);
     }
-  }, [data, highlightId]);
+  }, [localizedData, highlightId]);
 
-  if (loading) {
+  if (loading || (data && !localizedData)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FFFDF6]">
         <Loader2 className="w-12 h-12 text-[#FFD700] animate-spin" />
@@ -279,10 +313,10 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
 
   if (!data) return notFound();
 
-  const levels = Array.from(new Set(data.modules.map(m => m.level))).sort((a, b) => a - b);
+  const levels = Array.from(new Set(localizedData.modules.map(m => m.level))).sort((a, b) => a - b);
   const minLevel = levels[0] || 1;
   const maxLevel = levels[levels.length - 1] || 1;
-  const currentLevelModules = data.modules.filter(m => m.level === currentLevel);
+  const currentLevelModules = localizedData.modules.filter(m => m.level === currentLevel);
 
   // Dynamic Level Progress Calculator
   const totalModulesInLevel = currentLevelModules.length;
@@ -297,13 +331,20 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
         <div className="absolute inset-0 pointer-events-none z-0 opacity-30 bg-[radial-gradient(#FDE68A_1.5px,transparent_1.5px)] [background-size:24px_24px]" />
 
         {/* Header Section */}
-        <div className="text-center z-10 mb-12 max-w-2xl px-4">
+        <div className="text-center z-10 mb-8 max-w-2xl px-4 flex flex-col items-center">
           <motion.h1
             initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
             className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-2 capitalize"
           >
-            {data.title}
+            {localizedData.title}
           </motion.h1>
+        </div>
+
+        {/* Top Right Actions */}
+        <div className="absolute top-8 right-4 md:right-8 z-20">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
+            <SkillLanguageSelector />
+          </motion.div>
         </div>
 
         {/* Dynamic Level Progress Bar Tracker */}
