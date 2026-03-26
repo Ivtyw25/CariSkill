@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import Sidebar from '@/components/Sidebar';
 import { createClient } from '@/utils/supabase/client';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MoreHorizontal, Clock, PlayCircle, Loader2, Plus, Check, FileCheck } from 'lucide-react';
+import { MoreHorizontal, Clock, PlayCircle, Loader2, Plus, Check, FileCheck, XCircle, AlertTriangle } from 'lucide-react';
 import type { SkillStatus } from '@/lib/profile-data';
 
 const LanguageTag = ({ lang }: { lang: string }) => {
@@ -25,6 +25,20 @@ const LanguageTag = ({ lang }: { lang: string }) => {
   );
 };
 
+const ImportanceTag = ({ priority }: { priority: number }) => {
+  const configs: Record<number, { label: string, color: string, bg: string }> = {
+    3: { label: 'Vital', color: 'text-red-600', bg: 'bg-red-50' },
+    2: { label: 'Building Block', color: 'text-yellow-700', bg: 'bg-yellow-50' },
+    1: { label: 'Curiosity', color: 'text-green-600', bg: 'bg-green-50' },
+  };
+  const config = configs[priority] || configs[1];
+  return (
+    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${config.bg} ${config.color} border-current opacity-90 uppercase tracking-wider`}>
+      {config.label}
+    </span>
+  );
+};
+
 export default function ProfilePage() {
   const supabase = createClient();
   const [activeTab, setActiveTab] = useState<SkillStatus>('Ongoing');
@@ -32,6 +46,8 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [syncingSkillId, setSyncingSkillId] = useState<string | null>(null);
   const [syncedSkills, setSyncedSkills] = useState<Set<string>>(new Set());
+  const [cancellingSkill, setCancellingSkill] = useState<any | null>(null);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -41,7 +57,7 @@ export default function ProfilePage() {
       // Fetch all user roadmaps
       const { data: roadmaps } = await supabase
         .from('roadmaps')
-        .select('id, topic, created_at')
+        .select('id, topic, created_at, priority, is_cancelled')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
@@ -97,11 +113,23 @@ export default function ProfilePage() {
           status: (progress === 100 ? 'Done' : 'Ongoing') as SkillStatus,
           total_time_spent: totalMinutes,
           slug,
-          language: prefMap.get(roadmap.id) || 'en'
+          language: prefMap.get(roadmap.id) || 'en',
+          priority: roadmap.priority || 1,
+          is_cancelled: roadmap.is_cancelled || false,
+          created_at: roadmap.created_at
         };
       }));
 
-      setSkills(skillCards);
+      // Map status correctly
+      const statusMapped = skillCards.map(s => {
+        if (s.is_cancelled) return { ...s, status: 'Cancelled' as SkillStatus };
+        return s;
+      });
+
+      // Sort by created_at descending (newest first)
+      const sortedCards = statusMapped.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+      setSkills(sortedCards);
       setIsLoading(false);
     };
 
@@ -150,11 +178,39 @@ export default function ProfilePage() {
     }
   };
 
+  const handleCancelSkill = async () => {
+    if (!cancellingSkill) return;
+    setIsUpdating(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      // Update in roadmaps table
+      const { error } = await supabase
+        .from('roadmaps')
+        .update({ is_cancelled: true })
+        .eq('id', cancellingSkill.id);
+
+      if (error) throw error;
+
+      // Optimistic update
+      setSkills(prev => prev.map(s => 
+        s.id === cancellingSkill.id ? { ...s, status: 'Cancelled' as SkillStatus, is_cancelled: true } : s
+      ));
+      
+      setCancellingSkill(null);
+    } catch (error) {
+      console.error('Error cancelling skill:', error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   const displayedSkills = skills.filter(skill => skill.status === activeTab);
   const counts = {
     Ongoing: skills.filter(s => s.status === 'Ongoing').length,
     Done: skills.filter(s => s.status === 'Done').length,
-    Cancelled: 0,
+    Cancelled: skills.filter(s => s.status === 'Cancelled').length,
   };
 
   return (
@@ -207,31 +263,52 @@ export default function ProfilePage() {
             ) : (
               <AnimatePresence mode="wait">
                 <div key={activeTab} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {displayedSkills.length > 0 ? (
-                    displayedSkills.map((skill, idx) => (
-                      /* Each card animates in immediately using its own index delay — no stagger chain needed */
-                      <motion.div
-                        key={skill.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.35, delay: idx * 0.07, ease: 'easeOut' }}
-                        whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                        onClick={() => window.location.href = `/skill/${skill.slug}`}
-                        className="relative bg-white rounded-[24px] p-6 shadow-sm hover:shadow-xl border border-gray-100 flex flex-col transition-all duration-300 group cursor-pointer min-h-[260px] h-auto overflow-hidden text-left"
-                      >
-                        {/* Interactive Yellow Glow on Hover */}
-                        <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400/20 via-yellow-400/40 to-[#FFD700]/20 rounded-[28px] blur-xl opacity-0 group-hover:opacity-100 transition duration-500 group-hover:duration-200 pointer-events-none" />
+                    {displayedSkills.length > 0 ? (
+                      displayedSkills.map((skill, idx) => {
+                        const priorityGlows: Record<number, string> = {
+                          3: 'hover:shadow-[0_0_25px_rgba(239,68,68,0.25)] hover:border-red-300',
+                          2: 'hover:shadow-[0_0_25px_rgba(234,179,8,0.25)] hover:border-yellow-300',
+                          1: 'hover:shadow-[0_0_25px_rgba(34,197,94,0.25)] hover:border-green-300',
+                        };
+                        const glowClass = priorityGlows[skill.priority] || priorityGlows[1];
 
-                        {/* Inner Content Wrapper to keep it above the glow */}
-                        <div className="relative z-10 flex flex-col h-full">
-                          <div className="flex justify-between items-start mb-5">
+                        return (
+                          /* Each card animates in immediately using its own index delay — no stagger chain needed */
+                          <motion.div
+                            key={skill.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={{ 
+                              duration: 0.4, 
+                              delay: idx * 0.05, 
+                              type: 'spring',
+                              stiffness: 300,
+                              damping: 25
+                            }}
+                            whileHover={{ y: -12, scale: 1.05 }}
+                            onClick={() => window.location.href = `/skill/${skill.slug}`}
+                            className={`relative bg-white rounded-[24px] p-6 shadow-sm border-2 border-transparent flex flex-col transition-all duration-300 group cursor-pointer min-h-[260px] h-auto overflow-hidden text-left ${glowClass}`}
+                          >
+                            {/* Inner Content Wrapper */}
+                            <div className="relative z-10 flex flex-col h-full">
+                              <div className="flex justify-between items-start mb-5">
                             <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#FEF9C3] text-[#CA8A04] group-hover:scale-110 transition-transform">
                               <PlayCircle className="w-6 h-6" />
                             </div>
 
-                            {/* Language Tag replacing the three dots */}
-                            <div className="flex items-center" onClick={(e) => e.stopPropagation()}>
+                            {/* Tags replacing the three dots */}
+                            <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                              {activeTab === 'Ongoing' && (
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); setCancellingSkill(skill); }}
+                                  className="w-7 h-7 flex items-center justify-center rounded-full bg-red-50 text-red-400 hover:bg-red-100 hover:text-red-600 transition-colors border border-red-100 mr-1"
+                                  title="Cancel Skill"
+                                >
+                                  <XCircle size={15} />
+                                </button>
+                              )}
+                              <ImportanceTag priority={skill.priority} />
                               <LanguageTag lang={skill.language} />
                             </div>
                           </div>
@@ -288,13 +365,14 @@ export default function ProfilePage() {
                           </div>
                         </div>
                       </motion.div>
-                    ))
-                  ) : (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="col-span-full py-12 text-center text-gray-500"
-                    >
+                    );
+                  })
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="col-span-full py-12 text-center text-gray-500"
+                  >
                       {activeTab === 'Ongoing' ? (
                         <>No ongoing skills yet. <a href="/roadmaps" className="text-[#CA8A04] font-bold hover:underline">Generate a roadmap</a> to start!</>
                       ) : `No ${activeTab.toLowerCase()} skills found.`}
@@ -306,6 +384,55 @@ export default function ProfilePage() {
           </section>
         </div>
       </main>
+
+      {/* Cancellation Confirmation Modal */}
+      <AnimatePresence>
+        {cancellingSkill && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setCancellingSkill(null)}
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="relative bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl overflow-hidden border border-gray-100"
+            >
+              <div className="absolute top-0 left-0 w-full h-2 bg-red-500" />
+              
+              <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center text-red-500 mb-6">
+                <AlertTriangle size={32} />
+              </div>
+              
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">Cancel this Skill?</h3>
+              <p className="text-gray-500 mb-8 leading-relaxed">
+                You are about to cancel <span className="font-bold text-gray-900 italic">"{cancellingSkill.title}"</span>. 
+                This will move it to your cancelled list. You can view it later, but it will no longer show in your active modules.
+              </p>
+              
+              <div className="flex gap-4">
+                <button
+                  onClick={() => setCancellingSkill(null)}
+                  className="flex-1 py-3.5 px-6 rounded-2xl bg-gray-50 text-gray-600 font-bold hover:bg-gray-100 transition-all border border-gray-100"
+                >
+                  Keep Skill
+                </button>
+                <button
+                  onClick={handleCancelSkill}
+                  disabled={isUpdating}
+                  className="flex-1 py-3.5 px-6 rounded-2xl bg-red-500 text-white font-bold hover:bg-red-600 shadow-lg shadow-red-200 transition-all flex items-center justify-center gap-2"
+                >
+                  {isUpdating ? <Loader2 size={18} className="animate-spin" /> : 'Yes, Cancel'}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
       <Footer />
     </div>
   );
