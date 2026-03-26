@@ -1,11 +1,10 @@
 import { memo } from 'react';
-import { Handle, Position } from '@xyflow/react';
 import { motion } from 'framer-motion';
 import { Crown, Network, Lock, Check } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 import { ProgressNodeData } from '@/lib/progress-data';
 
-export const ProgressNode = memo(({ data, selected }: { data: ProgressNodeData, selected: boolean }) => {
+export const ProgressNode = memo(({ data, selected }: { data: any, selected: boolean }) => {
     const isCompleted = data.status === 'completed';
     const isInProgress = data.status === 'progress';
     const isLocked = data.status === 'locked';
@@ -13,24 +12,26 @@ export const ProgressNode = memo(({ data, selected }: { data: ProgressNodeData, 
 
     const breathingGlow = {
         animate: { boxShadow: `0px 0px 20px 8px ${color}80`, opacity: [0.3, 0.7, 0.3] },
-        transition: { duration: 2, repeat: Infinity, ease: 'easeInOut' }
+        transition: { duration: 2, repeat: Infinity, ease: 'easeInOut' as any }
     };
 
-    const depth = (data as any).depth || 0;
+    const scrollThreshold = data.scrollThreshold || 0;
+    const nodeY = data.y || 0;
+    const isVisible = nodeY <= scrollThreshold || data.type === 'user';
     const IconComponent = data.icon ? (LucideIcons as any)[data.icon] : null;
 
     return (
         <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: depth * 0.3 }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+            transition={{ 
+                type: 'spring', 
+                stiffness: 260, 
+                damping: 20,
+                delay: isVisible ? 0.1 : 0 
+            }}
             className={`relative flex flex-col items-center justify-center group ${isLocked ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
         >
-
-            {data.type !== 'user' && (
-                <Handle type="target" position={Position.Top} className="!w-1 !h-1 !bg-transparent border-none !opacity-0" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: -1 }} />
-            )}
-
             {(isInProgress || data.type === 'user') && (
                 <motion.div animate={breathingGlow.animate} transition={breathingGlow.transition} className="absolute inset-0 rounded-full" />
             )}
@@ -69,9 +70,6 @@ export const ProgressNode = memo(({ data, selected }: { data: ProgressNodeData, 
                     {data.isCollapsed ? '+' : '-'}
                 </div>
             )}
-
-            <Handle type="source" position={Position.Bottom} className="!w-1 !h-1 !bg-transparent border-none !opacity-0" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: -1 }} />
-
         </motion.div>
     );
 });
