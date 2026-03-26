@@ -2,219 +2,267 @@
   "pydantic_output": {
     "nodes": [
       {
-        "node_id": "understanding_fishing_basics",
-        "title": "Understanding Fishing Basics",
-        "rationale": "To relax by the water with fishing, a beginner needs to understand the fundamental concepts of fishing, including basic gear and fish behavior. This foundation will prevent frustration and allow for a more enjoyable experience.",
+        "node_id": "bakery_business_foundations",
+        "title": "Bakery Business Foundations",
+        "rationale": "Understand the core concepts and unique challenges of operating a bakery. This module sets the stage for all subsequent steps. Podcasts are great for learning business basics on the go.",
         "prerequisites": [],
         "suggested_micro_topics": [
-          "Types of fishing (e.g., bait fishing, lure fishing)",
-          "Basic fishing gear (rod, reel, line, hooks, sinkers, bobbers)",
-          "Understanding common freshwater fish (e.g., sunfish, perch)",
-          "Basic fish behavior and feeding patterns",
-          "Safety considerations near water"
+          "Types of bakeries (retail, wholesale, home-based)",
+          "Market research basics for food industry",
+          "Legal structures for small businesses",
+          "Local health department regulations overview",
+          "Understanding startup costs for a bakery"
         ]
       },
       {
-        "node_id": "selecting_and_setting_up_gear",
-        "title": "Selecting and Setting Up Gear",
-        "rationale": "Properly selecting and setting up fishing gear is crucial for a beginner to have a successful and relaxing experience. Ill-suited or incorrectly assembled gear can lead to tangles, lost fish, and overall frustration.",
-        "prerequisites": [
-          "understanding_fishing_basics"
-        ],
+        "node_id": "mastering_bakery_products",
+        "title": "Mastering Bakery Products & Menu Development",
+        "rationale": "Develop a strong product offering that appeals to your target market. For a beginner, hands-on skill development is paramount.",
+        "prerequisites": [],
         "suggested_micro_topics": [
-          "Choosing a beginner-friendly rod and reel combo",
-          "Spooling fishing line",
-          "Tying basic fishing knots (e.g., clinch knot, palomar knot)",
-          "Attaching hooks, sinkers, and bobbers",
-          "Selecting appropriate bait or lures for target fish"
+          "Core baking techniques (breads, pastries, cakes, cookies)",
+          "Recipe development and standardization",
+          "Ingredient sourcing and quality control",
+          "Allergen management and labeling",
+          "Menu design and pricing strategies"
         ]
       },
       {
-        "node_id": "finding_and_approaching_fishing_spots",
-        "title": "Finding and Approaching Fishing Spots",
-        "rationale": "Knowing where to fish and how to approach a spot without disturbing the fish is essential for a relaxing and productive outing. This module focuses on practical location skills.",
+        "node_id": "crafting_bakery_business_plan",
+        "title": "Crafting Your Bakery Business Plan",
+        "rationale": "A comprehensive business plan is your roadmap to success, outlining your vision, strategies, and financial projections. Essential for securing funding and staying focused.",
         "prerequisites": [
-          "understanding_fishing_basics"
+          "bakery_business_foundations",
+          "mastering_bakery_products"
         ],
         "suggested_micro_topics": [
-          "Identifying promising fishing locations (e.g., near structures, weed beds)",
-          "Understanding local fishing regulations and licenses",
-          " stealthy approach to avoid scaring fish",
-          "Reading the water for signs of fish activity",
-          "Considering accessibility and comfort of fishing spots"
+          "Executive summary writing",
+          "Detailed market analysis and competitive landscape",
+          "Marketing and sales strategy",
+          "Operational plan (production, staffing)",
+          "Financial projections (startup, P&L, cash flow)",
+          "Funding options for small food businesses"
         ]
       },
       {
-        "node_id": "casting_and_retrieving_techniques",
-        "title": "Casting and Retrieving Techniques",
-        "rationale": "Mastering basic casting and retrieving techniques allows a beginner to effectively present their bait or lure, increasing their chances of catching fish and making the process more engaging and less frustrating.",
+        "node_id": "legal_licensing_health",
+        "title": "Legal, Licensing & Health Compliance",
+        "rationale": "Navigate the essential legal and health regulations to ensure your bakery operates safely and legally, avoiding costly penalties.",
         "prerequisites": [
-          "selecting_and_setting_up_gear"
+          "bakery_business_foundations",
+          "crafting_bakery_business_plan"
         ],
         "suggested_micro_topics": [
-          "Basic overhead casting",
-          "Underhand casting for accuracy",
-          "Varying retrieval speeds and patterns",
-          "Detecting bites and setting the hook",
-          "Practicing casting in open areas"
+          "Business registration and permits",
+          "Food handler permits and certifications (e.g., ServSafe)",
+          "Local zoning laws for commercial kitchens",
+          "Food labeling requirements",
+          "Business insurance essentials (liability, property)"
         ]
       },
       {
-        "node_id": "handling_and_releasing_fish",
-        "title": "Handling and Releasing Fish",
-        "rationale": "Learning how to properly handle and release fish is important for ethical fishing practices and ensures the well-being of the fish, contributing to a sustainable and enjoyable hobby.",
+        "node_id": "kitchen_setup_supply_chain",
+        "title": "Kitchen Setup & Supply Chain Management",
+        "rationale": "Establish an efficient and compliant kitchen space and manage your ingredient supply effectively to maintain quality and control costs.",
         "prerequisites": [
-          "casting_and_retrieving_techniques"
+          "crafting_bakery_business_plan",
+          "legal_licensing_health"
         ],
         "suggested_micro_topics": [
-          "Safe handling of fish (e.g., wet hands, supporting body)",
-          "Removing hooks safely",
-          "Understanding catch and release principles",
-          "Minimizing stress on the fish",
-          "Photography tips for fish (optional)"
+          "Essential bakery equipment selection",
+          "Kitchen layout and workflow optimization",
+          "Supplier identification and negotiation",
+          "Inventory management systems",
+          "Food storage and rotation best practices"
         ]
       },
       {
-        "node_id": "fishing_for_relaxation_mindset",
-        "title": "Fishing for Relaxation Mindset",
-        "rationale": "Since the user's goal is to relax, this module focuses on cultivating a mindful approach to fishing, emphasizing patience, observation, and enjoying the natural surroundings.",
+        "node_id": "marketing_branding_bakery",
+        "title": "Marketing & Branding Your Bakery",
+        "rationale": "Create a compelling brand identity and effective marketing strategies to attract and retain customers. Podcasts on small business marketing can be very insightful.",
         "prerequisites": [
-          "understanding_fishing_basics"
+          "crafting_bakery_business_plan",
+          "mastering_bakery_products"
         ],
         "suggested_micro_topics": [
-          "Patience and observation in fishing",
-          "Connecting with nature during fishing",
-          "Mindfulness techniques while by the water",
-          "Enjoying the process over the catch",
-          "Dealing with slow fishing days"
+          "Developing a unique bakery brand story",
+          "Social media marketing for food businesses",
+          "Local SEO and Google My Business setup",
+          "Email marketing basics",
+          "Partnerships and collaborations (e.g., local cafes, events)",
+          "Photography for food products"
         ]
       },
       {
-        "node_id": "beginner_fishing_podcasts",
-        "title": "Beginner Fishing Podcasts",
-        "rationale": "To address the user's desire for podcasts, this module provides resources for listening to fishing-related content, offering an alternative and convenient way to learn and relax.",
+        "node_id": "financial_management_profitability",
+        "title": "Financial Management & Profitability",
+        "rationale": "Understand your costs, manage finances, and set pricing to ensure your bakery is profitable and sustainable.",
         "prerequisites": [
-          "understanding_fishing_basics"
+          "crafting_bakery_business_plan",
+          "kitchen_setup_supply_chain"
         ],
         "suggested_micro_topics": [
-          "Identifying beginner-friendly fishing podcasts",
-          "Topics covered in popular fishing podcasts (e.g., gear reviews, fishing stories)",
-          "How podcasts can enhance the fishing experience",
-          "Finding podcasts focused on relaxation and nature",
-          "Using podcasts for continued learning and inspiration"
+          "Cost of Goods Sold (COGS) calculation",
+          "Pricing strategies for baked goods",
+          "Budgeting and expense tracking",
+          "Basic accounting software introduction",
+          "Cash flow management",
+          "Understanding profit margins"
+        ]
+      },
+      {
+        "node_id": "launching_growing_bakery",
+        "title": "Launching & Growing Your Bakery",
+        "rationale": "Execute a successful launch and lay the groundwork for continuous improvement and expansion.",
+        "prerequisites": [
+          "marketing_branding_bakery",
+          "financial_management_profitability",
+          "kitchen_setup_supply_chain"
+        ],
+        "suggested_micro_topics": [
+          "Soft launch vs. grand opening strategies",
+          "Gathering and acting on customer feedback",
+          "Building a loyal customer base",
+          "Scaling production and operations",
+          "Hiring and training initial staff",
+          "Exploring new product lines or sales channels"
         ]
       }
     ]
   },
   "json_dict_output": null,
-  "raw_output": "{\"nodes\": [{\"node_id\": \"understanding_fishing_basics\", \"title\": \"Understanding Fishing Basics\", \"rationale\": \"To relax by the water with fishing, a beginner needs to understand the fundamental concepts of fishing, including basic gear and fish behavior. This foundation will prevent frustration and allow for a more enjoyable experience.\", \"prerequisites\": [], \"suggested_micro_topics\": [\"Types of fishing (e.g., bait fishing, lure fishing)\", \"Basic fishing gear (rod, reel, line, hooks, sinkers, bobbers)\", \"Understanding common freshwater fish (e.g., sunfish, perch)\", \"Basic fish behavior and feeding patterns\", \"Safety considerations near water\"]}, {\"node_id\": \"selecting_and_setting_up_gear\", \"title\": \"Selecting and Setting Up Gear\", \"rationale\": \"Properly selecting and setting up fishing gear is crucial for a beginner to have a successful and relaxing experience. Ill-suited or incorrectly assembled gear can lead to tangles, lost fish, and overall frustration.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Choosing a beginner-friendly rod and reel combo\", \"Spooling fishing line\", \"Tying basic fishing knots (e.g., clinch knot, palomar knot)\", \"Attaching hooks, sinkers, and bobbers\", \"Selecting appropriate bait or lures for target fish\"]}, {\"node_id\": \"finding_and_approaching_fishing_spots\", \"title\": \"Finding and Approaching Fishing Spots\", \"rationale\": \"Knowing where to fish and how to approach a spot without disturbing the fish is essential for a relaxing and productive outing. This module focuses on practical location skills.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Identifying promising fishing locations (e.g., near structures, weed beds)\", \"Understanding local fishing regulations and licenses\", \" stealthy approach to avoid scaring fish\", \"Reading the water for signs of fish activity\", \"Considering accessibility and comfort of fishing spots\"]}, {\"node_id\": \"casting_and_retrieving_techniques\", \"title\": \"Casting and Retrieving Techniques\", \"rationale\": \"Mastering basic casting and retrieving techniques allows a beginner to effectively present their bait or lure, increasing their chances of catching fish and making the process more engaging and less frustrating.\", \"prerequisites\": [\"selecting_and_setting_up_gear\"], \"suggested_micro_topics\": [\"Basic overhead casting\", \"Underhand casting for accuracy\", \"Varying retrieval speeds and patterns\", \"Detecting bites and setting the hook\", \"Practicing casting in open areas\"]}, {\"node_id\": \"handling_and_releasing_fish\", \"title\": \"Handling and Releasing Fish\", \"rationale\": \"Learning how to properly handle and release fish is important for ethical fishing practices and ensures the well-being of the fish, contributing to a sustainable and enjoyable hobby.\", \"prerequisites\": [\"casting_and_retrieving_techniques\"], \"suggested_micro_topics\": [\"Safe handling of fish (e.g., wet hands, supporting body)\", \"Removing hooks safely\", \"Understanding catch and release principles\", \"Minimizing stress on the fish\", \"Photography tips for fish (optional)\"]}, {\"node_id\": \"fishing_for_relaxation_mindset\", \"title\": \"Fishing for Relaxation Mindset\", \"rationale\": \"Since the user's goal is to relax, this module focuses on cultivating a mindful approach to fishing, emphasizing patience, observation, and enjoying the natural surroundings.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Patience and observation in fishing\", \"Connecting with nature during fishing\", \"Mindfulness techniques while by the water\", \"Enjoying the process over the catch\", \"Dealing with slow fishing days\"]}, {\"node_id\": \"beginner_fishing_podcasts\", \"title\": \"Beginner Fishing Podcasts\", \"rationale\": \"To address the user's desire for podcasts, this module provides resources for listening to fishing-related content, offering an alternative and convenient way to learn and relax.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Identifying beginner-friendly fishing podcasts\", \"Topics covered in popular fishing podcasts (e.g., gear reviews, fishing stories)\", \"How podcasts can enhance the fishing experience\", \"Finding podcasts focused on relaxation and nature\", \"Using podcasts for continued learning and inspiration\"]}]}",
+  "raw_output": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"bakery_business_foundations\",\n      \"title\": \"Bakery Business Foundations\",\n      \"rationale\": \"Understand the core concepts and unique challenges of operating a bakery. This module sets the stage for all subsequent steps. Podcasts are great for learning business basics on the go.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Types of bakeries (retail, wholesale, home-based)\",\n        \"Market research basics for food industry\",\n        \"Legal structures for small businesses\",\n        \"Local health department regulations overview\",\n        \"Understanding startup costs for a bakery\"\n      ]\n    },\n    {\n      \"node_id\": \"mastering_bakery_products\",\n      \"title\": \"Mastering Bakery Products & Menu Development\",\n      \"rationale\": \"Develop a strong product offering that appeals to your target market. For a beginner, hands-on skill development is paramount.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Core baking techniques (breads, pastries, cakes, cookies)\",\n        \"Recipe development and standardization\",\n        \"Ingredient sourcing and quality control\",\n        \"Allergen management and labeling\",\n        \"Menu design and pricing strategies\"\n      ]\n    },\n    {\n      \"node_id\": \"crafting_bakery_business_plan\",\n      \"title\": \"Crafting Your Bakery Business Plan\",\n      \"rationale\": \"A comprehensive business plan is your roadmap to success, outlining your vision, strategies, and financial projections. Essential for securing funding and staying focused.\",\n      \"prerequisites\": [\n        \"bakery_business_foundations\",\n        \"mastering_bakery_products\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Executive summary writing\",\n        \"Detailed market analysis and competitive landscape\",\n        \"Marketing and sales strategy\",\n        \"Operational plan (production, staffing)\",\n        \"Financial projections (startup, P&L, cash flow)\",\n        \"Funding options for small food businesses\"\n      ]\n    },\n    {\n      \"node_id\": \"legal_licensing_health\",\n      \"title\": \"Legal, Licensing & Health Compliance\",\n      \"rationale\": \"Navigate the essential legal and health regulations to ensure your bakery operates safely and legally, avoiding costly penalties.\",\n      \"prerequisites\": [\n        \"bakery_business_foundations\",\n        \"crafting_bakery_business_plan\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Business registration and permits\",\n        \"Food handler permits and certifications (e.g., ServSafe)\",\n        \"Local zoning laws for commercial kitchens\",\n        \"Food labeling requirements\",\n        \"Business insurance essentials (liability, property)\"\n      ]\n    },\n    {\n      \"node_id\": \"kitchen_setup_supply_chain\",\n      \"title\": \"Kitchen Setup & Supply Chain Management\",\n      \"rationale\": \"Establish an efficient and compliant kitchen space and manage your ingredient supply effectively to maintain quality and control costs.\",\n      \"prerequisites\": [\n        \"crafting_bakery_business_plan\",\n        \"legal_licensing_health\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Essential bakery equipment selection\",\n        \"Kitchen layout and workflow optimization\",\n        \"Supplier identification and negotiation\",\n        \"Inventory management systems\",\n        \"Food storage and rotation best practices\"\n      ]\n    },\n    {\n      \"node_id\": \"marketing_branding_bakery\",\n      \"title\": \"Marketing & Branding Your Bakery\",\n      \"rationale\": \"Create a compelling brand identity and effective marketing strategies to attract and retain customers. Podcasts on small business marketing can be very insightful.\",\n      \"prerequisites\": [\n        \"crafting_bakery_business_plan\",\n        \"mastering_bakery_products\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Developing a unique bakery brand story\",\n        \"Social media marketing for food businesses\",\n        \"Local SEO and Google My Business setup\",\n        \"Email marketing basics\",\n        \"Partnerships and collaborations (e.g., local cafes, events)\",\n        \"Photography for food products\"\n      ]\n    },\n    {\n      \"node_id\": \"financial_management_profitability\",\n      \"title\": \"Financial Management & Profitability\",\n      \"rationale\": \"Understand your costs, manage finances, and set pricing to ensure your bakery is profitable and sustainable.\",\n      \"prerequisites\": [\n        \"crafting_bakery_business_plan\",\n        \"kitchen_setup_supply_chain\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Cost of Goods Sold (COGS) calculation\",\n        \"Pricing strategies for baked goods\",\n        \"Budgeting and expense tracking\",\n        \"Basic accounting software introduction\",\n        \"Cash flow management\",\n        \"Understanding profit margins\"\n      ]\n    },\n    {\n      \"node_id\": \"launching_growing_bakery\",\n      \"title\": \"Launching & Growing Your Bakery\",\n      \"rationale\": \"Execute a successful launch and lay the groundwork for continuous improvement and expansion.\",\n      \"prerequisites\": [\n        \"marketing_branding_bakery\",\n        \"financial_management_profitability\",\n        \"kitchen_setup_supply_chain\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Soft launch vs. grand opening strategies\",\n        \"Gathering and acting on customer feedback\",\n        \"Building a loyal customer base\",\n        \"Scaling production and operations\",\n        \"Hiring and training initial staff\",\n        \"Exploring new product lines or sales channels\"\n      ]\n    }\n  ]\n}\n```",
   "tasks_output": [
     {
-      "raw": "{\"nodes\": [{\"node_id\": \"understanding_fishing_basics\", \"title\": \"Understanding Fishing Basics\", \"rationale\": \"To relax by the water with fishing, a beginner needs to understand the fundamental concepts of fishing, including basic gear and fish behavior. This foundation will prevent frustration and allow for a more enjoyable experience.\", \"prerequisites\": [], \"suggested_micro_topics\": [\"Types of fishing (e.g., bait fishing, lure fishing)\", \"Basic fishing gear (rod, reel, line, hooks, sinkers, bobbers)\", \"Understanding common freshwater fish (e.g., sunfish, perch)\", \"Basic fish behavior and feeding patterns\", \"Safety considerations near water\"]}, {\"node_id\": \"selecting_and_setting_up_gear\", \"title\": \"Selecting and Setting Up Gear\", \"rationale\": \"Properly selecting and setting up fishing gear is crucial for a beginner to have a successful and relaxing experience. Ill-suited or incorrectly assembled gear can lead to tangles, lost fish, and overall frustration.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Choosing a beginner-friendly rod and reel combo\", \"Spooling fishing line\", \"Tying basic fishing knots (e.g., clinch knot, palomar knot)\", \"Attaching hooks, sinkers, and bobbers\", \"Selecting appropriate bait or lures for target fish\"]}, {\"node_id\": \"finding_and_approaching_fishing_spots\", \"title\": \"Finding and Approaching Fishing Spots\", \"rationale\": \"Knowing where to fish and how to approach a spot without disturbing the fish is essential for a relaxing and productive outing. This module focuses on practical location skills.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Identifying promising fishing locations (e.g., near structures, weed beds)\", \"Understanding local fishing regulations and licenses\", \" stealthy approach to avoid scaring fish\", \"Reading the water for signs of fish activity\", \"Considering accessibility and comfort of fishing spots\"]}, {\"node_id\": \"casting_and_retrieving_techniques\", \"title\": \"Casting and Retrieving Techniques\", \"rationale\": \"Mastering basic casting and retrieving techniques allows a beginner to effectively present their bait or lure, increasing their chances of catching fish and making the process more engaging and less frustrating.\", \"prerequisites\": [\"selecting_and_setting_up_gear\"], \"suggested_micro_topics\": [\"Basic overhead casting\", \"Underhand casting for accuracy\", \"Varying retrieval speeds and patterns\", \"Detecting bites and setting the hook\", \"Practicing casting in open areas\"]}, {\"node_id\": \"handling_and_releasing_fish\", \"title\": \"Handling and Releasing Fish\", \"rationale\": \"Learning how to properly handle and release fish is important for ethical fishing practices and ensures the well-being of the fish, contributing to a sustainable and enjoyable hobby.\", \"prerequisites\": [\"casting_and_retrieving_techniques\"], \"suggested_micro_topics\": [\"Safe handling of fish (e.g., wet hands, supporting body)\", \"Removing hooks safely\", \"Understanding catch and release principles\", \"Minimizing stress on the fish\", \"Photography tips for fish (optional)\"]}, {\"node_id\": \"fishing_for_relaxation_mindset\", \"title\": \"Fishing for Relaxation Mindset\", \"rationale\": \"Since the user's goal is to relax, this module focuses on cultivating a mindful approach to fishing, emphasizing patience, observation, and enjoying the natural surroundings.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Patience and observation in fishing\", \"Connecting with nature during fishing\", \"Mindfulness techniques while by the water\", \"Enjoying the process over the catch\", \"Dealing with slow fishing days\"]}, {\"node_id\": \"beginner_fishing_podcasts\", \"title\": \"Beginner Fishing Podcasts\", \"rationale\": \"To address the user's desire for podcasts, this module provides resources for listening to fishing-related content, offering an alternative and convenient way to learn and relax.\", \"prerequisites\": [\"understanding_fishing_basics\"], \"suggested_micro_topics\": [\"Identifying beginner-friendly fishing podcasts\", \"Topics covered in popular fishing podcasts (e.g., gear reviews, fishing stories)\", \"How podcasts can enhance the fishing experience\", \"Finding podcasts focused on relaxation and nature\", \"Using podcasts for continued learning and inspiration\"]}]}",
+      "raw": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"bakery_business_foundations\",\n      \"title\": \"Bakery Business Foundations\",\n      \"rationale\": \"Understand the core concepts and unique challenges of operating a bakery. This module sets the stage for all subsequent steps. Podcasts are great for learning business basics on the go.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Types of bakeries (retail, wholesale, home-based)\",\n        \"Market research basics for food industry\",\n        \"Legal structures for small businesses\",\n        \"Local health department regulations overview\",\n        \"Understanding startup costs for a bakery\"\n      ]\n    },\n    {\n      \"node_id\": \"mastering_bakery_products\",\n      \"title\": \"Mastering Bakery Products & Menu Development\",\n      \"rationale\": \"Develop a strong product offering that appeals to your target market. For a beginner, hands-on skill development is paramount.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Core baking techniques (breads, pastries, cakes, cookies)\",\n        \"Recipe development and standardization\",\n        \"Ingredient sourcing and quality control\",\n        \"Allergen management and labeling\",\n        \"Menu design and pricing strategies\"\n      ]\n    },\n    {\n      \"node_id\": \"crafting_bakery_business_plan\",\n      \"title\": \"Crafting Your Bakery Business Plan\",\n      \"rationale\": \"A comprehensive business plan is your roadmap to success, outlining your vision, strategies, and financial projections. Essential for securing funding and staying focused.\",\n      \"prerequisites\": [\n        \"bakery_business_foundations\",\n        \"mastering_bakery_products\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Executive summary writing\",\n        \"Detailed market analysis and competitive landscape\",\n        \"Marketing and sales strategy\",\n        \"Operational plan (production, staffing)\",\n        \"Financial projections (startup, P&L, cash flow)\",\n        \"Funding options for small food businesses\"\n      ]\n    },\n    {\n      \"node_id\": \"legal_licensing_health\",\n      \"title\": \"Legal, Licensing & Health Compliance\",\n      \"rationale\": \"Navigate the essential legal and health regulations to ensure your bakery operates safely and legally, avoiding costly penalties.\",\n      \"prerequisites\": [\n        \"bakery_business_foundations\",\n        \"crafting_bakery_business_plan\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Business registration and permits\",\n        \"Food handler permits and certifications (e.g., ServSafe)\",\n        \"Local zoning laws for commercial kitchens\",\n        \"Food labeling requirements\",\n        \"Business insurance essentials (liability, property)\"\n      ]\n    },\n    {\n      \"node_id\": \"kitchen_setup_supply_chain\",\n      \"title\": \"Kitchen Setup & Supply Chain Management\",\n      \"rationale\": \"Establish an efficient and compliant kitchen space and manage your ingredient supply effectively to maintain quality and control costs.\",\n      \"prerequisites\": [\n        \"crafting_bakery_business_plan\",\n        \"legal_licensing_health\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Essential bakery equipment selection\",\n        \"Kitchen layout and workflow optimization\",\n        \"Supplier identification and negotiation\",\n        \"Inventory management systems\",\n        \"Food storage and rotation best practices\"\n      ]\n    },\n    {\n      \"node_id\": \"marketing_branding_bakery\",\n      \"title\": \"Marketing & Branding Your Bakery\",\n      \"rationale\": \"Create a compelling brand identity and effective marketing strategies to attract and retain customers. Podcasts on small business marketing can be very insightful.\",\n      \"prerequisites\": [\n        \"crafting_bakery_business_plan\",\n        \"mastering_bakery_products\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Developing a unique bakery brand story\",\n        \"Social media marketing for food businesses\",\n        \"Local SEO and Google My Business setup\",\n        \"Email marketing basics\",\n        \"Partnerships and collaborations (e.g., local cafes, events)\",\n        \"Photography for food products\"\n      ]\n    },\n    {\n      \"node_id\": \"financial_management_profitability\",\n      \"title\": \"Financial Management & Profitability\",\n      \"rationale\": \"Understand your costs, manage finances, and set pricing to ensure your bakery is profitable and sustainable.\",\n      \"prerequisites\": [\n        \"crafting_bakery_business_plan\",\n        \"kitchen_setup_supply_chain\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Cost of Goods Sold (COGS) calculation\",\n        \"Pricing strategies for baked goods\",\n        \"Budgeting and expense tracking\",\n        \"Basic accounting software introduction\",\n        \"Cash flow management\",\n        \"Understanding profit margins\"\n      ]\n    },\n    {\n      \"node_id\": \"launching_growing_bakery\",\n      \"title\": \"Launching & Growing Your Bakery\",\n      \"rationale\": \"Execute a successful launch and lay the groundwork for continuous improvement and expansion.\",\n      \"prerequisites\": [\n        \"marketing_branding_bakery\",\n        \"financial_management_profitability\",\n        \"kitchen_setup_supply_chain\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Soft launch vs. grand opening strategies\",\n        \"Gathering and acting on customer feedback\",\n        \"Building a loyal customer base\",\n        \"Scaling production and operations\",\n        \"Hiring and training initial staff\",\n        \"Exploring new product lines or sales channels\"\n      ]\n    }\n  ]\n}\n```",
       "json_dict": null,
       "pydantic": {
         "nodes": [
           {
-            "node_id": "understanding_fishing_basics",
-            "title": "Understanding Fishing Basics",
-            "rationale": "To relax by the water with fishing, a beginner needs to understand the fundamental concepts of fishing, including basic gear and fish behavior. This foundation will prevent frustration and allow for a more enjoyable experience.",
+            "node_id": "bakery_business_foundations",
+            "title": "Bakery Business Foundations",
+            "rationale": "Understand the core concepts and unique challenges of operating a bakery. This module sets the stage for all subsequent steps. Podcasts are great for learning business basics on the go.",
             "prerequisites": [],
             "suggested_micro_topics": [
-              "Types of fishing (e.g., bait fishing, lure fishing)",
-              "Basic fishing gear (rod, reel, line, hooks, sinkers, bobbers)",
-              "Understanding common freshwater fish (e.g., sunfish, perch)",
-              "Basic fish behavior and feeding patterns",
-              "Safety considerations near water"
+              "Types of bakeries (retail, wholesale, home-based)",
+              "Market research basics for food industry",
+              "Legal structures for small businesses",
+              "Local health department regulations overview",
+              "Understanding startup costs for a bakery"
             ]
           },
           {
-            "node_id": "selecting_and_setting_up_gear",
-            "title": "Selecting and Setting Up Gear",
-            "rationale": "Properly selecting and setting up fishing gear is crucial for a beginner to have a successful and relaxing experience. Ill-suited or incorrectly assembled gear can lead to tangles, lost fish, and overall frustration.",
-            "prerequisites": [
-              "understanding_fishing_basics"
-            ],
+            "node_id": "mastering_bakery_products",
+            "title": "Mastering Bakery Products & Menu Development",
+            "rationale": "Develop a strong product offering that appeals to your target market. For a beginner, hands-on skill development is paramount.",
+            "prerequisites": [],
             "suggested_micro_topics": [
-              "Choosing a beginner-friendly rod and reel combo",
-              "Spooling fishing line",
-              "Tying basic fishing knots (e.g., clinch knot, palomar knot)",
-              "Attaching hooks, sinkers, and bobbers",
-              "Selecting appropriate bait or lures for target fish"
+              "Core baking techniques (breads, pastries, cakes, cookies)",
+              "Recipe development and standardization",
+              "Ingredient sourcing and quality control",
+              "Allergen management and labeling",
+              "Menu design and pricing strategies"
             ]
           },
           {
-            "node_id": "finding_and_approaching_fishing_spots",
-            "title": "Finding and Approaching Fishing Spots",
-            "rationale": "Knowing where to fish and how to approach a spot without disturbing the fish is essential for a relaxing and productive outing. This module focuses on practical location skills.",
+            "node_id": "crafting_bakery_business_plan",
+            "title": "Crafting Your Bakery Business Plan",
+            "rationale": "A comprehensive business plan is your roadmap to success, outlining your vision, strategies, and financial projections. Essential for securing funding and staying focused.",
             "prerequisites": [
-              "understanding_fishing_basics"
+              "bakery_business_foundations",
+              "mastering_bakery_products"
             ],
             "suggested_micro_topics": [
-              "Identifying promising fishing locations (e.g., near structures, weed beds)",
-              "Understanding local fishing regulations and licenses",
-              " stealthy approach to avoid scaring fish",
-              "Reading the water for signs of fish activity",
-              "Considering accessibility and comfort of fishing spots"
+              "Executive summary writing",
+              "Detailed market analysis and competitive landscape",
+              "Marketing and sales strategy",
+              "Operational plan (production, staffing)",
+              "Financial projections (startup, P&L, cash flow)",
+              "Funding options for small food businesses"
             ]
           },
           {
-            "node_id": "casting_and_retrieving_techniques",
-            "title": "Casting and Retrieving Techniques",
-            "rationale": "Mastering basic casting and retrieving techniques allows a beginner to effectively present their bait or lure, increasing their chances of catching fish and making the process more engaging and less frustrating.",
+            "node_id": "legal_licensing_health",
+            "title": "Legal, Licensing & Health Compliance",
+            "rationale": "Navigate the essential legal and health regulations to ensure your bakery operates safely and legally, avoiding costly penalties.",
             "prerequisites": [
-              "selecting_and_setting_up_gear"
+              "bakery_business_foundations",
+              "crafting_bakery_business_plan"
             ],
             "suggested_micro_topics": [
-              "Basic overhead casting",
-              "Underhand casting for accuracy",
-              "Varying retrieval speeds and patterns",
-              "Detecting bites and setting the hook",
-              "Practicing casting in open areas"
+              "Business registration and permits",
+              "Food handler permits and certifications (e.g., ServSafe)",
+              "Local zoning laws for commercial kitchens",
+              "Food labeling requirements",
+              "Business insurance essentials (liability, property)"
             ]
           },
           {
-            "node_id": "handling_and_releasing_fish",
-            "title": "Handling and Releasing Fish",
-            "rationale": "Learning how to properly handle and release fish is important for ethical fishing practices and ensures the well-being of the fish, contributing to a sustainable and enjoyable hobby.",
+            "node_id": "kitchen_setup_supply_chain",
+            "title": "Kitchen Setup & Supply Chain Management",
+            "rationale": "Establish an efficient and compliant kitchen space and manage your ingredient supply effectively to maintain quality and control costs.",
             "prerequisites": [
-              "casting_and_retrieving_techniques"
+              "crafting_bakery_business_plan",
+              "legal_licensing_health"
             ],
             "suggested_micro_topics": [
-              "Safe handling of fish (e.g., wet hands, supporting body)",
-              "Removing hooks safely",
-              "Understanding catch and release principles",
-              "Minimizing stress on the fish",
-              "Photography tips for fish (optional)"
+              "Essential bakery equipment selection",
+              "Kitchen layout and workflow optimization",
+              "Supplier identification and negotiation",
+              "Inventory management systems",
+              "Food storage and rotation best practices"
             ]
           },
           {
-            "node_id": "fishing_for_relaxation_mindset",
-            "title": "Fishing for Relaxation Mindset",
-            "rationale": "Since the user's goal is to relax, this module focuses on cultivating a mindful approach to fishing, emphasizing patience, observation, and enjoying the natural surroundings.",
+            "node_id": "marketing_branding_bakery",
+            "title": "Marketing & Branding Your Bakery",
+            "rationale": "Create a compelling brand identity and effective marketing strategies to attract and retain customers. Podcasts on small business marketing can be very insightful.",
             "prerequisites": [
-              "understanding_fishing_basics"
+              "crafting_bakery_business_plan",
+              "mastering_bakery_products"
             ],
             "suggested_micro_topics": [
-              "Patience and observation in fishing",
-              "Connecting with nature during fishing",
-              "Mindfulness techniques while by the water",
-              "Enjoying the process over the catch",
-              "Dealing with slow fishing days"
+              "Developing a unique bakery brand story",
+              "Social media marketing for food businesses",
+              "Local SEO and Google My Business setup",
+              "Email marketing basics",
+              "Partnerships and collaborations (e.g., local cafes, events)",
+              "Photography for food products"
             ]
           },
           {
-            "node_id": "beginner_fishing_podcasts",
-            "title": "Beginner Fishing Podcasts",
-            "rationale": "To address the user's desire for podcasts, this module provides resources for listening to fishing-related content, offering an alternative and convenient way to learn and relax.",
+            "node_id": "financial_management_profitability",
+            "title": "Financial Management & Profitability",
+            "rationale": "Understand your costs, manage finances, and set pricing to ensure your bakery is profitable and sustainable.",
             "prerequisites": [
-              "understanding_fishing_basics"
+              "crafting_bakery_business_plan",
+              "kitchen_setup_supply_chain"
             ],
             "suggested_micro_topics": [
-              "Identifying beginner-friendly fishing podcasts",
-              "Topics covered in popular fishing podcasts (e.g., gear reviews, fishing stories)",
-              "How podcasts can enhance the fishing experience",
-              "Finding podcasts focused on relaxation and nature",
-              "Using podcasts for continued learning and inspiration"
+              "Cost of Goods Sold (COGS) calculation",
+              "Pricing strategies for baked goods",
+              "Budgeting and expense tracking",
+              "Basic accounting software introduction",
+              "Cash flow management",
+              "Understanding profit margins"
+            ]
+          },
+          {
+            "node_id": "launching_growing_bakery",
+            "title": "Launching & Growing Your Bakery",
+            "rationale": "Execute a successful launch and lay the groundwork for continuous improvement and expansion.",
+            "prerequisites": [
+              "marketing_branding_bakery",
+              "financial_management_profitability",
+              "kitchen_setup_supply_chain"
+            ],
+            "suggested_micro_topics": [
+              "Soft launch vs. grand opening strategies",
+              "Gathering and acting on customer feedback",
+              "Building a loyal customer base",
+              "Scaling production and operations",
+              "Hiring and training initial staff",
+              "Exploring new product lines or sales channels"
             ]
           }
         ]
