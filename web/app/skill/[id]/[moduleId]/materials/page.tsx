@@ -4,8 +4,8 @@ import { use, useState, useEffect, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Bookmark, Flag, Play, Volume2, Maximize2, ChevronLeft, ChevronRight, Loader2, CheckCircle, Pencil } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Bookmark, Flag, Play, Volume2, Maximize2, ChevronLeft, ChevronRight, Loader2, CheckCircle, Pencil, MessageSquarePlus, X } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import BookmarkButton from '@/components/BookmarkButton';
 import PodcastPlayer from '@/components/PodcastPlayer';
@@ -36,12 +36,55 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
   const [selectedText, setSelectedText] = useState("");
   const [showChatbot, setShowChatbot] = useState(false);
 
+  // Feedback State
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [feedbackText, setFeedbackText] = useState("");
+  const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
+  const [topicIds, setTopicIds] = useState<string[]>([]);
+
   const handleContentMouseUp = () => {
     if (!isHighlighterMode) return;
     const text = window.getSelection()?.toString().trim();
     if (text && text.length > 0) {
       setSelectedText(text);
       setShowChatbot(true);
+    }
+  };
+
+  const handleFeedbackSubmit = async () => {
+    if (!feedbackText.trim()) return;
+    setIsSubmittingFeedback(true);
+    try {
+      const response = await fetch('/api/improve-topic', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          dbId: topicIds[activeIndex],
+          currentContent: currentTopic.theory_explanation,
+          feedback: feedbackText
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to process feedback");
+      }
+
+      const data = await response.json();
+      
+      // Update the UI state with the rewritten content without refreshing the page
+      setMicroTopics(prev => prev.map((t, idx) => 
+        idx === activeIndex ? { ...t, theory_explanation: data.updatedContent } : t
+      ));
+      
+    } catch (e) {
+      console.error("Failed to submit feedback", e);
+    } finally {
+      setIsSubmittingFeedback(false);
+      setShowFeedbackModal(false);
+      setFeedbackText("");
+      // Alert can optionally be replaced by a toast in future
+      alert("Thank you for your feedback! We will use this to improve the content.");
     }
   };
 
@@ -80,6 +123,7 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
             }
           }).filter(Boolean); // Drop failed parses
 
+          setTopicIds(topicsData.map(topic => topic.id));
           setMicroTopics(parsedTopics);
         }
 
@@ -343,6 +387,16 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
                   </div>
                 </div>
               )}
+
+              <div className="mt-10 flex justify-center border-t border-gray-50 pt-8">
+                <button
+                  onClick={() => setShowFeedbackModal(true)}
+                  className="flex items-center gap-2 px-5 py-2.5 bg-[#FEF3C7] text-[#B45309] hover:bg-[#FDE68A] border border-[#FDE68A] rounded-xl font-medium transition-colors cursor-pointer shadow-sm active:scale-95"
+                >
+                  <MessageSquarePlus className="w-5 h-5" />
+                  Having trouble understanding? Share your difficulties
+                </button>
+              </div>
             </motion.div>
 
             <div className="flex justify-between items-center bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
@@ -398,6 +452,54 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
           materialContext={currentTopic.theory_explanation || ""}
         />
       )}
+
+      {/* Feedback Modal Overlay */}
+      <AnimatePresence>
+        {showFeedbackModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="w-full max-w-lg bg-white rounded-3xl p-6 md:p-8 shadow-2xl border border-gray-100 relative"
+            >
+              <button 
+                onClick={() => setShowFeedbackModal(false)}
+                className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              
+              <h3 className="font-display font-bold text-2xl text-gray-900 mb-2">Share Your Difficulties</h3>
+              <p className="text-gray-500 mb-6 text-sm">Let us know what parts of this topic were hard to understand, and what you wish would change (e.g., more examples, clearer explanations).</p>
+              
+              <textarea 
+                value={feedbackText}
+                onChange={(e) => setFeedbackText(e.target.value)}
+                placeholder="I found the concept of [X] confusing because..."
+                className="w-full h-32 p-4 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#FFD700] focus:border-transparent transition-all resize-none outline-none text-gray-700"
+              />
+              
+              <div className="flex justify-end gap-3 mt-6">
+                <button 
+                  onClick={() => setShowFeedbackModal(false)}
+                  className="px-5 py-2.5 rounded-xl font-bold text-gray-600 hover:bg-gray-100 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={handleFeedbackSubmit}
+                  disabled={isSubmittingFeedback || !feedbackText.trim()}
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold bg-[#FFD700] text-gray-900 hover:bg-[#E6C200] transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                >
+                  {isSubmittingFeedback ? <Loader2 className="w-5 h-5 animate-spin" /> : null}
+                  Submit Feedback
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>
