@@ -164,6 +164,7 @@ async def download_podcast(task_id: str):
 class VideoRequest(BaseModel):
     text: str
     session_id: str
+    node_id: Optional[str] = None
 
 @app.post("/api/video/generate")
 async def generate_video_endpoint(req: VideoRequest):
@@ -175,18 +176,33 @@ async def generate_video_endpoint(req: VideoRequest):
 
     async def run_pipeline():
         try:
-            # run_video_pipeline is an async function that returns the final Path object
-            final_video_path = await run_video_pipeline(req.text)
+            # run_video_pipeline is an async function that returns the final Path object (as string) or public URL
+            final_result = await run_video_pipeline(req.text)
             
-            if not final_video_path or not os.path.exists(final_video_path):
-                raise Exception("Video generation failed to produce a file.")
+            if not final_result:
+                raise Exception("Video generation failed to produce a result.")
 
             active_videos[task_id] = {
                 "status": "completed",
-                "file_path": str(final_video_path),
+                "file_path": str(final_result), # Could be local path or public URL
+                "public_url": str(final_result) if str(final_result).startswith("http") else None,
                 "session_id": req.session_id
             }
-            print(f"Video {task_id} generated successfully: {final_video_path}")
+            print(f"Video {task_id} generated successfully: {final_result}")
+
+            # --- DB UPDATE ---
+            video_url = active_videos[task_id].get("public_url")
+            if req.node_id and video_url:
+                try:
+                    print(f"[DB] Updating video_url for node {req.node_id}...")
+                    supabase_url = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+                    supabase_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+                    db_client = create_client(supabase_url, supabase_key)
+                    
+                    db_client.table("roadmap_nodes").update({"video_url": video_url}).eq("node_id", req.node_id).execute()
+                    print(f"[DB SUCCESS] video_url updated for node {req.node_id}")
+                except Exception as db_err:
+                    print(f"[DB ERROR] Failed to update video_url: {db_err}")
 
         except Exception as e:
             print(f"Video generation error: {str(e)}")
@@ -209,6 +225,12 @@ async def download_video(task_id: str):
         raise HTTPException(status_code=404, detail="Video not found or not yet completed.")
     
     file_path = active_videos[task_id]["file_path"]
+
+    # If it's a Supabase URL, redirect
+    if file_path.startswith("http"):
+        return RedirectResponse(url=file_path)
+
+    # Otherwise, serve as a local file
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="Video file missing from server.")
         

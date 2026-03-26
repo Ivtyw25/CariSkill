@@ -8,6 +8,7 @@ import shutil
 from pathlib import Path
 from typing import List, Dict, Optional
 from dotenv import load_dotenv
+from supabase import create_client, Client
 
 # Use the new google-genai SDK
 try:
@@ -40,12 +41,13 @@ def generate_director_prompts(text: str) -> Dict:
     """
     print(f"[DIRECTOR] Analyzing text to generate cinematic prompts and narration script...")
     
+    safe_text = text.replace("\"", "\\\"")
     prompt = f"""
     You are a professional film director and educator. Based on the following study text, 
     generate exactly 3 highly descriptive, cinematic video prompts for Veo 3.1, 
     AND a concise, ~50-word educational narration script that explains the core concepts.
     
-    TEXT: "{text}"
+    TEXT: "{safe_text}"
     
     Return ONLY a valid JSON object with this exact structure:
     {{
@@ -56,6 +58,8 @@ def generate_director_prompts(text: str) -> Dict:
       ],
       "narration_script": "The 50-word educational script goes here..."
     }}
+
+    IMPORTANT: DO NOT include markdown code blocks like ```json. Output ONLY raw JSON.
     """
     
     response = client.models.generate_content(
@@ -67,7 +71,16 @@ def generate_director_prompts(text: str) -> Dict:
     )
     
     try:
-        data = json.loads(response.text)
+        raw_content = response.text.strip()
+        if raw_content.startswith('```'):
+            # Split by newline and take everything after the first line (the ```json part)
+            raw_content = raw_content.split('\n', 1)[-1]
+            # Split by newline from the end and take everything before the last line (the ``` part)
+            raw_content = raw_content.rsplit('\n', 1)[0].strip()
+            # Safety check if it still ends with ```
+            if raw_content.endswith('```'):
+                raw_content = raw_content[:-3].strip()
+        data = json.loads(raw_content)
         return data
     except Exception as e:
         print(f"[ERROR] Failed to parse director prompts: {e}")
@@ -216,9 +229,43 @@ async def run_video_pipeline(text: str):
     
     # Step 3: Stitch everything together
     if video_paths:
-        final_video = stitch_videos(task_id, video_paths, narration_path)
-        print(f"\n[PIPELINE] Task {task_id} finished successfully!")
-        return final_video
+        final_video_path = stitch_videos(task_id, video_paths, narration_path)
+        print(f"\n[PIPELINE] Task {task_id} stitched successfully: {final_video_path}")
+
+        # --- SUPABASE UPLOAD ---
+        supabase_url = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+        supabase_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+        
+        if not supabase_url or not supabase_key:
+            print("[WARN] Supabase credentials missing. Returning local path.")
+            return str(final_video_path)
+
+        try:
+            supabase: Client = create_client(supabase_url, supabase_key)
+            bucket_name = "cariskill-media"
+            file_name = f"videos/video_{task_id}.mp4"
+
+            print(f"[SUPABASE] Uploading video to {file_name}...")
+            with open(final_video_path, "rb") as f:
+                supabase.storage.from_(bucket_name).upload(
+                    path=file_name,
+                    file=f.read(),
+                    file_options={"content-type": "video/mp4"}
+                )
+
+            public_url = supabase.storage.from_(bucket_name).get_public_url(file_name)
+            print(f"[SUCCESS] Video uploaded to Supabase: {public_url}")
+
+            # Cleanup local file
+            if os.path.exists(final_video_path):
+                os.remove(final_video_path)
+                print(f"[CLEANUP] Local video file removed.")
+
+            return public_url
+
+        except Exception as e:
+            print(f"[ERROR] Supabase upload failed: {e}")
+            return str(final_video_path)
 
 if __name__ == "__main__":
     # Test Block

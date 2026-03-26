@@ -23,6 +23,7 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
   const [isDownloading, setIsDownloading] = useState(false);
 
   const [moduleTitle, setModuleTitle] = useState('Summary');
+  const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [microTopics, setMicroTopics] = useState<any[]>([]);
   const [topicIndex, setTopicIndex] = useState(0);
 
@@ -30,14 +31,20 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
     const fetchTopics = async () => {
       try {
         const supabase = createClient();
-        const { data: nodeData } = await supabase.from('roadmap_nodes').select('title').eq('node_id', moduleId).limit(1);
-        if (nodeData && nodeData.length > 0) setModuleTitle(nodeData[0].title);
+        const { data: nodeData } = await supabase.from('roadmap_nodes').select('title, video_url').eq('node_id', moduleId).limit(1);
+        if (nodeData && nodeData.length > 0) {
+          setModuleTitle(nodeData[0].title);
+          if (nodeData[0].video_url) setVideoUrl(nodeData[0].video_url);
+        }
 
-        const { data: topicsData } = await supabase
+        const { data: topicsData, error: topicsError } = await supabase
           .from('micro_topics_contents')
           .select('id, content')
           .eq('macro_node_id', moduleId)
           .order('id', { ascending: true });
+
+        console.log("Supabase Topics Data:", topicsData);
+        if (topicsError) console.error("Supabase Topics Error:", topicsError);
 
         if (topicsData && topicsData.length > 0) {
           const parsed = topicsData.map(t => ({
@@ -168,7 +175,7 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
             <>
               {currentTopic.theory_explanation && (
                 <div data-html2canvas-ignore="true" className="mb-8">
-                  <VideoSummaryPlayer textContent={currentTopic.theory_explanation} />
+                  <VideoSummaryPlayer textContent={currentTopic.theory_explanation} nodeId={moduleId} initialVideoUrl={videoUrl} />
                 </div>
               )}
               
