@@ -6,14 +6,30 @@ import Footer from '@/components/Footer';
 import Sidebar from '@/components/Sidebar';
 import { createClient } from '@/utils/supabase/client';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MoreHorizontal, Clock, PlayCircle, Loader2 } from 'lucide-react';
+import { MoreHorizontal, Clock, PlayCircle, Loader2, Plus, Check, FileCheck } from 'lucide-react';
 import type { SkillStatus } from '@/lib/profile-data';
+
+const LanguageTag = ({ lang }: { lang: string }) => {
+  const configs: Record<string, { label: string, color: string, bg: string }> = {
+    en: { label: 'EN', color: 'text-blue-600', bg: 'bg-blue-50' },
+    zh: { label: '中文', color: 'text-red-600', bg: 'bg-red-50' },
+    ms: { label: 'BM', color: 'text-green-600', bg: 'bg-green-50' },
+  };
+  const config = configs[lang.toLowerCase()] || configs.en;
+  return (
+    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${config.bg} ${config.color} border-current opacity-90 uppercase tracking-wider`}>
+      {config.label}
+    </span>
+  );
+};
 
 export default function ProfilePage() {
   const supabase = createClient();
   const [activeTab, setActiveTab] = useState<SkillStatus>('Ongoing');
   const [skills, setSkills] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [syncingSkillId, setSyncingSkillId] = useState<string | null>(null);
+  const [syncedSkills, setSyncedSkills] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -28,6 +44,14 @@ export default function ProfilePage() {
         .order('created_at', { ascending: false });
 
       if (!roadmaps || roadmaps.length === 0) { setIsLoading(false); return; }
+
+      // Fetch language preferences
+      const { data: prefs } = await supabase
+        .from('user_roadmap_preferences')
+        .select('roadmap_id, preferred_language')
+        .eq('user_id', user.id);
+      
+      const prefMap = new Map(prefs?.map(p => [p.roadmap_id, p.preferred_language]));
 
       // For each roadmap, compute progress from node_progress
       const skillCards = await Promise.all(roadmaps.map(async (roadmap) => {
@@ -71,6 +95,7 @@ export default function ProfilePage() {
           status: (progress === 100 ? 'Done' : 'Ongoing') as SkillStatus,
           total_time_spent: totalMinutes,
           slug,
+          language: prefMap.get(roadmap.id) || 'en'
         };
       }));
 
@@ -80,6 +105,48 @@ export default function ProfilePage() {
 
     fetchProfileData();
   }, []);
+
+  const handleAddToResume = async (e: React.MouseEvent, skill: any) => {
+    e.stopPropagation();
+    setSyncingSkillId(skill.id);
+    
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      // 1. Fetch current resume data
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('resume_data')
+        .eq('id', user.id)
+        .maybeSingle();
+
+      let resumeData = profile?.resume_data || { skills: [] };
+      if (!resumeData.skills) resumeData.skills = [];
+
+      // 2. Add skill if not exists
+      if (!resumeData.skills.includes(skill.title)) {
+        resumeData.skills.push(skill.title);
+      }
+
+      // 3. Update profile
+      await supabase
+        .from('profiles')
+        .update({ resume_data: resumeData })
+        .eq('id', user.id);
+
+      setSyncedSkills(prev => new Set(prev).add(skill.id));
+      
+      // Feedback duration
+      setTimeout(() => {
+        setSyncingSkillId(null);
+      }, 1500);
+
+    } catch (error) {
+      console.error('Error syncing skill to resume:', error);
+      setSyncingSkillId(null);
+    }
+  };
 
   const displayedSkills = skills.filter(skill => skill.status === activeTab);
   const counts = {
@@ -149,19 +216,21 @@ export default function ProfilePage() {
                         transition={{ duration: 0.35, delay: idx * 0.07, ease: 'easeOut' }}
                         whileHover={{ y: -6, transition: { duration: 0.2 } }}
                         onClick={() => window.location.href = `/skill/${skill.slug}`}
-                        className="bg-white rounded-[24px] p-6 shadow-sm hover:shadow-xl border border-gray-100 flex flex-col transition-shadow duration-300 group cursor-pointer h-[260px]"
+                        className="bg-white rounded-[24px] p-6 shadow-sm hover:shadow-xl border border-gray-100 flex flex-col transition-shadow duration-300 group cursor-pointer min-h-[260px] h-auto"
                       >
                         <div className="flex justify-between items-start mb-5">
                           <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#FEF9C3] text-[#CA8A04] group-hover:scale-110 transition-transform">
                             <PlayCircle className="w-6 h-6" />
                           </div>
-                          <button className="text-gray-400 hover:text-gray-600 p-1" onClick={(e) => e.stopPropagation()}>
-                            <MoreHorizontal className="w-5 h-5" />
-                          </button>
+                          
+                          {/* Language Tag replacing the three dots */}
+                          <div className="flex items-center" onClick={(e) => e.stopPropagation()}>
+                            <LanguageTag lang={skill.language} />
+                          </div>
                         </div>
 
                         {/* Topic title — e.g. "Next.js", "Python" */}
-                        <h3 className="font-bold text-xl text-gray-900 mb-1 leading-tight capitalize">{skill.title}</h3>
+                        <h3 className="font-bold text-xl text-gray-900 mb-1 leading-tight capitalize line-clamp-2" title={skill.title}>{skill.title}</h3>
                         <p className="text-sm text-gray-400 mb-4">{skill.category}</p>
 
                         <div className="mt-auto">
@@ -183,10 +252,31 @@ export default function ProfilePage() {
                               {/* Shows 0 min until study_sessions table is created and populated */}
                               <span className="text-xs font-medium">{skill.total_time_spent} min</span>
                             </div>
-                            <span className={`text-sm font-bold flex items-center gap-1 ${skill.status === 'Done' ? 'text-green-600' : 'text-[#CA8A04]'}`}>
-                              {skill.status === 'Ongoing' && <PlayCircle className="w-4 h-4" />}
-                              {skill.status === 'Ongoing' ? 'Continue' : 'Review'}
-                            </span>
+                            
+                            {skill.status === 'Done' ? (
+                              <button
+                                onClick={(e) => handleAddToResume(e, skill)}
+                                disabled={syncingSkillId === skill.id || syncedSkills.has(skill.id)}
+                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all
+                                  ${syncedSkills.has(skill.id) 
+                                    ? 'bg-green-100 text-green-700 pointer-events-none' 
+                                    : 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200 active:scale-95'}`}
+                              >
+                                {syncingSkillId === skill.id ? (
+                                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                ) : syncedSkills.has(skill.id) ? (
+                                  <FileCheck className="w-3.5 h-3.5" />
+                                ) : (
+                                  <Plus className="w-3.5 h-3.5" />
+                                )}
+                                {syncedSkills.has(skill.id) ? 'Added to Resume' : 'Add to Resume'}
+                              </button>
+                            ) : (
+                              <span className={`text-sm font-bold flex items-center gap-1 ${skill.status === 'Done' ? 'text-green-600' : 'text-[#CA8A04]'}`}>
+                                {skill.status === 'Ongoing' && <PlayCircle className="w-4 h-4" />}
+                                {skill.status === 'Ongoing' ? 'Continue' : 'Review'}
+                              </span>
+                            )}
                           </div>
                         </div>
                       </motion.div>
