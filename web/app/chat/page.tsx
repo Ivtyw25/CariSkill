@@ -41,6 +41,21 @@ function ChatContent() {
     const [generationData, setGenerationData] = useState<{ topic: string, experience: string, goal?: string, constraints?: string } | null>(null);
     const initialTriggerRef = useRef<Set<string>>(new Set());
 
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLTextAreaElement>(null);
+
+    // Auto-scroll to bottom whenever messages change
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+
+    // Auto-focus input when AI finishes generating
+    useEffect(() => {
+        if (!isSending) {
+            inputRef.current?.focus();
+        }
+    }, [isSending]);
+
     // Secure the route
     useEffect(() => {
         if (!authLoading && !user) {
@@ -347,25 +362,6 @@ function ChatContent() {
                                                                         const topicStr = (generationData.topic || "").toLowerCase();
                                                                         const skillSlug = topicStr.replace(/[^a-z0-9 ]/g, '').replace(/ +/g, '-');
 
-                                                                        // 🌟 HACKATHON GOD MODE INTERCEPT 🌟
-                                                                        if (topicStr.includes('baking') || topicStr.includes('bakery')) {
-                                                                            console.log("[FRONTEND] 🥖 BAKERY GOLDEN PATH ACTIVATED! 🥖");
-
-                                                                            // Set the payload, but inject our specific Golden Database UUID
-                                                                            localStorage.setItem(`chat_for_${skillSlug}`, selectedChatId!);
-                                                                            localStorage.setItem('generation_payload', JSON.stringify({
-                                                                                topic: generationData.topic,
-                                                                                experience: generationData.experience,
-                                                                                goal: generationData.goal,
-                                                                                constraints: generationData.constraints,
-                                                                                session_id: '26e45a75-3a48-4b35-b460-7a4827232497' // The exact UUID of your saved Bakery Data
-                                                                            }));
-
-                                                                            // We still go to the loading screen, but the loading screen will now use our Golden UUID
-                                                                            router.replace(`/setup/loading`);
-                                                                            return;
-                                                                        }
-
                                                                         // --- NORMAL PIPELINE EXECUTION ---
                                                                         localStorage.setItem(`chat_for_${skillSlug}`, selectedChatId!);
                                                                         localStorage.setItem('generation_payload', JSON.stringify({
@@ -411,6 +407,7 @@ function ChatContent() {
                                             </div>
                                         </motion.div>
                                     )}
+                                    <div ref={messagesEndRef} />
                                 </motion.div>
                             )}
 
@@ -424,6 +421,7 @@ function ChatContent() {
                                 <div className="relative flex items-center justify-center gap-4">
                                     <div className="flex-1 relative shadow-[0_4px_20px_rgba(0,0,0,0.05)] rounded-2xl">
                                         <input
+                                            ref={inputRef as any}
                                             type="text"
                                             value={inputMessage}
                                             onChange={(e) => setInputMessage(e.target.value)}

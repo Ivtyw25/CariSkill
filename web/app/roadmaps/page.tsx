@@ -139,11 +139,7 @@ export default function RoadmapsPage() {
             variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07 } } }}
             className="grid grid-cols-1 md:grid-cols-2 gap-5"
           >
-            {roadmaps.filter((rm) => {
-              const topicName = (rm.topic || '').toLowerCase();
-              const isBakery = topicName.includes('baking') || topicName.includes('bakery');
-              return isBakery ? rm.id === '26e45a75-3a48-4b35-b460-7a4827232497' : true;
-            }).map((rm) => {
+            {roadmaps.map((rm) => {
               const phases = getPhaseCount(rm.content);
               return (
                 <motion.div

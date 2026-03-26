@@ -26,25 +26,6 @@ class MasterFlow(Flow[SystemState]):
         print(f"--- MACRO PLANNING CREW ACTIVATED ---")
         start_time = time.time()
         
-        # 🌟 MACRO HACKATHON BYPASS (LAYER 1) 🌟
-        topic_lower = str(self.state.topic).lower() if self.state.topic else ""
-        if 'baking' in topic_lower or 'bakery' in topic_lower:
-            print('\n[BACKEND] 🥖 BAKERY GOLDEN PATH ACTIVATED (MACRO PHASE)! 🥖')
-            print('[BACKEND] Bypassing Gemini API and Macro Crew...')
-
-            time.sleep(8)
-            
-            # Feed it a dummy blueprint so Phase 2 doesn't crash!
-            self.state.blueprint = {
-                "nodes": [{
-                    "title": "Bakery Dummy Node", 
-                    "node_id": "bakery_01", 
-                    "suggested_micro_topics": ["Baking"]
-                }]
-            }
-            self.state.macro_duration = time.time() - start_time
-            return
-        
         inputs = {
             "topic": self.state.topic,
             "experience": self.state.experience,
@@ -118,17 +99,6 @@ class MasterFlow(Flow[SystemState]):
         blueprint_data = self.state.blueprint # This is the dict saved from Macro Crew
         pending_nodes = blueprint_data.get("nodes", [])
 
-        # 🌟 UPDATED HACKATHON DEMO BYPASS (GOLDEN PATH) 🌟
-        blueprint_str = str(blueprint_data).lower()
-        if 'baking' in blueprint_str or 'bakery' in blueprint_str:
-            print('\n[BACKEND] 🥖 BAKERY GOLDEN PATH ACTIVATED! 🥖')
-            print('[BACKEND] Bypassing live web scraper for instant demo loading...')
-            
-            await asyncio.sleep(10) # Simulate processing time
-            
-            print('[BACKEND] Golden Path Data loaded successfully. UI Unlocked.')
-            return
-        
         async def process_single_node(node):
             print(f"--- GENERATING CONTENT FOR (ASYNC): {node['title']} ---")
             inputs = {

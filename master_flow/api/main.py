@@ -93,8 +93,8 @@ async def generate_podcast_endpoint(req: PodcastRequest):
                 from custom_podcast import run_custom_podcast_pipeline
             
             # Generate the podcast audio file using our custom async pipeline
-            # We prioritize topic, then text, then first URL if available
-            input_text = req.topic or req.text
+            # We prioritize combined topic and text, then fallbacks
+            input_text = f"Topic: {req.topic}\n\nContent: {req.text}" if req.topic and req.text else (req.text or req.topic)
             if not input_text and req.urls:
                 input_text = f"Content from URLs: {', '.join(req.urls)}"
                 
