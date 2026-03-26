@@ -41,6 +41,21 @@ function ChatContent() {
     const [generationData, setGenerationData] = useState<{ topic: string, experience: string, goal?: string, constraints?: string } | null>(null);
     const initialTriggerRef = useRef<Set<string>>(new Set());
 
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLTextAreaElement>(null);
+
+    // Auto-scroll to bottom whenever messages change
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+
+    // Auto-focus input when AI finishes generating
+    useEffect(() => {
+        if (!isSending) {
+            inputRef.current?.focus();
+        }
+    }, [isSending]);
+
     // Secure the route
     useEffect(() => {
         if (!authLoading && !user) {
@@ -411,6 +426,7 @@ function ChatContent() {
                                             </div>
                                         </motion.div>
                                     )}
+                                    <div ref={messagesEndRef} />
                                 </motion.div>
                             )}
 
@@ -424,6 +440,7 @@ function ChatContent() {
                                 <div className="relative flex items-center justify-center gap-4">
                                     <div className="flex-1 relative shadow-[0_4px_20px_rgba(0,0,0,0.05)] rounded-2xl">
                                         <input
+                                            ref={inputRef as any}
                                             type="text"
                                             value={inputMessage}
                                             onChange={(e) => setInputMessage(e.target.value)}
