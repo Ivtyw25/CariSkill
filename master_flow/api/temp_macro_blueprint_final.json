@@ -1,106 +1,171 @@
 {
   "nodes": [
     {
-      "node_id": "understanding_fishing_basics",
-      "title": "Understanding Fishing Basics",
-      "rationale": "To relax by the water with fishing, a beginner needs to understand the fundamental concepts of fishing, including basic gear and fish behavior. This foundation will prevent frustration and allow for a more enjoyable experience.",
+      "node_id": "devops_cicd_intro",
+      "title": "Introduction to DevOps & CI/CD",
+      "rationale": "Understanding the core principles of DevOps and CI/CD is fundamental before diving into specific tools like Kubernetes, as it provides the 'why' behind the practices.",
       "prerequisites": [],
       "suggested_micro_topics": [
-        "Types of fishing (e.g., bait fishing, lure fishing)",
-        "Basic fishing gear (rod, reel, line, hooks, sinkers, bobbers)",
-        "Understanding common freshwater fish (e.g., sunfish, perch)",
-        "Basic fish behavior and feeding patterns",
-        "Safety considerations near water"
+        "What is DevOps?",
+        "Benefits of DevOps",
+        "CI/CD Pipeline overview",
+        "Continuous Integration principles",
+        "Continuous Delivery vs. Deployment",
+        "DevOps culture and practices"
       ]
     },
     {
-      "node_id": "selecting_and_setting_up_gear",
-      "title": "Selecting and Setting Up Gear",
-      "rationale": "Properly selecting and setting up fishing gear is crucial for a beginner to have a successful and relaxing experience. Ill-suited or incorrectly assembled gear can lead to tangles, lost fish, and overall frustration.",
-      "prerequisites": [
-        "understanding_fishing_basics"
-      ],
+      "node_id": "git_fundamentals",
+      "title": "Version Control with Git",
+      "rationale": "Git is the industry standard for version control and is an absolute prerequisite for any CI/CD pipeline, as it manages the source code that pipelines operate on.",
+      "prerequisites": [],
       "suggested_micro_topics": [
-        "Choosing a beginner-friendly rod and reel combo",
-        "Spooling fishing line",
-        "Tying basic fishing knots (e.g., clinch knot, palomar knot)",
-        "Attaching hooks, sinkers, and bobbers",
-        "Selecting appropriate bait or lures for target fish"
+        "Git basic commands (add, commit, push, pull)",
+        "Branching and Merging strategies",
+        "Resolving merge conflicts",
+        "Remote repositories (GitHub/GitLab/Bitbucket)",
+        "Git workflow (e.g., GitFlow, Trunk-based development)",
+        "Reverting changes"
       ]
     },
     {
-      "node_id": "finding_and_approaching_fishing_spots",
-      "title": "Finding and Approaching Fishing Spots",
-      "rationale": "Knowing where to fish and how to approach a spot without disturbing the fish is essential for a relaxing and productive outing. This module focuses on practical location skills.",
-      "prerequisites": [
-        "understanding_fishing_basics"
-      ],
+      "node_id": "docker_containerization",
+      "title": "Containerization with Docker",
+      "rationale": "Kubernetes orchestrates containers, so a solid understanding of Docker and containerization concepts is essential before learning Kubernetes itself.",
+      "prerequisites": [],
       "suggested_micro_topics": [
-        "Identifying promising fishing locations (e.g., near structures, weed beds)",
-        "Understanding local fishing regulations and licenses",
-        " stealthy approach to avoid scaring fish",
-        "Reading the water for signs of fish activity",
-        "Considering accessibility and comfort of fishing spots"
+        "What are containers?",
+        "Docker architecture",
+        "Dockerfile creation",
+        "Building and managing Docker images",
+        "Running Docker containers",
+        "Docker Compose for multi-container apps",
+        "Container registries (Docker Hub)"
       ]
     },
     {
-      "node_id": "casting_and_retrieving_techniques",
-      "title": "Casting and Retrieving Techniques",
-      "rationale": "Mastering basic casting and retrieving techniques allows a beginner to effectively present their bait or lure, increasing their chances of catching fish and making the process more engaging and less frustrating.",
+      "node_id": "kubernetes_fundamentals",
+      "title": "Kubernetes Core Concepts",
+      "rationale": "This module establishes the foundational knowledge of Kubernetes, which is critical for orchestrating applications and building CI/CD pipelines on it.",
       "prerequisites": [
-        "selecting_and_setting_up_gear"
+        "docker_containerization"
       ],
       "suggested_micro_topics": [
-        "Basic overhead casting",
-        "Underhand casting for accuracy",
-        "Varying retrieval speeds and patterns",
-        "Detecting bites and setting the hook",
-        "Practicing casting in open areas"
+        "Kubernetes architecture (Master, Nodes)",
+        "Pods, Deployments, Services",
+        "Namespaces, Labels, Selectors",
+        "kubectl commands",
+        "YAML for Kubernetes manifests",
+        "ReplicaSets and StatefulSets",
+        "ConfigMaps and Secrets"
       ]
     },
     {
-      "node_id": "handling_and_releasing_fish",
-      "title": "Handling and Releasing Fish",
-      "rationale": "Learning how to properly handle and release fish is important for ethical fishing practices and ensures the well-being of the fish, contributing to a sustainable and enjoyable hobby.",
+      "node_id": "ci_cd_tools_concepts",
+      "title": "CI/CD Pipeline Tools & Concepts",
+      "rationale": "Beyond the theoretical understanding of CI/CD, this module introduces the practical tools and concepts used to build and manage pipelines, which is directly relevant to securing a CI/CD job.",
       "prerequisites": [
-        "casting_and_retrieving_techniques"
+        "devops_cicd_intro",
+        "git_fundamentals"
       ],
       "suggested_micro_topics": [
-        "Safe handling of fish (e.g., wet hands, supporting body)",
-        "Removing hooks safely",
-        "Understanding catch and release principles",
-        "Minimizing stress on the fish",
-        "Photography tips for fish (optional)"
+        "Jenkins/GitLab CI/CD/GitHub Actions overview",
+        "Pipeline as Code",
+        "Build automation",
+        "Testing in CI/CD (unit, integration)",
+        "Artifact management",
+        "Deployment strategies (blue/green, canary)",
+        "Rollbacks"
       ]
     },
     {
-      "node_id": "fishing_for_relaxation_mindset",
-      "title": "Fishing for Relaxation Mindset",
-      "rationale": "Since the user's goal is to relax, this module focuses on cultivating a mindful approach to fishing, emphasizing patience, observation, and enjoying the natural surroundings.",
+      "node_id": "kubernetes_ci_cd_integration",
+      "title": "CI/CD Integration with Kubernetes",
+      "rationale": "This module directly addresses the user's goal of getting a CI/CD job by focusing on how to integrate CI/CD pipelines with Kubernetes for automated deployments.",
       "prerequisites": [
-        "understanding_fishing_basics"
+        "kubernetes_fundamentals",
+        "ci_cd_tools_concepts"
       ],
       "suggested_micro_topics": [
-        "Patience and observation in fishing",
-        "Connecting with nature during fishing",
-        "Mindfulness techniques while by the water",
-        "Enjoying the process over the catch",
-        "Dealing with slow fishing days"
+        "Deploying applications to Kubernetes via CI/CD",
+        "CI/CD pipeline stages for Kubernetes",
+        "Using Kubeconfig in CI/CD",
+        "Image building and pushing to registry in pipeline",
+        "Automated testing in Kubernetes deployments",
+        "Secrets management in CI/CD for Kubernetes",
+        "GitOps principles (Argo CD, Flux CD introduction)"
       ]
     },
     {
-      "node_id": "beginner_fishing_podcasts",
-      "title": "Beginner Fishing Podcasts",
-      "rationale": "To address the user's desire for podcasts, this module provides resources for listening to fishing-related content, offering an alternative and convenient way to learn and relax.",
+      "node_id": "helm_package_management",
+      "title": "Helm for Kubernetes Package Management",
+      "rationale": "Helm is a crucial tool for packaging and deploying applications on Kubernetes, making it an essential skill for managing complex CI/CD deployments.",
       "prerequisites": [
-        "understanding_fishing_basics"
+        "kubernetes_fundamentals"
       ],
       "suggested_micro_topics": [
-        "Identifying beginner-friendly fishing podcasts",
-        "Topics covered in popular fishing podcasts (e.g., gear reviews, fishing stories)",
-        "How podcasts can enhance the fishing experience",
-        "Finding podcasts focused on relaxation and nature",
-        "Using podcasts for continued learning and inspiration"
+        "What is Helm?",
+        "Helm Charts structure",
+        "Creating and customizing Helm Charts",
+        "Deploying applications with Helm",
+        "Managing Helm releases",
+        "Helm templates and values",
+        "Helm repositories"
+      ]
+    },
+    {
+      "node_id": "kubernetes_monitoring_logging",
+      "title": "Monitoring & Logging in Kubernetes",
+      "rationale": "Effective monitoring and logging are critical for maintaining the health and performance of applications deployed via CI/CD on Kubernetes, and for troubleshooting pipeline issues.",
+      "prerequisites": [
+        "kubernetes_fundamentals",
+        "kubernetes_ci_cd_integration"
+      ],
+      "suggested_micro_topics": [
+        "Prometheus and Grafana for monitoring",
+        "Kubernetes native logging (stdout/stderr)",
+        "Elastic Stack (Elasticsearch, Fluentd, Kibana)",
+        "Container insights",
+        "Alerting strategies",
+        "Tracing in Kubernetes"
+      ]
+    },
+    {
+      "node_id": "kubernetes_security_cicd",
+      "title": "Security in Kubernetes CI/CD",
+      "rationale": "Security is paramount in any production environment. Understanding how to secure Kubernetes deployments and CI/CD pipelines is vital for a robust and reliable system.",
+      "prerequisites": [
+        "kubernetes_fundamentals",
+        "kubernetes_ci_cd_integration"
+      ],
+      "suggested_micro_topics": [
+        "Image security scanning",
+        "Secrets management best practices",
+        "RBAC (Role-Based Access Control) in Kubernetes",
+        "Network Policies",
+        "Pod Security Standards",
+        "Supply chain security in CI/CD",
+        "Vulnerability scanning in pipelines"
+      ]
+    },
+    {
+      "node_id": "ci_cd_project",
+      "title": "Building a Complete Kubernetes CI/CD Pipeline (Project)",
+      "rationale": "This capstone project integrates all learned concepts into a practical application, providing hands-on experience crucial for demonstrating skills for a CI/CD job.",
+      "prerequisites": [
+        "kubernetes_ci_cd_integration",
+        "helm_package_management",
+        "kubernetes_monitoring_logging",
+        "kubernetes_security_cicd"
+      ],
+      "suggested_micro_topics": [
+        "Designing a multi-stage CI/CD pipeline",
+        "Automating application deployment with Helm",
+        "Implementing automated testing",
+        "Integrating monitoring and logging",
+        "Applying security best practices",
+        "Troubleshooting pipeline failures",
+        "Optimizing pipeline performance"
       ]
     }
   ]
