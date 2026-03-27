@@ -2,6 +2,7 @@ import os
 from crewai.tools import tool
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
+from tavily import TavilyClient
 from ddgs import DDGS
 
 # We use a getter for clients to avoid crushing the process if env vars are missing at startup
@@ -23,25 +24,58 @@ def get_embedding_model():
         _embedding_model = SentenceTransformer('BAAI/bge-small-en-v1.5')
     return _embedding_model
 
+# @tool("Web Syllabus Search")
+# def web_syllabus_search(skill: str) -> str:
+#     """Fetches course syllabus and curriculum steps from the web when local database fails. Use this to find the live industry standard roadmap for a skill."""
+#     skill_query = skill.get("skill", skill) if isinstance(skill, dict) else skill
+    
+#     try:
+#         # We prompt DuckDuckGo to find step-by-step learning roadmaps or course syllabi
+#         response = DDGS().text(f"Best learning roadmap or complete step-by-step course syllabus for {skill_query} 2026", max_results=3)
+#         results = list(response)
+        
+#         if not results:
+#             return f"No web results found for {skill_query}."
+            
+#         formatted_results = [f"Found {len(results)} relevant articles. Use this information to construct a standard learning curriculum for {skill_query}, and MAKE SURE to include the URLs as references:"]
+        
+#         for idx, result in enumerate(results):
+#             title = result.get("title", "Unknown Title")
+#             url = result.get("href", "")
+#             content = result.get("body", "")[:1000] # Take first 1000 characters of each top result
+            
+#             formatted_results.append(f"\n--- Source {idx+1} ---\nTitle: {title}\nURL: {url}\nContent Snippet: {content}")
+            
+#         return "\n".join(formatted_results)
+#     except Exception as e:
+#         return f"Error retrieving web results for {skill_query}: {e}"
+
 @tool("Web Syllabus Search")
 def web_syllabus_search(skill: str) -> str:
-    """Fetches course syllabus and curriculum steps from the web when local database fails. Use this to find the live industry standard roadmap for a skill."""
+    """Fetches course syllabus and curriculum steps from the web using Tavily."""
     skill_query = skill.get("skill", skill) if isinstance(skill, dict) else skill
     
     try:
-        # We prompt DuckDuckGo to find step-by-step learning roadmaps or course syllabi
-        response = DDGS().text(f"Best learning roadmap or complete step-by-step course syllabus for {skill_query} 2026", max_results=3)
-        results = list(response)
+        # Initialize the synchronous Tavily Client
+        client = TavilyClient(api_key=os.environ.get("TAVILY_API_KEY"))
         
+        # Fire an advanced search to get deep syllabus data
+        response = client.search(
+            query=f"Best learning roadmap or complete step-by-step course syllabus for {skill_query}",
+            search_depth="advanced",
+            max_results=3
+        )
+        
+        results = response.get("results", [])
         if not results:
             return f"No web results found for {skill_query}."
             
-        formatted_results = [f"Found {len(results)} relevant articles. Use this information to construct a standard learning curriculum for {skill_query}, and MAKE SURE to include the URLs as references:"]
+        formatted_results = [f"Found {len(results)} relevant articles. Use this information to construct a standard learning curriculum for {skill_query}:"]
         
         for idx, result in enumerate(results):
             title = result.get("title", "Unknown Title")
-            url = result.get("href", "")
-            content = result.get("body", "")[:1000] # Take first 1000 characters of each top result
+            url = result.get("url", "")
+            content = result.get("content", "")
             
             formatted_results.append(f"\n--- Source {idx+1} ---\nTitle: {title}\nURL: {url}\nContent Snippet: {content}")
             
