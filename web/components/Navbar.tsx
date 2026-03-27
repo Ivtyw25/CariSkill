@@ -4,9 +4,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
-import { User, Settings, HelpCircle, LogOut, Bell } from 'lucide-react';
+import { User, Settings, HelpCircle, LogOut, Bell, Zap, ChevronRight } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import { useAuth } from '@/components/AuthProvider';
+import DailyReviewDropdown from '@/components/DailyReviewDropdown';
 
 interface NavbarProps {
   isLoggedIn: boolean;
@@ -16,13 +17,52 @@ export default function Navbar({ isLoggedIn }: NavbarProps) {
   const { user, isLoading: authLoading } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isBellOpen, setIsBellOpen] = useState(false);
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [notifications, setNotifications] = useState<any[]>([]);
   const [unseenCount, setUnseenCount] = useState(0);
+  const [dueCount, setDueCount] = useState(0);
+  const [reviewFact, setReviewFact] = useState<any>(null);
+
+  const fetchReviewSummary = async () => {
+    if (!user) return;
+    // Fetch due modules count
+    const REVIEWS = [1, 3, 7, 13];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let totalDue = 0;
+    
+    for (const offset of REVIEWS) {
+      const start = new Date(today);
+      start.setDate(today.getDate() - offset);
+      const end = new Date(start);
+      end.setDate(start.getDate() + 1);
+
+      const { count } = await supabase
+        .from('node_progress')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+        .eq('is_completed', true)
+        .gte('completed_at', start.toISOString())
+        .lt('completed_at', end.toISOString());
+      
+      totalDue += (count || 0);
+    }
+    setDueCount(totalDue);
+
+    // Fetch current fact
+    const { data: fact } = await supabase
+      .from('user_review_facts')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+    setReviewFact(fact);
+  };
   const userFullName = user?.user_metadata?.full_name || 'Student';
   const userEmail = user?.email || '';
   const avatarUrl = user?.user_metadata?.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(userFullName)}&background=FFD700&color=18181b&bold=true`;
   const dropdownRef = useRef<HTMLDivElement>(null);
   const bellRef = useRef<HTMLDivElement>(null);
+  const reviewRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const pathname = usePathname();
   const supabase = createClient();
@@ -46,6 +86,11 @@ export default function Navbar({ isLoggedIn }: NavbarProps) {
     fetchNotifications();
   }, [user]);
 
+  // Fetch Review Summary
+  useEffect(() => {
+    if (user) fetchReviewSummary();
+  }, [user]);
+
   const markAllSeen = async () => {
     if (unseenCount === 0) return;
     await supabase.from('user_achievements').update({ is_seen: true }).eq('user_id', user!.id).eq('is_seen', false);
@@ -58,6 +103,7 @@ export default function Navbar({ isLoggedIn }: NavbarProps) {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) setIsDropdownOpen(false);
       if (bellRef.current && !bellRef.current.contains(event.target as Node)) setIsBellOpen(false);
+      if (reviewRef.current && !reviewRef.current.contains(event.target as Node)) setIsReviewOpen(false);
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -125,18 +171,63 @@ export default function Navbar({ isLoggedIn }: NavbarProps) {
             </>
           ) : (
             <>
+              {/* Daily Review Dropdown */}
+              <div className="relative" ref={reviewRef}>
+                <div className="relative group/tooltip">
+                  <button
+                    onClick={() => { setIsReviewOpen(!isReviewOpen); setIsBellOpen(false); }}
+                    className={`relative transition-all duration-300 hover:-rotate-12 block ${isReviewOpen ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
+                  >
+                    <Zap className="w-6 h-6" />
+                    {dueCount > 0 && (
+                      <span className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-500 text-gray-900 text-[9px] font-black rounded-full flex items-center justify-center border border-white">
+                        {dueCount}
+                      </span>
+                    )}
+                  </button>
+                  {/* Custom Tooltip */}
+                  {!isReviewOpen && (
+                    <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 scale-0 group-hover/tooltip:scale-100 opacity-0 group-hover/tooltip:opacity-100 transition-all duration-200 bg-gray-900 text-white min-w-[max-content] text-[10px] font-bold py-1.5 px-3 rounded-lg shadow-xl pointer-events-none z-50 border border-gray-700/50">
+                      Daily Review
+                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-gray-900 rotate-45 border-t border-l border-gray-700/50"></div>
+                    </div>
+                  )}
+                </div>
+
+                {isReviewOpen && (
+                  <div className="absolute right-0 mt-3 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50 origin-top-right animate-in fade-in slide-in-from-top-2 duration-200">
+                    <DailyReviewDropdown 
+                      initialFact={reviewFact} 
+                      initialDueCount={dueCount} 
+                      onClose={() => setIsReviewOpen(false)} 
+                      onRefresh={fetchReviewSummary}
+                    />
+                  </div>
+                )}
+              </div>
+
               {/* Bell notification */}
               <div className="relative" ref={bellRef}>
-                <button
-                  onClick={() => { setIsBellOpen(!isBellOpen); if (!isBellOpen) markAllSeen(); }}
-                  className="relative text-gray-400 hover:text-yellow-500 transition-colors duration-300 hover:rotate-12">
-                  <Bell className="w-6 h-6" />
-                  {unseenCount > 0 && (
-                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
-                      {unseenCount > 9 ? '9+' : unseenCount}
-                    </span>
+                <div className="relative group/tooltip">
+                  <button
+                    onClick={() => { setIsBellOpen(!isBellOpen); if (!isBellOpen) markAllSeen(); }}
+                    className="relative text-gray-400 hover:text-yellow-500 transition-colors duration-300 hover:rotate-12">
+                    <Bell className="w-6 h-6" />
+                    {unseenCount > 0 && (
+                      <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                        {unseenCount > 9 ? '9+' : unseenCount}
+                      </span>
+                    )}
+                  </button>
+                  {/* Custom Tooltip */}
+                  {!isBellOpen && (
+                    <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 scale-0 group-hover/tooltip:scale-100 opacity-0 group-hover/tooltip:opacity-100 transition-all duration-200 bg-gray-900 text-white min-w-[max-content] text-[10px] font-bold py-1.5 px-3 rounded-lg shadow-xl pointer-events-none z-50 border border-gray-700/50">
+                      Notifications
+                      {/* Caret */}
+                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-gray-900 rotate-45 border-t border-l border-gray-700/50"></div>
+                    </div>
                   )}
-                </button>
+                </div>
 
                 {isBellOpen && (
                   <div className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 origin-top-right animate-in fade-in slide-in-from-top-2 duration-200">

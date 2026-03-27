@@ -1,6 +1,7 @@
 {
   "nodes": [
     {
+<<<<<<< HEAD
       "node_id": "product_dev",
       "title": "Product Development & Niche Identification",
       "rationale": "Before investing time and resources, you need to define what makes your bakery unique. This module helps you identify your signature products and target audience, a critical first step for any beginner aiming to start a small business within 6 months. Podcasts on food entrepreneurship can offer great inspiration here.",
@@ -163,6 +164,173 @@
         "Basic scaling strategies for production",
         "Hiring your first team members (if applicable)",
         "Continuous improvement and adaptation"
+=======
+      "node_id": "devops_cicd_intro",
+      "title": "Introduction to DevOps & CI/CD",
+      "rationale": "Understanding the core principles of DevOps and CI/CD is fundamental before diving into specific tools like Kubernetes, as it provides the 'why' behind the practices.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "What is DevOps?",
+        "Benefits of DevOps",
+        "CI/CD Pipeline overview",
+        "Continuous Integration principles",
+        "Continuous Delivery vs. Deployment",
+        "DevOps culture and practices"
+      ]
+    },
+    {
+      "node_id": "git_fundamentals",
+      "title": "Version Control with Git",
+      "rationale": "Git is the industry standard for version control and is an absolute prerequisite for any CI/CD pipeline, as it manages the source code that pipelines operate on.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Git basic commands (add, commit, push, pull)",
+        "Branching and Merging strategies",
+        "Resolving merge conflicts",
+        "Remote repositories (GitHub/GitLab/Bitbucket)",
+        "Git workflow (e.g., GitFlow, Trunk-based development)",
+        "Reverting changes"
+      ]
+    },
+    {
+      "node_id": "docker_containerization",
+      "title": "Containerization with Docker",
+      "rationale": "Kubernetes orchestrates containers, so a solid understanding of Docker and containerization concepts is essential before learning Kubernetes itself.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "What are containers?",
+        "Docker architecture",
+        "Dockerfile creation",
+        "Building and managing Docker images",
+        "Running Docker containers",
+        "Docker Compose for multi-container apps",
+        "Container registries (Docker Hub)"
+      ]
+    },
+    {
+      "node_id": "kubernetes_fundamentals",
+      "title": "Kubernetes Core Concepts",
+      "rationale": "This module establishes the foundational knowledge of Kubernetes, which is critical for orchestrating applications and building CI/CD pipelines on it.",
+      "prerequisites": [
+        "docker_containerization"
+      ],
+      "suggested_micro_topics": [
+        "Kubernetes architecture (Master, Nodes)",
+        "Pods, Deployments, Services",
+        "Namespaces, Labels, Selectors",
+        "kubectl commands",
+        "YAML for Kubernetes manifests",
+        "ReplicaSets and StatefulSets",
+        "ConfigMaps and Secrets"
+      ]
+    },
+    {
+      "node_id": "ci_cd_tools_concepts",
+      "title": "CI/CD Pipeline Tools & Concepts",
+      "rationale": "Beyond the theoretical understanding of CI/CD, this module introduces the practical tools and concepts used to build and manage pipelines, which is directly relevant to securing a CI/CD job.",
+      "prerequisites": [
+        "devops_cicd_intro",
+        "git_fundamentals"
+      ],
+      "suggested_micro_topics": [
+        "Jenkins/GitLab CI/CD/GitHub Actions overview",
+        "Pipeline as Code",
+        "Build automation",
+        "Testing in CI/CD (unit, integration)",
+        "Artifact management",
+        "Deployment strategies (blue/green, canary)",
+        "Rollbacks"
+      ]
+    },
+    {
+      "node_id": "kubernetes_ci_cd_integration",
+      "title": "CI/CD Integration with Kubernetes",
+      "rationale": "This module directly addresses the user's goal of getting a CI/CD job by focusing on how to integrate CI/CD pipelines with Kubernetes for automated deployments.",
+      "prerequisites": [
+        "kubernetes_fundamentals",
+        "ci_cd_tools_concepts"
+      ],
+      "suggested_micro_topics": [
+        "Deploying applications to Kubernetes via CI/CD",
+        "CI/CD pipeline stages for Kubernetes",
+        "Using Kubeconfig in CI/CD",
+        "Image building and pushing to registry in pipeline",
+        "Automated testing in Kubernetes deployments",
+        "Secrets management in CI/CD for Kubernetes",
+        "GitOps principles (Argo CD, Flux CD introduction)"
+      ]
+    },
+    {
+      "node_id": "helm_package_management",
+      "title": "Helm for Kubernetes Package Management",
+      "rationale": "Helm is a crucial tool for packaging and deploying applications on Kubernetes, making it an essential skill for managing complex CI/CD deployments.",
+      "prerequisites": [
+        "kubernetes_fundamentals"
+      ],
+      "suggested_micro_topics": [
+        "What is Helm?",
+        "Helm Charts structure",
+        "Creating and customizing Helm Charts",
+        "Deploying applications with Helm",
+        "Managing Helm releases",
+        "Helm templates and values",
+        "Helm repositories"
+      ]
+    },
+    {
+      "node_id": "kubernetes_monitoring_logging",
+      "title": "Monitoring & Logging in Kubernetes",
+      "rationale": "Effective monitoring and logging are critical for maintaining the health and performance of applications deployed via CI/CD on Kubernetes, and for troubleshooting pipeline issues.",
+      "prerequisites": [
+        "kubernetes_fundamentals",
+        "kubernetes_ci_cd_integration"
+      ],
+      "suggested_micro_topics": [
+        "Prometheus and Grafana for monitoring",
+        "Kubernetes native logging (stdout/stderr)",
+        "Elastic Stack (Elasticsearch, Fluentd, Kibana)",
+        "Container insights",
+        "Alerting strategies",
+        "Tracing in Kubernetes"
+      ]
+    },
+    {
+      "node_id": "kubernetes_security_cicd",
+      "title": "Security in Kubernetes CI/CD",
+      "rationale": "Security is paramount in any production environment. Understanding how to secure Kubernetes deployments and CI/CD pipelines is vital for a robust and reliable system.",
+      "prerequisites": [
+        "kubernetes_fundamentals",
+        "kubernetes_ci_cd_integration"
+      ],
+      "suggested_micro_topics": [
+        "Image security scanning",
+        "Secrets management best practices",
+        "RBAC (Role-Based Access Control) in Kubernetes",
+        "Network Policies",
+        "Pod Security Standards",
+        "Supply chain security in CI/CD",
+        "Vulnerability scanning in pipelines"
+      ]
+    },
+    {
+      "node_id": "ci_cd_project",
+      "title": "Building a Complete Kubernetes CI/CD Pipeline (Project)",
+      "rationale": "This capstone project integrates all learned concepts into a practical application, providing hands-on experience crucial for demonstrating skills for a CI/CD job.",
+      "prerequisites": [
+        "kubernetes_ci_cd_integration",
+        "helm_package_management",
+        "kubernetes_monitoring_logging",
+        "kubernetes_security_cicd"
+      ],
+      "suggested_micro_topics": [
+        "Designing a multi-stage CI/CD pipeline",
+        "Automating application deployment with Helm",
+        "Implementing automated testing",
+        "Integrating monitoring and logging",
+        "Applying security best practices",
+        "Troubleshooting pipeline failures",
+        "Optimizing pipeline performance"
+>>>>>>> 5c16b55
       ]
     }
   ]

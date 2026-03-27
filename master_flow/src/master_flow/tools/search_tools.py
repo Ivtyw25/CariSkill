@@ -1,5 +1,4 @@
 import os
-import json
 from crewai.tools import tool
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
@@ -32,7 +31,6 @@ def web_syllabus_search(skill: str) -> str:
     try:
         # We prompt DuckDuckGo to find step-by-step learning roadmaps or course syllabi
         response = DDGS().text(f"Best learning roadmap or complete step-by-step course syllabus for {skill_query} 2026", max_results=3)
-        
         results = list(response)
         
         if not results:

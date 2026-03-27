@@ -40,6 +40,5 @@ class MacroPlanningCrew():
             agents=[self.architect()],
             tasks=[self.blueprint_task()],
             verbose=True,
-            output_log_file="macro_planning.log",
             max_rpm=15
         )

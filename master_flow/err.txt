@@ -1,0 +1,35 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import api.main
+  File "C:\Users\Ivantham\CariSkill\master_flow\api\main.py", line 14, in <module>
+    from master_flow.main import MasterFlow
+  File "C:\Users\Ivantham\CariSkill\master_flow\src\master_flow\main.py", line 18, in <module>
+    from master_flow.crews.macro_planning_crew.macro_crew import MacroPlanningCrew
+  File "C:\Users\Ivantham\CariSkill\master_flow\src\master_flow\crews\macro_planning_crew\macro_crew.py", line 5, in <module>
+    from master_flow.tools.search_tools import search_syllabi, web_syllabus_search
+  File "C:\Users\Ivantham\CariSkill\master_flow\src\master_flow\tools\search_tools.py", line 5, in <module>
+    from sentence_transformers import SentenceTransformer
+  File "C:\Users\Ivantham\CariSkill\master_flow\.venv\Lib\site-packages\sentence_transformers\__init__.py", line 10, in <module>
+    from sentence_transformers.backend import (
+    ...<3 lines>...
+    )
+  File "C:\Users\Ivantham\CariSkill\master_flow\.venv\Lib\site-packages\sentence_transformers\backend\__init__.py", line 3, in <module>
+    from .load import load_onnx_model, load_openvino_model
+  File "C:\Users\Ivantham\CariSkill\master_flow\.venv\Lib\site-packages\sentence_transformers\backend\load.py", line 7, in <module>
+    from transformers.configuration_utils import PretrainedConfig
+  File "C:\Users\Ivantham\CariSkill\master_flow\.venv\Lib\site-packages\transformers\__init__.py", line 26, in <module>
+    from . import dependency_versions_check
+  File "C:\Users\Ivantham\CariSkill\master_flow\.venv\Lib\site-packages\transformers\dependency_versions_check.py", line 16, in <module>
+    from .utils.versions import require_version, require_version_core
+  File "C:\Users\Ivantham\CariSkill\master_flow\.venv\Lib\site-packages\transformers\utils\__init__.py", line 27, in <module>
+    from .chat_template_utils import DocstringParsingException, TypeHintParsingException, get_json_schema
+  File "C:\Users\Ivantham\CariSkill\master_flow\.venv\Lib\site-packages\transformers\utils\chat_template_utils.py", line 39, in <module>
+    from torch import Tensor
+  File "C:\Users\Ivantham\CariSkill\master_flow\.venv\Lib\site-packages\torch\__init__.py", line 285, in <module>
+    _load_dll_libraries()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Ivantham\CariSkill\master_flow\.venv\Lib\site-packages\torch\__init__.py", line 281, in _load_dll_libraries
+    raise err
+OSError: [WinError 1114] A dynamic link library (DLL) initialization routine failed. Error loading "C:\Users\Ivantham\CariSkill\master_flow\.venv\Lib\site-packages\torch\lib\c10.dll" or one of its dependencies.
+Microsoft Visual C++ Redistributable is not installed, this may lead to the DLL load failure.
+It can be downloaded at https://aka.ms/vs/17/release/vc_redist.x64.exe

@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User } from '@supabase/supabase-js';
+import { createClient } from '@/utils/supabase/client';
 
 type AuthContextType = {
     user: User | null;
@@ -22,20 +23,32 @@ export function AuthProvider({
     user: User | null;
     children: React.ReactNode;
 }) {
+    // Initialise from the server-injected user — this prevents the first-paint flicker
     const [currentUser, setCurrentUser] = useState<User | null>(user);
-
-    // Since the user is passed down from the server on initial load,
-    // we do not need to show a loading state immediately if we have them!
     const [isLoading, setIsLoading] = useState<boolean>(!user);
 
     useEffect(() => {
-        // If the server didn't provide a user (e.g. static export, or not found)
-        // We could potentially refetch here if needed, but since our layout is SSR
-        // 'user' will always be accurate as of the last hydration. 
-        // This effect is mainly to sync state.
+        // Keep in sync when the server prop changes (e.g. hard navigations)
         setCurrentUser(user);
         setIsLoading(false);
     }, [user]);
+
+    useEffect(() => {
+        const supabase = createClient();
+
+        // Subscribe to ALL auth state changes so the avatar never goes stale
+        // during client-side navigation or background token refreshes.
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(
+            (_event, session) => {
+                setCurrentUser(session?.user ?? null);
+                setIsLoading(false);
+            }
+        );
+
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, []); // Empty array — only run once on mount, the listener handles the rest
 
     return (
         <AuthContext.Provider value={{ user: currentUser, isLoading }}>

@@ -1,5 +1,4 @@
 // lib/progress-data.ts
-import { Node, Edge } from '@xyflow/react';
 
 export type NodeStatus = 'completed' | 'progress' | 'locked';
 export type NodeType = 'user' | 'category' | 'tech' | 'level1' | 'level2' | 'level3';
@@ -16,9 +15,8 @@ export type ProgressNodeData = {
   topicSlug?: string;
 };
 
-// We assign a default position of { x: 0, y: 0 }, dagre will overwrite these
 // The fully populated tree is backed up here for the mock user
-export const mockInitialNodes: Node<ProgressNodeData>[] = [
+export const mockInitialNodes: any[] = [
   // --- ROOT (The User) ---
   {
     id: 'user',
@@ -234,7 +232,7 @@ const edgeStyle = (color: string) => ({
   style: { strokeWidth: 3, stroke: color },
 });
 
-export const mockInitialEdges: Edge[] = [
+export const mockInitialEdges: any[] = [
   // User -> Category
   { id: 'e-user-category-tech', source: 'user', target: 'category-tech', ...edgeStyle('#4da6ff') },
 
@@ -288,7 +286,7 @@ export const mockInitialEdges: Edge[] = [
 ];
 
 // The default empty tree for all normal users
-export const initialNodes: Node<ProgressNodeData>[] = [
+export const initialNodes: any[] = [
   {
     id: 'user',
     position: { x: 0, y: 0 },
@@ -297,4 +295,4 @@ export const initialNodes: Node<ProgressNodeData>[] = [
   },
 ];
 
-export const initialEdges: Edge[] = [];
+export const initialEdges: any[] = [];

@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import { exploreData, BubbleSize } from '@/lib/explore-data';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import {
-  Upload, Plus, Sparkles, TrendingUp, Users, Loader2, RefreshCw
+  Upload, Plus, Sparkles, TrendingUp, Users, Loader2, RefreshCw, Shuffle
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -22,19 +22,26 @@ const cardVariants: Variants = {
   show: { opacity: 1, x: 0, transition: { type: "spring" as const, stiffness: 200, damping: 20 } }
 };
 
-const FloatingBubble = ({ text, size, top, left, delay, onClick }: any) => {
+const FloatingBubble = ({ text, size, top, left, delay, onClick, colorScheme }: any) => {
   const styleVariants: any = {
     // Exact sizes: w-24 = 96px, w-32 = 128px, w-40 = 160px
-    sm: 'w-24 h-24 text-xs p-3 ring-4 ring-[#FEF9C3] shadow-md shadow-[#FFD700]/20',
-    md: 'w-32 h-32 text-sm p-4 ring-6 ring-[#FEF9C3] shadow-lg shadow-[#FFD700]/30',
-    lg: 'w-40 h-40 text-base p-5 ring-8 ring-[#FEF9C3] shadow-xl shadow-[#FFD700]/40'
+    sm: 'w-24 h-24 text-xs p-3 ring-4 shadow-md',
+    md: 'w-32 h-32 text-sm p-4 ring-4 shadow-lg',
+    lg: 'w-40 h-40 text-base p-5 ring-8 shadow-xl'
   };
+
+  const colorStyles: any = {
+    yellow: 'ring-[#FEF9C3] shadow-[#FFD700]/20 bg-white border-yellow-100 hover:ring-[#FFD700]/40',
+    purple: 'ring-purple-100 shadow-purple-300/20 bg-white border-purple-100 hover:ring-purple-300/40',
+  };
+
+  const scheme = colorScheme || 'yellow';
 
   return (
     <motion.div
       onClick={onClick}
-      className={`absolute flex group rounded-full items-center justify-center bg-white font-bold text-gray-800 border border-yellow-100 cursor-pointer hover:scale-105 hover:shadow-2xl hover:ring-[#FFD700]/40 transition-all duration-300 z-20 text-center leading-tight break-words
-        ${styleVariants[size]}
+      className={`absolute flex group rounded-full items-center justify-center font-bold text-gray-800 border cursor-pointer hover:scale-105 hover:shadow-2xl transition-all duration-300 z-20 text-center leading-tight break-words
+        ${styleVariants[size]} ${colorStyles[scheme]}
       `}
       style={{ top, left, transform: 'translate(-50%, -50%)' }}
       initial={{ opacity: 0, scale: 0.8 }}
@@ -66,9 +73,20 @@ const FloatingBubble = ({ text, size, top, left, delay, onClick }: any) => {
 
 export default function ExplorePage() {
   const router = useRouter();
+
+  // --- Recommendations state ---
+  const [rawBubbles, setRawBubbles] = useState<any[]>([]);
   const [bubbles, setBubbles] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // --- Random bubbles state ---
+  const [rawRandomBubbles, setRawRandomBubbles] = useState<any[]>([]);
+  const [randomBubbles, setRandomBubbles] = useState<any[]>([]);
+  const [isRandomLoading, setIsRandomLoading] = useState(true);
+  const [isRandomRefreshing, setIsRandomRefreshing] = useState(false);
+  const randomContainerRef = useRef<HTMLDivElement>(null);
 
   const handleBubbleClick = (topic: string) => {
     const sessionId = crypto.randomUUID();
@@ -76,41 +94,55 @@ export default function ExplorePage() {
     router.push(`/chat?id=${sessionId}`);
   };
 
-  // 1. We need a reference to the container to know its exact pixel size
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // 2. The Collision Detection Algorithm (UPDATED)
+  // 2. The Collision Detection Algorithm - Refined to prevent overlaps
   const calculatePositions = (rawBubbles: any[], containerW: number, containerH: number) => {
     const placedBubbles: any[] = [];
-    const minGap = 20; // Minimum space between bubbles
-    const edgeBuffer = 40; // Force bubbles to stay 40px away from the dashed walls
+    const edgeBuffer = 30; // Reduced from 40 to give more space
+    
+    // Calculate approximate area used and scale radii if tight
+    const avgBubbleArea = 12000; // rough avg area for sm/md/lg bubbles
+    const totalArea = containerW * containerH;
+    const coverage = (rawBubbles.length * avgBubbleArea) / totalArea;
+    const radiusScale = coverage > 0.3 ? 0.85 : 1.0;
 
     rawBubbles.forEach((bubble) => {
-      // Estimate the radius based on our Tailwind CSS classes
-      let radius = 48; // sm default (w-24 = 96px / 2)
-      if (bubble.size === 'md') radius = 64; // w-32 = 128px / 2
-      if (bubble.size === 'lg') radius = 80; // w-40 = 160px / 2
+      let baseRadius = 48;
+      if (bubble.size === 'md') baseRadius = 60;
+      if (bubble.size === 'lg') baseRadius = 75;
+      
+      const radius = baseRadius * radiusScale;
 
       let isPlaced = false;
       let attempts = 0;
+      const maxAttempts = 1000;
       let x = 0, y = 0;
 
-      // Calculate the safe internal area where centers can be placed
+      // Calculate safe zone for the center point
       const safeW = Math.max(0, containerW - (radius * 2) - (edgeBuffer * 2));
       const safeH = Math.max(0, containerH - (radius * 2) - (edgeBuffer * 2));
 
-      // Try up to 200 times to find a random spot that doesn't overlap
-      while (!isPlaced && attempts < 200) {
-        // Generate coordinates strictly inside the safe zone
+      if (safeW <= 0 || safeH <= 0) {
+        // Fallback: place in center with small radius if container is tiny
+        x = containerW / 2;
+        y = containerH / 2;
+        isPlaced = true;
+      }
+
+      while (!isPlaced && attempts < maxAttempts) {
         x = radius + edgeBuffer + Math.random() * safeW;
         y = radius + edgeBuffer + Math.random() * safeH;
 
-        // Check distance against all previously placed bubbles
+        // "Soft" gap: reduce minimum required gap if we've tried many times
+        let currentMinGap = 15;
+        if (attempts > 300) currentMinGap = 8;
+        if (attempts > 700) currentMinGap = 2;
+
         const hasCollision = placedBubbles.some((placed) => {
           const dx = x - placed.x;
           const dy = y - placed.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
-          return distance < (radius + placed.radius + minGap);
+          // Collision if distance < sum of radii + gap
+          return distance < (radius + placed.radius + currentMinGap);
         });
 
         if (!hasCollision) {
@@ -119,14 +151,18 @@ export default function ExplorePage() {
         attempts++;
       }
 
-      placedBubbles.push({
-        ...bubble,
-        x,
-        y,
-        radius,
-        top: `${y}px`,
-        left: `${x}px`,
-      });
+      // Only push if we found a spot or if it's the first few bubbles 
+      // where overlapping is less likely anyway
+      if (isPlaced || placedBubbles.length < 3) {
+        placedBubbles.push({
+          ...bubble,
+          x,
+          y,
+          radius,
+          top: `${y}px`,
+          left: `${x}px`,
+        });
+      }
     });
 
     return placedBubbles;
@@ -137,31 +173,89 @@ export default function ExplorePage() {
       const response = await fetch('/api/skills/recommendations');
       if (!response.ok) throw new Error("API Failed");
       const dynamicBubbles = await response.json();
-
-      if (containerRef.current) {
-        const containerW = containerRef.current.clientWidth;
-        const containerH = containerRef.current.clientHeight;
-        const positionedBubbles = calculatePositions(dynamicBubbles, containerW, containerH);
-        setBubbles(positionedBubbles);
-      } else {
-        setBubbles(dynamicBubbles); // Fallback
-      }
+      setRawBubbles(dynamicBubbles);
     } catch (error) {
       console.error("Error loading bubbles:", error);
     }
   };
 
+  // Position recommended bubbles after the container is painted
+  useEffect(() => {
+    if (rawBubbles.length === 0) return;
+    const container = containerRef.current;
+    if (!container) return;
+
+    const containerW = container.clientWidth;
+    const containerH = container.clientHeight;
+
+    if (containerW === 0 || containerH === 0) {
+      const timer = setTimeout(() => {
+        const cW = containerRef.current?.clientWidth || 0;
+        const cH = containerRef.current?.clientHeight || 0;
+        if (cW > 0 && cH > 0) {
+          setBubbles(calculatePositions(rawBubbles, cW, cH));
+        } else {
+          setBubbles(rawBubbles);
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+
+    setBubbles(calculatePositions(rawBubbles, containerW, containerH));
+  }, [rawBubbles]);
+
+  const fetchRandomSkills = async () => {
+    try {
+      const response = await fetch('/api/skills/random', { method: 'POST' });
+      if (!response.ok) throw new Error("Random API Failed");
+      const rawBubbles = await response.json();
+      // Store raw bubbles — positioning happens in the useEffect below
+      // once the container is painted and has real dimensions
+      setRawRandomBubbles(rawBubbles);
+    } catch (error) {
+      console.error("Error loading random bubbles:", error);
+    }
+  };
+
+  // Position random bubbles after the container is painted
+  useEffect(() => {
+    if (rawRandomBubbles.length === 0) return;
+    const container = randomContainerRef.current;
+    if (!container) return;
+
+    const containerW = container.clientWidth;
+    const containerH = container.clientHeight;
+
+    // If dimensions are 0 (not yet painted), retry after a frame
+    if (containerW === 0 || containerH === 0) {
+      const timer = setTimeout(() => {
+        const cW = randomContainerRef.current?.clientWidth || 0;
+        const cH = randomContainerRef.current?.clientHeight || 0;
+        if (cW > 0 && cH > 0) {
+          setRandomBubbles(calculatePositions(rawRandomBubbles, cW, cH));
+        } else {
+          setRandomBubbles(rawRandomBubbles);
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+
+    setRandomBubbles(calculatePositions(rawRandomBubbles, containerW, containerH));
+  }, [rawRandomBubbles]);
+
   useEffect(() => {
     const init = async () => {
-      await fetchSuggestions();
+      await Promise.all([fetchSuggestions(), fetchRandomSkills()]);
       setIsLoading(false);
+      setIsRandomLoading(false);
     };
     init();
   }, []);
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
-    setBubbles([]); // Clear immediately for visual feedback
+    setRawBubbles([]);
+    setBubbles([]);
     try {
       const res = await fetch('/api/skills/refresh-all', { method: 'POST' });
       if (res.ok) {
@@ -169,13 +263,26 @@ export default function ExplorePage() {
       } else {
         const errorData = await res.json();
         alert(errorData.error || "Failed to refresh recommendations.");
-        await fetchSuggestions(); // reload old ones if failed
+        await fetchSuggestions();
       }
     } catch (e) {
       console.error(e);
       await fetchSuggestions();
     } finally {
       setIsRefreshing(false);
+    }
+  };
+
+  const handleRandomRefresh = async () => {
+    setIsRandomRefreshing(true);
+    setRawRandomBubbles([]);
+    setRandomBubbles([]);
+    try {
+      await fetchRandomSkills();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsRandomRefreshing(false);
     }
   };
 
@@ -232,7 +339,8 @@ export default function ExplorePage() {
             </Link>
           </div>
 
-          <div className="mb-24 flex flex-col items-center">
+          {/* ===== RECOMMENDED SECTION ===== */}
+          <div className="mb-16 flex flex-col items-center">
             <div className="flex items-center gap-4 mb-6">
               <h2 className="font-display text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-2">
                 <Sparkles className="w-6 h-6 text-[#CA8A04] animate-pulse" />
@@ -248,10 +356,9 @@ export default function ExplorePage() {
               </button>
             </div>
 
-            {/* 4. ATTACH THE REF TO THE CONTAINER */}
             <div
               ref={containerRef}
-              className="relative w-full max-w-4xl h-[380px] md:h-[420px] flex items-center justify-center"
+              className="relative w-full max-w-4xl h-[400px] md:h-[480px] flex items-center justify-center"
             >
               {isLoading ? (
                 <div className="flex flex-col items-center gap-4 text-gray-400">
@@ -268,6 +375,7 @@ export default function ExplorePage() {
                       top={bubble.top}
                       left={bubble.left}
                       delay={Math.random()}
+                      colorScheme="yellow"
                       onClick={() => handleBubbleClick(bubble.text)}
                     />
                   ))}
@@ -284,7 +392,73 @@ export default function ExplorePage() {
                 </div>
               )}
             </div>
-            
+          </div>
+
+          {/* ===== RANDOM SKILL DISCOVERY SECTION ===== */}
+          <div className="mb-16 flex flex-col items-center">
+            {/* Section divider */}
+            <div className="w-full max-w-4xl flex items-center gap-4 mb-8">
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+              <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">or explore something new</span>
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+            </div>
+
+            <div className="flex items-center gap-4 mb-6">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-2">
+                <Shuffle className="w-6 h-6 text-purple-500" />
+                Discover Random Skills
+              </h2>
+              <button 
+                onClick={handleRandomRefresh}
+                disabled={isRandomLoading || isRandomRefreshing}
+                className="p-2 bg-purple-100 hover:bg-purple-200 text-purple-600 rounded-full transition-colors disabled:opacity-50"
+                title="Generate new random skills"
+              >
+                <RefreshCw className={`w-5 h-5 ${isRandomRefreshing ? "animate-spin" : ""}`} />
+              </button>
+            </div>
+            <p className="text-sm text-gray-500 mb-6 max-w-md text-center">
+              Step outside your comfort zone — click any bubble to start learning something completely new.
+            </p>
+
+            <div
+              ref={randomContainerRef}
+              className="relative w-full max-w-4xl h-[400px] md:h-[480px] flex items-center justify-center"
+            >
+              {isRandomLoading ? (
+                <div className="flex flex-col items-center gap-4 text-gray-400">
+                  <Loader2 className="w-10 h-10 animate-spin text-purple-400" />
+                  <p className="font-medium animate-pulse">Discovering random skills for you...</p>
+                </div>
+              ) : randomBubbles.length > 0 ? (
+                <AnimatePresence>
+                  {randomBubbles.map((bubble) => (
+                    <FloatingBubble
+                      key={bubble.id || bubble.text}
+                      text={bubble.text}
+                      size={bubble.size}
+                      top={bubble.top}
+                      left={bubble.left}
+                      delay={Math.random()}
+                      colorScheme="purple"
+                      onClick={() => handleBubbleClick(bubble.text)}
+                    />
+                  ))}
+                </AnimatePresence>
+              ) : (
+                <div className="flex flex-col items-center justify-center text-center p-10 max-w-md bg-white/50 backdrop-blur-sm rounded-3xl border-2 border-dashed border-purple-200 shadow-sm">
+                  <p className="text-gray-500 mb-6 font-medium text-lg">Could not load random skills.</p>
+                  <button
+                    onClick={handleRandomRefresh}
+                    className="px-8 py-3 bg-purple-500 hover:bg-purple-600 text-white font-bold rounded-xl shadow-md transition-transform active:scale-95"
+                  >
+                    Try Again
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Community button — moved here, after the random section */}
             <div className="mt-8 mb-6">
               <button
                 onClick={() => router.push('/community')}

@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { X, Send, Bot, User, Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { useSkillLanguage } from '@/components/SkillLanguageProvider';
+import { useAuth } from '@/components/AuthProvider';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -17,6 +19,8 @@ interface ContextChatbotProps {
 }
 
 export default function ContextChatbot({ isOpen, onClose, selectedText, materialContext }: ContextChatbotProps) {
+  const { currentLanguage } = useSkillLanguage();
+  const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -36,6 +40,7 @@ export default function ContextChatbot({ isOpen, onClose, selectedText, material
     if (isOpen && selectedText) {
       const initChat = async () => {
         const initialQuestion = `What is meant by "${selectedText}" according to the material?`;
+        
         setMessages([{ role: 'user', content: initialQuestion }]);
         setIsLoading(true);
 
@@ -45,7 +50,8 @@ export default function ContextChatbot({ isOpen, onClose, selectedText, material
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               messages: [{ role: 'user', content: initialQuestion }],
-              contextText: materialContext
+              contextText: materialContext,
+              preferredLanguage: currentLanguage
             })
           });
 
@@ -82,12 +88,15 @@ export default function ContextChatbot({ isOpen, onClose, selectedText, material
     setIsLoading(true);
 
     try {
+      const payloadMessages = [...messages, { role: 'user', content: userMessage }];
+
       const res = await fetch('/api/context-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: newMessages,
-          contextText: materialContext
+          messages: payloadMessages,
+          contextText: materialContext,
+          preferredLanguage: currentLanguage
         })
       });
 
@@ -128,8 +137,16 @@ export default function ContextChatbot({ isOpen, onClose, selectedText, material
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/50">
         {messages.map((m, idx) => (
           <div key={idx} className={`flex gap-3 max-w-[90%] ${m.role === 'user' ? 'ml-auto flex-row-reverse' : ''}`}>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm ${m.role === 'user' ? 'bg-blue-100 text-blue-600' : 'bg-yellow-100 text-yellow-600'}`}>
-              {m.role === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm overflow-hidden ${m.role === 'user' ? 'bg-blue-100 text-blue-600' : 'bg-yellow-100 text-yellow-600'}`}>
+              {m.role === 'user' ? (
+                user?.user_metadata?.avatar_url ? (
+                  <img src={user.user_metadata.avatar_url} alt="User" className="w-full h-full object-cover" />
+                ) : (
+                  <User className="w-4 h-4" />
+                )
+              ) : (
+                <Bot className="w-4 h-4" />
+              )}
             </div>
             <div className={`p-3 rounded-2xl text-[14px] leading-relaxed relative ${
               m.role === 'user' 

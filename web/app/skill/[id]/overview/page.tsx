@@ -11,6 +11,8 @@ import {
   Footprints, Trophy, Loader2, Share2, Check
 } from 'lucide-react';
 import DiscussionRoom from '@/components/DiscussionRoom';
+import SkillLanguageSelector from '@/components/SkillLanguageSelector';
+import { useSkillLanguage } from '@/components/SkillLanguageProvider';
 
 const isUUIDString = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(str);
 
@@ -19,8 +21,10 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
   const router = useRouter();
 
   const [data, setData] = useState<SkillTrack | null>(null);
+  const [localizedData, setLocalizedData] = useState<SkillTrack | null>(null);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
+  const { currentLanguage, translateText } = useSkillLanguage();
   
   // Publish state
   const [isPublishing, setIsPublishing] = useState(false);
@@ -248,6 +252,41 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
     fetchData();
   }, [id]);
 
+  useEffect(() => {
+    const localize = async () => {
+      if (!data) return;
+      if (currentLanguage === 'en') {
+        setLocalizedData(data);
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const tTitle = await translateText(data.title, currentLanguage);
+        const tTagline = await translateText(data.tagline, currentLanguage);
+        const tModules = await Promise.all(
+          data.modules.map(async m => {
+            const mTitle = await translateText(m.title, currentLanguage);
+            const mDesc = await translateText(m.description, currentLanguage);
+            // Translate subtopic items (bullets)
+            const mItems = m.items && m.items.length > 0
+              ? await translateText(m.items, currentLanguage)
+              : [];
+            
+            return { ...m, title: mTitle, description: mDesc, items: Array.isArray(mItems) ? mItems : [mItems] };
+          })
+        );
+        setLocalizedData({ ...data, title: tTitle, tagline: tTagline, modules: tModules });
+      } catch (e) {
+        console.error("Overview Translation Error:", e);
+        setLocalizedData(data);
+      } finally {
+        setLoading(false);
+      }
+    };
+    localize();
+  }, [data, currentLanguage]);
+
   const handlePublish = async () => {
     if (!user || !data) return;
     if (!isUUIDString(id)) {
@@ -379,7 +418,7 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
     transition: { duration: 2.5, repeat: Infinity, ease: "easeInOut" as const }
   };
 
-  if (loading) {
+  if (loading || (data && !localizedData)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FFFDF6]">
         <Loader2 className="w-12 h-12 text-[#FFD700] animate-spin" />
@@ -387,7 +426,7 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
     );
   }
 
-  if (!data) return notFound();
+  if (!data || !localizedData) return notFound();
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FFFDF6] font-sans text-gray-900 overflow-x-hidden">
@@ -398,15 +437,19 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
         <div className="absolute inset-0 pointer-events-none z-0 opacity-40 bg-[radial-gradient(#FDE68A_1.5px,transparent_1.5px)] [background-size:24px_24px]" />
 
         {/* Header Section */}
+        <div className="absolute top-8 right-8 z-20">
+           <SkillLanguageSelector />
+        </div>
+
         <div className="w-full max-w-5xl mb-16 flex flex-col md:flex-row items-center justify-between gap-8 z-10">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-sm font-bold mb-4 border border-yellow-200">
               <Trophy className="w-4 h-4" /> Skill Track
             </div>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-2 leading-tight">
-              {data.title}
+              {localizedData.title}
             </h1>
-            <p className="text-gray-600 text-lg">{data.tagline}</p>
+            <p className="text-gray-600 text-lg">{localizedData.tagline}</p>
           </motion.div>
 
           {/* Progress Ring (Static 0%) */}
@@ -470,8 +513,10 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
 
             {/* Module List with Scroll Animation */}
             <div className="flex flex-col items-center md:items-start w-full gap-20">
-              {data.modules.map((module) => (
+              {localizedData.modules.map((module) => (
                 <motion.div
+// ... (rest of map content uses 'module' which is fine)
+
                   key={module.id}
                   variants={popNode}
                   initial="hidden"
@@ -533,7 +578,7 @@ export default function SkillOverviewPage({ params }: { params: Promise<{ id: st
                     <Rocket className="w-32 h-32 text-white rotate-12" />
                   </div>
                   <h2 className="text-white font-display text-3xl font-bold mb-1 relative z-10">Start Your Journey</h2>
-                  <p className="text-gray-400 relative z-10">Welcome to {data.title}</p>
+                  <p className="text-gray-400 relative z-10">Welcome to {localizedData.title}</p>
                 </div>
                 <div className="p-8">
                   <div className="flex items-start gap-4 mb-8">

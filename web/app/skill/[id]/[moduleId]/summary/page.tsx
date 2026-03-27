@@ -13,11 +13,13 @@ import html2canvas from 'html2canvas';
 import { createClient } from '@/utils/supabase/client';
 import BookmarkButton from '@/components/BookmarkButton';
 import VideoSummaryPlayer from '@/components/VideoSummaryPlayer';
+import { useSkillLanguage } from '@/components/SkillLanguageProvider';
 
 export default function SummaryPage({ params }: { params: Promise<{ id: string, moduleId: string }> }) {
   const { id, moduleId } = use(params);
   const router = useRouter();
   const pdfRef = useRef<HTMLDivElement>(null);
+  const { currentLanguage, translateText } = useSkillLanguage();
 
   const [loading, setLoading] = useState(true);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -33,7 +35,10 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
         const supabase = createClient();
         const { data: nodeData } = await supabase.from('roadmap_nodes').select('title, video_url').eq('node_id', moduleId).limit(1);
         if (nodeData && nodeData.length > 0) {
-          setModuleTitle(nodeData[0].title);
+          {
+          const t = currentLanguage === 'en' ? nodeData[0].title : await translateText(nodeData[0].title, currentLanguage);
+          setModuleTitle(t);
+        }
           if (nodeData[0].video_url) setVideoUrl(nodeData[0].video_url);
         }
 
@@ -51,6 +56,25 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
             rowId: t.id,
             ...(typeof t.content === 'string' ? JSON.parse(t.content) : t.content),
           })).filter(Boolean);
+
+          if (currentLanguage !== 'en') {
+             for (let i = 0; i < parsed.length; i++) {
+                if (parsed[i].topic_title) {
+                   parsed[i].topic_title = await translateText(parsed[i].topic_title, currentLanguage);
+                }
+                if (parsed[i].theory_explanation) {
+                   parsed[i].theory_explanation = await translateText(parsed[i].theory_explanation, currentLanguage);
+                }
+                if (parsed[i].resources) {
+                   for (let j = 0; j < parsed[i].resources.length; j++) {
+                      if (parsed[i].resources[j].title) {
+                         parsed[i].resources[j].title = await translateText(parsed[i].resources[j].title, currentLanguage);
+                      }
+                   }
+                }
+             }
+          }
+
           setMicroTopics(parsed);
         }
       } catch (err) {
@@ -60,7 +84,7 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
       }
     };
     fetchTopics();
-  }, [moduleId]);
+  }, [moduleId, currentLanguage]);
 
   const handleDownload = async () => {
     if (!pdfRef.current) return;

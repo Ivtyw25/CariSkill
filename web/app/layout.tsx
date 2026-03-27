@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css'; // Global styles
-import '@xyflow/react/dist/style.css'; // Required for skill tree nodes
+
 
 const inter = Inter({
   subsets: ['latin'],

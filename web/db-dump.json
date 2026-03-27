@@ -1,0 +1,33 @@
+{
+  "id": "17605bac-0a39-449c-8292-06ff31effc6b",
+  "macro_node_id": "foundations_plane_vectors",
+  "content": {
+    "resources": [
+      {
+        "url": "https://www.youtube.com/watch?v=rcDXQ-5H8mk",
+        "type": "youtube",
+        "title": "Scalar vs. Vector Quantities Explained",
+        "estimated_time_minutes": 10
+      },
+      {
+        "url": "https://www.geeksforgeeks.org/maths/difference-between-scalar-and-vector-quantities/",
+        "type": "article",
+        "title": "Difference between Scalar and Vector Quantities",
+        "estimated_time_minutes": 5
+      },
+      {
+        "url": "https://www.khanacademy.org/math/grade-12-math-snc-aligned/x35fdd21198d6755b:mechanics-kinematics-of-motion-in-a-straight-line/x35fdd21198d6755b:classification-of-physical-quantities-scalars-and-vectors/a/scalars-and-vectors",
+        "type": "article",
+        "title": "Scalars and Vectors",
+        "estimated_time_minutes": 5
+      }
+    ],
+    "difficulty": "easy",
+    "topic_title": "Scalar vs. Vector quantities",
+    "theory_explanation": "Now that we know what a vector is, let's compare it to something simpler: a **scalar**.\n\nThink of it this way:\n\n*   **Scalar Quantity:** This is a quantity that *only* has **magnitude** (size or amount). It doesn't care about direction.\n    *   **Examples:**\n        *   **Temperature:** When you say it's 25 degrees Celsius, you don't say \"25 degrees north.\" It's just a value.\n        *   **Speed:** If a car is going 60 miles per hour, that's its speed. We don't specify a direction unless we're talking about *velocity*.\n        *   **Mass:** Your mass is 70 kilograms. It's just a number.\n        *   **Time:** 30 seconds. No direction involved.\n\n*   **Vector Quantity:** This is a quantity that has *both* **magnitude** (size) and **direction**.\n    *   **Examples:**\n        *   **Velocity:** If a car is moving at 60 miles per hour *north*, that's its velocity. It includes both speed (magnitude) and direction.\n        *   **Force:** When you push a box with 10 Newtons of force *to the right*, that's a vector.\n        *   **Displacement:** If you walk 5 meters *east* from your starting point, that's your displacement. (It's different from just \"distance walked,\" which is a scalar).\n\nThe key takeaway, as highlighted by the resources, is that scalars are fully described by a number and unit (magnitude only), while vectors require both magnitude and a specific direction.",
+    "topic_total_time_minutes": 21
+  },
+  "roadmap_id": "e00ce03e-d08d-4a4f-8163-b8f2ebff06ee",
+  "flashcards_data": null,
+  "quiz_data": null
+}
