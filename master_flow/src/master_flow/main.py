@@ -98,7 +98,7 @@ class MasterFlow(Flow[SystemState]):
         start_time = time.time()
         blueprint_data = self.state.blueprint # This is the dict saved from Macro Crew
         pending_nodes = blueprint_data.get("nodes", [])
-        
+
         async def process_single_node(node):
             print(f"--- GENERATING CONTENT FOR (ASYNC): {node['title']} ---")
             inputs = {

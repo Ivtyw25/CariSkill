@@ -2,349 +2,173 @@
   "pydantic_output": {
     "nodes": [
       {
-        "node_id": "devops_cicd_intro",
-        "title": "Introduction to DevOps & CI/CD",
-        "rationale": "Understanding the core principles of DevOps and CI/CD is fundamental before diving into specific tools like Kubernetes, as it provides the 'why' behind the practices.",
+        "node_id": "intro_aerodynamics",
+        "title": "Introduction to Aerodynamics",
+        "rationale": "To prepare for a course, a beginner needs a solid understanding of what aerodynamics is and its fundamental importance in flight. This module sets the stage for all subsequent topics.",
         "prerequisites": [],
         "suggested_micro_topics": [
-          "What is DevOps?",
-          "Benefits of DevOps",
-          "CI/CD Pipeline overview",
-          "Continuous Integration principles",
-          "Continuous Delivery vs. Deployment",
-          "DevOps culture and practices"
+          "Definition of Aerodynamics",
+          "Historical overview of flight",
+          "Branches of Aerodynamics (e.g., internal, external)",
+          "Key terms: air, fluid, flow, pressure, density",
+          "Importance in aerospace engineering"
         ]
       },
       {
-        "node_id": "git_fundamentals",
-        "title": "Version Control with Git",
-        "rationale": "Git is the industry standard for version control and is an absolute prerequisite for any CI/CD pipeline, as it manages the source code that pipelines operate on.",
-        "prerequisites": [],
-        "suggested_micro_topics": [
-          "Git basic commands (add, commit, push, pull)",
-          "Branching and Merging strategies",
-          "Resolving merge conflicts",
-          "Remote repositories (GitHub/GitLab/Bitbucket)",
-          "Git workflow (e.g., GitFlow, Trunk-based development)",
-          "Reverting changes"
-        ]
-      },
-      {
-        "node_id": "docker_containerization",
-        "title": "Containerization with Docker",
-        "rationale": "Kubernetes orchestrates containers, so a solid understanding of Docker and containerization concepts is essential before learning Kubernetes itself.",
-        "prerequisites": [],
-        "suggested_micro_topics": [
-          "What are containers?",
-          "Docker architecture",
-          "Dockerfile creation",
-          "Building and managing Docker images",
-          "Running Docker containers",
-          "Docker Compose for multi-container apps",
-          "Container registries (Docker Hub)"
-        ]
-      },
-      {
-        "node_id": "kubernetes_fundamentals",
-        "title": "Kubernetes Core Concepts",
-        "rationale": "This module establishes the foundational knowledge of Kubernetes, which is critical for orchestrating applications and building CI/CD pipelines on it.",
+        "node_id": "principles_of_flight",
+        "title": "Fundamental Principles of Flight",
+        "rationale": "Understanding how an aircraft stays in the air is crucial. This module covers the core forces that govern flight and how they interact.",
         "prerequisites": [
-          "docker_containerization"
+          "intro_aerodynamics"
         ],
         "suggested_micro_topics": [
-          "Kubernetes architecture (Master, Nodes)",
-          "Pods, Deployments, Services",
-          "Namespaces, Labels, Selectors",
-          "kubectl commands",
-          "YAML for Kubernetes manifests",
-          "ReplicaSets and StatefulSets",
-          "ConfigMaps and Secrets"
+          "Lift: generation and factors affecting it",
+          "Drag: types (form, skin friction, induced) and reduction",
+          "Thrust: how it's generated",
+          "Weight: gravity's role",
+          "Equilibrium of forces",
+          "Bernoulli's Principle (simplified)",
+          "Newton's Third Law in flight"
         ]
       },
       {
-        "node_id": "ci_cd_tools_concepts",
-        "title": "CI/CD Pipeline Tools & Concepts",
-        "rationale": "Beyond the theoretical understanding of CI/CD, this module introduces the practical tools and concepts used to build and manage pipelines, which is directly relevant to securing a CI/CD job.",
+        "node_id": "airfoils_and_wings",
+        "title": "Airfoils and Wing Geometry",
+        "rationale": "The shape of a wing (airfoil) is central to generating lift. This module explains the characteristics and terminology of airfoils and how they contribute to flight.",
         "prerequisites": [
-          "devops_cicd_intro",
-          "git_fundamentals"
+          "principles_of_flight"
         ],
         "suggested_micro_topics": [
-          "Jenkins/GitLab CI/CD/GitHub Actions overview",
-          "Pipeline as Code",
-          "Build automation",
-          "Testing in CI/CD (unit, integration)",
-          "Artifact management",
-          "Deployment strategies (blue/green, canary)",
-          "Rollbacks"
+          "Airfoil nomenclature (chord, leading edge, trailing edge, camber)",
+          "Types of airfoils",
+          "Angle of Attack (AoA)",
+          "Stall phenomenon",
+          "Wing planforms (rectangular, tapered, swept)",
+          "Aspect ratio",
+          "High-lift devices (flaps, slats - basic understanding)"
         ]
       },
       {
-        "node_id": "kubernetes_ci_cd_integration",
-        "title": "CI/CD Integration with Kubernetes",
-        "rationale": "This module directly addresses the user's goal of getting a CI/CD job by focusing on how to integrate CI/CD pipelines with Kubernetes for automated deployments.",
+        "node_id": "basic_fluid_dynamics",
+        "title": "Basic Fluid Dynamics Concepts for Aerodynamics",
+        "rationale": "Aerodynamics is a branch of fluid dynamics. A basic grasp of how fluids (air) behave is essential to understand aerodynamic phenomena.",
         "prerequisites": [
-          "kubernetes_fundamentals",
-          "ci_cd_tools_concepts"
+          "intro_aerodynamics"
         ],
         "suggested_micro_topics": [
-          "Deploying applications to Kubernetes via CI/CD",
-          "CI/CD pipeline stages for Kubernetes",
-          "Using Kubeconfig in CI/CD",
-          "Image building and pushing to registry in pipeline",
-          "Automated testing in Kubernetes deployments",
-          "Secrets management in CI/CD for Kubernetes",
-          "GitOps principles (Argo CD, Flux CD introduction)"
+          "Properties of air (density, viscosity, compressibility)",
+          "Laminar vs. Turbulent flow",
+          "Boundary layers (basic concept)",
+          "Continuity equation (simplified)",
+          "Flow visualization techniques (conceptual)",
+          "Introduction to Reynolds number"
         ]
       },
       {
-        "node_id": "helm_package_management",
-        "title": "Helm for Kubernetes Package Management",
-        "rationale": "Helm is a crucial tool for packaging and deploying applications on Kubernetes, making it an essential skill for managing complex CI/CD deployments.",
+        "node_id": "aerodynamic_testing_intro",
+        "title": "Introduction to Aerodynamic Testing",
+        "rationale": "Understanding how aerodynamic theories are validated in practice is important. This module introduces basic experimental methods like wind tunnels.",
         "prerequisites": [
-          "kubernetes_fundamentals"
+          "principles_of_flight",
+          "basic_fluid_dynamics"
         ],
         "suggested_micro_topics": [
-          "What is Helm?",
-          "Helm Charts structure",
-          "Creating and customizing Helm Charts",
-          "Deploying applications with Helm",
-          "Managing Helm releases",
-          "Helm templates and values",
-          "Helm repositories"
-        ]
-      },
-      {
-        "node_id": "kubernetes_monitoring_logging",
-        "title": "Monitoring & Logging in Kubernetes",
-        "rationale": "Effective monitoring and logging are critical for maintaining the health and performance of applications deployed via CI/CD on Kubernetes, and for troubleshooting pipeline issues.",
-        "prerequisites": [
-          "kubernetes_fundamentals",
-          "kubernetes_ci_cd_integration"
-        ],
-        "suggested_micro_topics": [
-          "Prometheus and Grafana for monitoring",
-          "Kubernetes native logging (stdout/stderr)",
-          "Elastic Stack (Elasticsearch, Fluentd, Kibana)",
-          "Container insights",
-          "Alerting strategies",
-          "Tracing in Kubernetes"
-        ]
-      },
-      {
-        "node_id": "kubernetes_security_cicd",
-        "title": "Security in Kubernetes CI/CD",
-        "rationale": "Security is paramount in any production environment. Understanding how to secure Kubernetes deployments and CI/CD pipelines is vital for a robust and reliable system.",
-        "prerequisites": [
-          "kubernetes_fundamentals",
-          "kubernetes_ci_cd_integration"
-        ],
-        "suggested_micro_topics": [
-          "Image security scanning",
-          "Secrets management best practices",
-          "RBAC (Role-Based Access Control) in Kubernetes",
-          "Network Policies",
-          "Pod Security Standards",
-          "Supply chain security in CI/CD",
-          "Vulnerability scanning in pipelines"
-        ]
-      },
-      {
-        "node_id": "ci_cd_project",
-        "title": "Building a Complete Kubernetes CI/CD Pipeline (Project)",
-        "rationale": "This capstone project integrates all learned concepts into a practical application, providing hands-on experience crucial for demonstrating skills for a CI/CD job.",
-        "prerequisites": [
-          "kubernetes_ci_cd_integration",
-          "helm_package_management",
-          "kubernetes_monitoring_logging",
-          "kubernetes_security_cicd"
-        ],
-        "suggested_micro_topics": [
-          "Designing a multi-stage CI/CD pipeline",
-          "Automating application deployment with Helm",
-          "Implementing automated testing",
-          "Integrating monitoring and logging",
-          "Applying security best practices",
-          "Troubleshooting pipeline failures",
-          "Optimizing pipeline performance"
+          "Purpose of wind tunnels",
+          "Types of wind tunnels (subsonic, supersonic - conceptual)",
+          "Measurements in wind tunnels (lift, drag, pressure)",
+          "Flow visualization in wind tunnels",
+          "Scale models and similarity",
+          "Introduction to CFD (Computational Fluid Dynamics) as a tool (conceptual)"
         ]
       }
     ]
   },
   "json_dict_output": null,
-  "raw_output": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"devops_cicd_intro\",\n      \"title\": \"Introduction to DevOps & CI/CD\",\n      \"rationale\": \"Understanding the core principles of DevOps and CI/CD is fundamental before diving into specific tools like Kubernetes, as it provides the 'why' behind the practices.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"What is DevOps?\",\n        \"Benefits of DevOps\",\n        \"CI/CD Pipeline overview\",\n        \"Continuous Integration principles\",\n        \"Continuous Delivery vs. Deployment\",\n        \"DevOps culture and practices\"\n      ]\n    },\n    {\n      \"node_id\": \"git_fundamentals\",\n      \"title\": \"Version Control with Git\",\n      \"rationale\": \"Git is the industry standard for version control and is an absolute prerequisite for any CI/CD pipeline, as it manages the source code that pipelines operate on.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Git basic commands (add, commit, push, pull)\",\n        \"Branching and Merging strategies\",\n        \"Resolving merge conflicts\",\n        \"Remote repositories (GitHub/GitLab/Bitbucket)\",\n        \"Git workflow (e.g., GitFlow, Trunk-based development)\",\n        \"Reverting changes\"\n      ]\n    },\n    {\n      \"node_id\": \"docker_containerization\",\n      \"title\": \"Containerization with Docker\",\n      \"rationale\": \"Kubernetes orchestrates containers, so a solid understanding of Docker and containerization concepts is essential before learning Kubernetes itself.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"What are containers?\",\n        \"Docker architecture\",\n        \"Dockerfile creation\",\n        \"Building and managing Docker images\",\n        \"Running Docker containers\",\n        \"Docker Compose for multi-container apps\",\n        \"Container registries (Docker Hub)\"\n      ]\n    },\n    {\n      \"node_id\": \"kubernetes_fundamentals\",\n      \"title\": \"Kubernetes Core Concepts\",\n      \"rationale\": \"This module establishes the foundational knowledge of Kubernetes, which is critical for orchestrating applications and building CI/CD pipelines on it.\",\n      \"prerequisites\": [\n        \"docker_containerization\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Kubernetes architecture (Master, Nodes)\",\n        \"Pods, Deployments, Services\",\n        \"Namespaces, Labels, Selectors\",\n        \"kubectl commands\",\n        \"YAML for Kubernetes manifests\",\n        \"ReplicaSets and StatefulSets\",\n        \"ConfigMaps and Secrets\"\n      ]\n    },\n    {\n      \"node_id\": \"ci_cd_tools_concepts\",\n      \"title\": \"CI/CD Pipeline Tools & Concepts\",\n      \"rationale\": \"Beyond the theoretical understanding of CI/CD, this module introduces the practical tools and concepts used to build and manage pipelines, which is directly relevant to securing a CI/CD job.\",\n      \"prerequisites\": [\n        \"devops_cicd_intro\",\n        \"git_fundamentals\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Jenkins/GitLab CI/CD/GitHub Actions overview\",\n        \"Pipeline as Code\",\n        \"Build automation\",\n        \"Testing in CI/CD (unit, integration)\",\n        \"Artifact management\",\n        \"Deployment strategies (blue/green, canary)\",\n        \"Rollbacks\"\n      ]\n    },\n    {\n      \"node_id\": \"kubernetes_ci_cd_integration\",\n      \"title\": \"CI/CD Integration with Kubernetes\",\n      \"rationale\": \"This module directly addresses the user's goal of getting a CI/CD job by focusing on how to integrate CI/CD pipelines with Kubernetes for automated deployments.\",\n      \"prerequisites\": [\n        \"kubernetes_fundamentals\",\n        \"ci_cd_tools_concepts\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Deploying applications to Kubernetes via CI/CD\",\n        \"CI/CD pipeline stages for Kubernetes\",\n        \"Using Kubeconfig in CI/CD\",\n        \"Image building and pushing to registry in pipeline\",\n        \"Automated testing in Kubernetes deployments\",\n        \"Secrets management in CI/CD for Kubernetes\",\n        \"GitOps principles (Argo CD, Flux CD introduction)\"\n      ]\n    },\n    {\n      \"node_id\": \"helm_package_management\",\n      \"title\": \"Helm for Kubernetes Package Management\",\n      \"rationale\": \"Helm is a crucial tool for packaging and deploying applications on Kubernetes, making it an essential skill for managing complex CI/CD deployments.\",\n      \"prerequisites\": [\n        \"kubernetes_fundamentals\"\n      ],\n      \"suggested_micro_topics\": [\n        \"What is Helm?\",\n        \"Helm Charts structure\",\n        \"Creating and customizing Helm Charts\",\n        \"Deploying applications with Helm\",\n        \"Managing Helm releases\",\n        \"Helm templates and values\",\n        \"Helm repositories\"\n      ]\n    },\n    {\n      \"node_id\": \"kubernetes_monitoring_logging\",\n      \"title\": \"Monitoring & Logging in Kubernetes\",\n      \"rationale\": \"Effective monitoring and logging are critical for maintaining the health and performance of applications deployed via CI/CD on Kubernetes, and for troubleshooting pipeline issues.\",\n      \"prerequisites\": [\n        \"kubernetes_fundamentals\",\n        \"kubernetes_ci_cd_integration\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Prometheus and Grafana for monitoring\",\n        \"Kubernetes native logging (stdout/stderr)\",\n        \"Elastic Stack (Elasticsearch, Fluentd, Kibana)\",\n        \"Container insights\",\n        \"Alerting strategies\",\n        \"Tracing in Kubernetes\"\n      ]\n    },\n    {\n      \"node_id\": \"kubernetes_security_cicd\",\n      \"title\": \"Security in Kubernetes CI/CD\",\n      \"rationale\": \"Security is paramount in any production environment. Understanding how to secure Kubernetes deployments and CI/CD pipelines is vital for a robust and reliable system.\",\n      \"prerequisites\": [\n        \"kubernetes_fundamentals\",\n        \"kubernetes_ci_cd_integration\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Image security scanning\",\n        \"Secrets management best practices\",\n        \"RBAC (Role-Based Access Control) in Kubernetes\",\n        \"Network Policies\",\n        \"Pod Security Standards\",\n        \"Supply chain security in CI/CD\",\n        \"Vulnerability scanning in pipelines\"\n      ]\n    },\n    {\n      \"node_id\": \"ci_cd_project\",\n      \"title\": \"Building a Complete Kubernetes CI/CD Pipeline (Project)\",\n      \"rationale\": \"This capstone project integrates all learned concepts into a practical application, providing hands-on experience crucial for demonstrating skills for a CI/CD job.\",\n      \"prerequisites\": [\n        \"kubernetes_ci_cd_integration\",\n        \"helm_package_management\",\n        \"kubernetes_monitoring_logging\",\n        \"kubernetes_security_cicd\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Designing a multi-stage CI/CD pipeline\",\n        \"Automating application deployment with Helm\",\n        \"Implementing automated testing\",\n        \"Integrating monitoring and logging\",\n        \"Applying security best practices\",\n        \"Troubleshooting pipeline failures\",\n        \"Optimizing pipeline performance\"\n      ]\n    }\n  ]\n}\n```",
+  "raw_output": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"intro_aerodynamics\",\n      \"title\": \"Introduction to Aerodynamics\",\n      \"rationale\": \"To prepare for a course, a beginner needs a solid understanding of what aerodynamics is and its fundamental importance in flight. This module sets the stage for all subsequent topics.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Definition of Aerodynamics\",\n        \"Historical overview of flight\",\n        \"Branches of Aerodynamics (e.g., internal, external)\",\n        \"Key terms: air, fluid, flow, pressure, density\",\n        \"Importance in aerospace engineering\"\n      ]\n    },\n    {\n      \"node_id\": \"principles_of_flight\",\n      \"title\": \"Fundamental Principles of Flight\",\n      \"rationale\": \"Understanding how an aircraft stays in the air is crucial. This module covers the core forces that govern flight and how they interact.\",\n      \"prerequisites\": [\n        \"intro_aerodynamics\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Lift: generation and factors affecting it\",\n        \"Drag: types (form, skin friction, induced) and reduction\",\n        \"Thrust: how it's generated\",\n        \"Weight: gravity's role\",\n        \"Equilibrium of forces\",\n        \"Bernoulli's Principle (simplified)\",\n        \"Newton's Third Law in flight\"\n      ]\n    },\n    {\n      \"node_id\": \"airfoils_and_wings\",\n      \"title\": \"Airfoils and Wing Geometry\",\n      \"rationale\": \"The shape of a wing (airfoil) is central to generating lift. This module explains the characteristics and terminology of airfoils and how they contribute to flight.\",\n      \"prerequisites\": [\n        \"principles_of_flight\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Airfoil nomenclature (chord, leading edge, trailing edge, camber)\",\n        \"Types of airfoils\",\n        \"Angle of Attack (AoA)\",\n        \"Stall phenomenon\",\n        \"Wing planforms (rectangular, tapered, swept)\",\n        \"Aspect ratio\",\n        \"High-lift devices (flaps, slats - basic understanding)\"\n      ]\n    },\n    {\n      \"node_id\": \"basic_fluid_dynamics\",\n      \"title\": \"Basic Fluid Dynamics Concepts for Aerodynamics\",\n      \"rationale\": \"Aerodynamics is a branch of fluid dynamics. A basic grasp of how fluids (air) behave is essential to understand aerodynamic phenomena.\",\n      \"prerequisites\": [\n        \"intro_aerodynamics\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Properties of air (density, viscosity, compressibility)\",\n        \"Laminar vs. Turbulent flow\",\n        \"Boundary layers (basic concept)\",\n        \"Continuity equation (simplified)\",\n        \"Flow visualization techniques (conceptual)\",\n        \"Introduction to Reynolds number\"\n      ]\n    },\n    {\n      \"node_id\": \"aerodynamic_testing_intro\",\n      \"title\": \"Introduction to Aerodynamic Testing\",\n      \"rationale\": \"Understanding how aerodynamic theories are validated in practice is important. This module introduces basic experimental methods like wind tunnels.\",\n      \"prerequisites\": [\n        \"principles_of_flight\",\n        \"basic_fluid_dynamics\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Purpose of wind tunnels\",\n        \"Types of wind tunnels (subsonic, supersonic - conceptual)\",\n        \"Measurements in wind tunnels (lift, drag, pressure)\",\n        \"Flow visualization in wind tunnels\",\n        \"Scale models and similarity\",\n        \"Introduction to CFD (Computational Fluid Dynamics) as a tool (conceptual)\"\n      ]\n    }\n  ]\n}\n```",
   "tasks_output": [
     {
-      "raw": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"devops_cicd_intro\",\n      \"title\": \"Introduction to DevOps & CI/CD\",\n      \"rationale\": \"Understanding the core principles of DevOps and CI/CD is fundamental before diving into specific tools like Kubernetes, as it provides the 'why' behind the practices.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"What is DevOps?\",\n        \"Benefits of DevOps\",\n        \"CI/CD Pipeline overview\",\n        \"Continuous Integration principles\",\n        \"Continuous Delivery vs. Deployment\",\n        \"DevOps culture and practices\"\n      ]\n    },\n    {\n      \"node_id\": \"git_fundamentals\",\n      \"title\": \"Version Control with Git\",\n      \"rationale\": \"Git is the industry standard for version control and is an absolute prerequisite for any CI/CD pipeline, as it manages the source code that pipelines operate on.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Git basic commands (add, commit, push, pull)\",\n        \"Branching and Merging strategies\",\n        \"Resolving merge conflicts\",\n        \"Remote repositories (GitHub/GitLab/Bitbucket)\",\n        \"Git workflow (e.g., GitFlow, Trunk-based development)\",\n        \"Reverting changes\"\n      ]\n    },\n    {\n      \"node_id\": \"docker_containerization\",\n      \"title\": \"Containerization with Docker\",\n      \"rationale\": \"Kubernetes orchestrates containers, so a solid understanding of Docker and containerization concepts is essential before learning Kubernetes itself.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"What are containers?\",\n        \"Docker architecture\",\n        \"Dockerfile creation\",\n        \"Building and managing Docker images\",\n        \"Running Docker containers\",\n        \"Docker Compose for multi-container apps\",\n        \"Container registries (Docker Hub)\"\n      ]\n    },\n    {\n      \"node_id\": \"kubernetes_fundamentals\",\n      \"title\": \"Kubernetes Core Concepts\",\n      \"rationale\": \"This module establishes the foundational knowledge of Kubernetes, which is critical for orchestrating applications and building CI/CD pipelines on it.\",\n      \"prerequisites\": [\n        \"docker_containerization\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Kubernetes architecture (Master, Nodes)\",\n        \"Pods, Deployments, Services\",\n        \"Namespaces, Labels, Selectors\",\n        \"kubectl commands\",\n        \"YAML for Kubernetes manifests\",\n        \"ReplicaSets and StatefulSets\",\n        \"ConfigMaps and Secrets\"\n      ]\n    },\n    {\n      \"node_id\": \"ci_cd_tools_concepts\",\n      \"title\": \"CI/CD Pipeline Tools & Concepts\",\n      \"rationale\": \"Beyond the theoretical understanding of CI/CD, this module introduces the practical tools and concepts used to build and manage pipelines, which is directly relevant to securing a CI/CD job.\",\n      \"prerequisites\": [\n        \"devops_cicd_intro\",\n        \"git_fundamentals\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Jenkins/GitLab CI/CD/GitHub Actions overview\",\n        \"Pipeline as Code\",\n        \"Build automation\",\n        \"Testing in CI/CD (unit, integration)\",\n        \"Artifact management\",\n        \"Deployment strategies (blue/green, canary)\",\n        \"Rollbacks\"\n      ]\n    },\n    {\n      \"node_id\": \"kubernetes_ci_cd_integration\",\n      \"title\": \"CI/CD Integration with Kubernetes\",\n      \"rationale\": \"This module directly addresses the user's goal of getting a CI/CD job by focusing on how to integrate CI/CD pipelines with Kubernetes for automated deployments.\",\n      \"prerequisites\": [\n        \"kubernetes_fundamentals\",\n        \"ci_cd_tools_concepts\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Deploying applications to Kubernetes via CI/CD\",\n        \"CI/CD pipeline stages for Kubernetes\",\n        \"Using Kubeconfig in CI/CD\",\n        \"Image building and pushing to registry in pipeline\",\n        \"Automated testing in Kubernetes deployments\",\n        \"Secrets management in CI/CD for Kubernetes\",\n        \"GitOps principles (Argo CD, Flux CD introduction)\"\n      ]\n    },\n    {\n      \"node_id\": \"helm_package_management\",\n      \"title\": \"Helm for Kubernetes Package Management\",\n      \"rationale\": \"Helm is a crucial tool for packaging and deploying applications on Kubernetes, making it an essential skill for managing complex CI/CD deployments.\",\n      \"prerequisites\": [\n        \"kubernetes_fundamentals\"\n      ],\n      \"suggested_micro_topics\": [\n        \"What is Helm?\",\n        \"Helm Charts structure\",\n        \"Creating and customizing Helm Charts\",\n        \"Deploying applications with Helm\",\n        \"Managing Helm releases\",\n        \"Helm templates and values\",\n        \"Helm repositories\"\n      ]\n    },\n    {\n      \"node_id\": \"kubernetes_monitoring_logging\",\n      \"title\": \"Monitoring & Logging in Kubernetes\",\n      \"rationale\": \"Effective monitoring and logging are critical for maintaining the health and performance of applications deployed via CI/CD on Kubernetes, and for troubleshooting pipeline issues.\",\n      \"prerequisites\": [\n        \"kubernetes_fundamentals\",\n        \"kubernetes_ci_cd_integration\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Prometheus and Grafana for monitoring\",\n        \"Kubernetes native logging (stdout/stderr)\",\n        \"Elastic Stack (Elasticsearch, Fluentd, Kibana)\",\n        \"Container insights\",\n        \"Alerting strategies\",\n        \"Tracing in Kubernetes\"\n      ]\n    },\n    {\n      \"node_id\": \"kubernetes_security_cicd\",\n      \"title\": \"Security in Kubernetes CI/CD\",\n      \"rationale\": \"Security is paramount in any production environment. Understanding how to secure Kubernetes deployments and CI/CD pipelines is vital for a robust and reliable system.\",\n      \"prerequisites\": [\n        \"kubernetes_fundamentals\",\n        \"kubernetes_ci_cd_integration\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Image security scanning\",\n        \"Secrets management best practices\",\n        \"RBAC (Role-Based Access Control) in Kubernetes\",\n        \"Network Policies\",\n        \"Pod Security Standards\",\n        \"Supply chain security in CI/CD\",\n        \"Vulnerability scanning in pipelines\"\n      ]\n    },\n    {\n      \"node_id\": \"ci_cd_project\",\n      \"title\": \"Building a Complete Kubernetes CI/CD Pipeline (Project)\",\n      \"rationale\": \"This capstone project integrates all learned concepts into a practical application, providing hands-on experience crucial for demonstrating skills for a CI/CD job.\",\n      \"prerequisites\": [\n        \"kubernetes_ci_cd_integration\",\n        \"helm_package_management\",\n        \"kubernetes_monitoring_logging\",\n        \"kubernetes_security_cicd\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Designing a multi-stage CI/CD pipeline\",\n        \"Automating application deployment with Helm\",\n        \"Implementing automated testing\",\n        \"Integrating monitoring and logging\",\n        \"Applying security best practices\",\n        \"Troubleshooting pipeline failures\",\n        \"Optimizing pipeline performance\"\n      ]\n    }\n  ]\n}\n```",
+      "raw": "```json\n{\n  \"nodes\": [\n    {\n      \"node_id\": \"intro_aerodynamics\",\n      \"title\": \"Introduction to Aerodynamics\",\n      \"rationale\": \"To prepare for a course, a beginner needs a solid understanding of what aerodynamics is and its fundamental importance in flight. This module sets the stage for all subsequent topics.\",\n      \"prerequisites\": [],\n      \"suggested_micro_topics\": [\n        \"Definition of Aerodynamics\",\n        \"Historical overview of flight\",\n        \"Branches of Aerodynamics (e.g., internal, external)\",\n        \"Key terms: air, fluid, flow, pressure, density\",\n        \"Importance in aerospace engineering\"\n      ]\n    },\n    {\n      \"node_id\": \"principles_of_flight\",\n      \"title\": \"Fundamental Principles of Flight\",\n      \"rationale\": \"Understanding how an aircraft stays in the air is crucial. This module covers the core forces that govern flight and how they interact.\",\n      \"prerequisites\": [\n        \"intro_aerodynamics\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Lift: generation and factors affecting it\",\n        \"Drag: types (form, skin friction, induced) and reduction\",\n        \"Thrust: how it's generated\",\n        \"Weight: gravity's role\",\n        \"Equilibrium of forces\",\n        \"Bernoulli's Principle (simplified)\",\n        \"Newton's Third Law in flight\"\n      ]\n    },\n    {\n      \"node_id\": \"airfoils_and_wings\",\n      \"title\": \"Airfoils and Wing Geometry\",\n      \"rationale\": \"The shape of a wing (airfoil) is central to generating lift. This module explains the characteristics and terminology of airfoils and how they contribute to flight.\",\n      \"prerequisites\": [\n        \"principles_of_flight\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Airfoil nomenclature (chord, leading edge, trailing edge, camber)\",\n        \"Types of airfoils\",\n        \"Angle of Attack (AoA)\",\n        \"Stall phenomenon\",\n        \"Wing planforms (rectangular, tapered, swept)\",\n        \"Aspect ratio\",\n        \"High-lift devices (flaps, slats - basic understanding)\"\n      ]\n    },\n    {\n      \"node_id\": \"basic_fluid_dynamics\",\n      \"title\": \"Basic Fluid Dynamics Concepts for Aerodynamics\",\n      \"rationale\": \"Aerodynamics is a branch of fluid dynamics. A basic grasp of how fluids (air) behave is essential to understand aerodynamic phenomena.\",\n      \"prerequisites\": [\n        \"intro_aerodynamics\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Properties of air (density, viscosity, compressibility)\",\n        \"Laminar vs. Turbulent flow\",\n        \"Boundary layers (basic concept)\",\n        \"Continuity equation (simplified)\",\n        \"Flow visualization techniques (conceptual)\",\n        \"Introduction to Reynolds number\"\n      ]\n    },\n    {\n      \"node_id\": \"aerodynamic_testing_intro\",\n      \"title\": \"Introduction to Aerodynamic Testing\",\n      \"rationale\": \"Understanding how aerodynamic theories are validated in practice is important. This module introduces basic experimental methods like wind tunnels.\",\n      \"prerequisites\": [\n        \"principles_of_flight\",\n        \"basic_fluid_dynamics\"\n      ],\n      \"suggested_micro_topics\": [\n        \"Purpose of wind tunnels\",\n        \"Types of wind tunnels (subsonic, supersonic - conceptual)\",\n        \"Measurements in wind tunnels (lift, drag, pressure)\",\n        \"Flow visualization in wind tunnels\",\n        \"Scale models and similarity\",\n        \"Introduction to CFD (Computational Fluid Dynamics) as a tool (conceptual)\"\n      ]\n    }\n  ]\n}\n```",
       "json_dict": null,
       "pydantic": {
         "nodes": [
           {
-            "node_id": "devops_cicd_intro",
-            "title": "Introduction to DevOps & CI/CD",
-            "rationale": "Understanding the core principles of DevOps and CI/CD is fundamental before diving into specific tools like Kubernetes, as it provides the 'why' behind the practices.",
+            "node_id": "intro_aerodynamics",
+            "title": "Introduction to Aerodynamics",
+            "rationale": "To prepare for a course, a beginner needs a solid understanding of what aerodynamics is and its fundamental importance in flight. This module sets the stage for all subsequent topics.",
             "prerequisites": [],
             "suggested_micro_topics": [
-              "What is DevOps?",
-              "Benefits of DevOps",
-              "CI/CD Pipeline overview",
-              "Continuous Integration principles",
-              "Continuous Delivery vs. Deployment",
-              "DevOps culture and practices"
+              "Definition of Aerodynamics",
+              "Historical overview of flight",
+              "Branches of Aerodynamics (e.g., internal, external)",
+              "Key terms: air, fluid, flow, pressure, density",
+              "Importance in aerospace engineering"
             ]
           },
           {
-            "node_id": "git_fundamentals",
-            "title": "Version Control with Git",
-            "rationale": "Git is the industry standard for version control and is an absolute prerequisite for any CI/CD pipeline, as it manages the source code that pipelines operate on.",
-            "prerequisites": [],
-            "suggested_micro_topics": [
-              "Git basic commands (add, commit, push, pull)",
-              "Branching and Merging strategies",
-              "Resolving merge conflicts",
-              "Remote repositories (GitHub/GitLab/Bitbucket)",
-              "Git workflow (e.g., GitFlow, Trunk-based development)",
-              "Reverting changes"
-            ]
-          },
-          {
-            "node_id": "docker_containerization",
-            "title": "Containerization with Docker",
-            "rationale": "Kubernetes orchestrates containers, so a solid understanding of Docker and containerization concepts is essential before learning Kubernetes itself.",
-            "prerequisites": [],
-            "suggested_micro_topics": [
-              "What are containers?",
-              "Docker architecture",
-              "Dockerfile creation",
-              "Building and managing Docker images",
-              "Running Docker containers",
-              "Docker Compose for multi-container apps",
-              "Container registries (Docker Hub)"
-            ]
-          },
-          {
-            "node_id": "kubernetes_fundamentals",
-            "title": "Kubernetes Core Concepts",
-            "rationale": "This module establishes the foundational knowledge of Kubernetes, which is critical for orchestrating applications and building CI/CD pipelines on it.",
+            "node_id": "principles_of_flight",
+            "title": "Fundamental Principles of Flight",
+            "rationale": "Understanding how an aircraft stays in the air is crucial. This module covers the core forces that govern flight and how they interact.",
             "prerequisites": [
-              "docker_containerization"
+              "intro_aerodynamics"
             ],
             "suggested_micro_topics": [
-              "Kubernetes architecture (Master, Nodes)",
-              "Pods, Deployments, Services",
-              "Namespaces, Labels, Selectors",
-              "kubectl commands",
-              "YAML for Kubernetes manifests",
-              "ReplicaSets and StatefulSets",
-              "ConfigMaps and Secrets"
+              "Lift: generation and factors affecting it",
+              "Drag: types (form, skin friction, induced) and reduction",
+              "Thrust: how it's generated",
+              "Weight: gravity's role",
+              "Equilibrium of forces",
+              "Bernoulli's Principle (simplified)",
+              "Newton's Third Law in flight"
             ]
           },
           {
-            "node_id": "ci_cd_tools_concepts",
-            "title": "CI/CD Pipeline Tools & Concepts",
-            "rationale": "Beyond the theoretical understanding of CI/CD, this module introduces the practical tools and concepts used to build and manage pipelines, which is directly relevant to securing a CI/CD job.",
+            "node_id": "airfoils_and_wings",
+            "title": "Airfoils and Wing Geometry",
+            "rationale": "The shape of a wing (airfoil) is central to generating lift. This module explains the characteristics and terminology of airfoils and how they contribute to flight.",
             "prerequisites": [
-              "devops_cicd_intro",
-              "git_fundamentals"
+              "principles_of_flight"
             ],
             "suggested_micro_topics": [
-              "Jenkins/GitLab CI/CD/GitHub Actions overview",
-              "Pipeline as Code",
-              "Build automation",
-              "Testing in CI/CD (unit, integration)",
-              "Artifact management",
-              "Deployment strategies (blue/green, canary)",
-              "Rollbacks"
+              "Airfoil nomenclature (chord, leading edge, trailing edge, camber)",
+              "Types of airfoils",
+              "Angle of Attack (AoA)",
+              "Stall phenomenon",
+              "Wing planforms (rectangular, tapered, swept)",
+              "Aspect ratio",
+              "High-lift devices (flaps, slats - basic understanding)"
             ]
           },
           {
-            "node_id": "kubernetes_ci_cd_integration",
-            "title": "CI/CD Integration with Kubernetes",
-            "rationale": "This module directly addresses the user's goal of getting a CI/CD job by focusing on how to integrate CI/CD pipelines with Kubernetes for automated deployments.",
+            "node_id": "basic_fluid_dynamics",
+            "title": "Basic Fluid Dynamics Concepts for Aerodynamics",
+            "rationale": "Aerodynamics is a branch of fluid dynamics. A basic grasp of how fluids (air) behave is essential to understand aerodynamic phenomena.",
             "prerequisites": [
-              "kubernetes_fundamentals",
-              "ci_cd_tools_concepts"
+              "intro_aerodynamics"
             ],
             "suggested_micro_topics": [
-              "Deploying applications to Kubernetes via CI/CD",
-              "CI/CD pipeline stages for Kubernetes",
-              "Using Kubeconfig in CI/CD",
-              "Image building and pushing to registry in pipeline",
-              "Automated testing in Kubernetes deployments",
-              "Secrets management in CI/CD for Kubernetes",
-              "GitOps principles (Argo CD, Flux CD introduction)"
+              "Properties of air (density, viscosity, compressibility)",
+              "Laminar vs. Turbulent flow",
+              "Boundary layers (basic concept)",
+              "Continuity equation (simplified)",
+              "Flow visualization techniques (conceptual)",
+              "Introduction to Reynolds number"
             ]
           },
           {
-            "node_id": "helm_package_management",
-            "title": "Helm for Kubernetes Package Management",
-            "rationale": "Helm is a crucial tool for packaging and deploying applications on Kubernetes, making it an essential skill for managing complex CI/CD deployments.",
+            "node_id": "aerodynamic_testing_intro",
+            "title": "Introduction to Aerodynamic Testing",
+            "rationale": "Understanding how aerodynamic theories are validated in practice is important. This module introduces basic experimental methods like wind tunnels.",
             "prerequisites": [
-              "kubernetes_fundamentals"
+              "principles_of_flight",
+              "basic_fluid_dynamics"
             ],
             "suggested_micro_topics": [
-              "What is Helm?",
-              "Helm Charts structure",
-              "Creating and customizing Helm Charts",
-              "Deploying applications with Helm",
-              "Managing Helm releases",
-              "Helm templates and values",
-              "Helm repositories"
-            ]
-          },
-          {
-            "node_id": "kubernetes_monitoring_logging",
-            "title": "Monitoring & Logging in Kubernetes",
-            "rationale": "Effective monitoring and logging are critical for maintaining the health and performance of applications deployed via CI/CD on Kubernetes, and for troubleshooting pipeline issues.",
-            "prerequisites": [
-              "kubernetes_fundamentals",
-              "kubernetes_ci_cd_integration"
-            ],
-            "suggested_micro_topics": [
-              "Prometheus and Grafana for monitoring",
-              "Kubernetes native logging (stdout/stderr)",
-              "Elastic Stack (Elasticsearch, Fluentd, Kibana)",
-              "Container insights",
-              "Alerting strategies",
-              "Tracing in Kubernetes"
-            ]
-          },
-          {
-            "node_id": "kubernetes_security_cicd",
-            "title": "Security in Kubernetes CI/CD",
-            "rationale": "Security is paramount in any production environment. Understanding how to secure Kubernetes deployments and CI/CD pipelines is vital for a robust and reliable system.",
-            "prerequisites": [
-              "kubernetes_fundamentals",
-              "kubernetes_ci_cd_integration"
-            ],
-            "suggested_micro_topics": [
-              "Image security scanning",
-              "Secrets management best practices",
-              "RBAC (Role-Based Access Control) in Kubernetes",
-              "Network Policies",
-              "Pod Security Standards",
-              "Supply chain security in CI/CD",
-              "Vulnerability scanning in pipelines"
-            ]
-          },
-          {
-            "node_id": "ci_cd_project",
-            "title": "Building a Complete Kubernetes CI/CD Pipeline (Project)",
-            "rationale": "This capstone project integrates all learned concepts into a practical application, providing hands-on experience crucial for demonstrating skills for a CI/CD job.",
-            "prerequisites": [
-              "kubernetes_ci_cd_integration",
-              "helm_package_management",
-              "kubernetes_monitoring_logging",
-              "kubernetes_security_cicd"
-            ],
-            "suggested_micro_topics": [
-              "Designing a multi-stage CI/CD pipeline",
-              "Automating application deployment with Helm",
-              "Implementing automated testing",
-              "Integrating monitoring and logging",
-              "Applying security best practices",
-              "Troubleshooting pipeline failures",
-              "Optimizing pipeline performance"
+              "Purpose of wind tunnels",
+              "Types of wind tunnels (subsonic, supersonic - conceptual)",
+              "Measurements in wind tunnels (lift, drag, pressure)",
+              "Flow visualization in wind tunnels",
+              "Scale models and similarity",
+              "Introduction to CFD (Computational Fluid Dynamics) as a tool (conceptual)"
             ]
           }
         ]

@@ -12,6 +12,13 @@ interface PodcastPlayerProps {
   initialAudioUrl?: string | null;
 }
 
+interface PodcastStatusResponse {
+  status: 'processing' | 'completed' | 'error' | 'unknown';
+  session_id?: string;
+  message?: string;
+  public_url?: string; // The beautiful new cloud URL field!
+}
+
 type GenerationStatus = 'idle' | 'requesting' | 'processing' | 'completed' | 'error';
 
 export default function PodcastPlayer({
@@ -106,12 +113,12 @@ export default function PodcastPlayer({
         const response = await fetch(`${WORKER_URL}/api/podcast/status/${id}`);
         if (!response.ok) throw new Error('Failed to check status');
 
-        const data = await response.json();
+        const data: PodcastStatusResponse = await response.json();
 
         if (data.status === 'completed') {
           if (pollingInterval.current) clearInterval(pollingInterval.current);
 
-          const finalUrl = `${WORKER_URL}/api/podcast/download/${id}`;
+          const finalUrl = data.public_url || `${WORKER_URL}/api/podcast/download/${id}`;
           setAudioUrl(finalUrl);
           setStatus('completed');
 

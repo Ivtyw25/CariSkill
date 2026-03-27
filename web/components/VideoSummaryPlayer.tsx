@@ -6,15 +6,25 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 interface VideoSummaryPlayerProps {
   textContent: string;
+  nodeId?: string;
+  initialVideoUrl?: string | null;
 }
 
 const BACKEND_URL = "http://localhost:8000";
 
-export default function VideoSummaryPlayer({ textContent }: VideoSummaryPlayerProps) {
-  const [status, setStatus] = useState<'idle' | 'processing' | 'completed' | 'error'>('idle');
+export default function VideoSummaryPlayer({ textContent, nodeId, initialVideoUrl }: VideoSummaryPlayerProps) {
+  const [status, setStatus] = useState<'idle' | 'processing' | 'completed' | 'error'>(initialVideoUrl ? 'completed' : 'idle');
   const [taskId, setTaskId] = useState<string | null>(null);
-  const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const [videoUrl, setVideoUrl] = useState<string | null>(initialVideoUrl || null);
   const [error, setError] = useState<string | null>(null);
+
+  // Update if initialVideoUrl changes (e.g. after successful DB fetch in parent)
+  useEffect(() => {
+    if (initialVideoUrl) {
+      setVideoUrl(initialVideoUrl);
+      setStatus('completed');
+    }
+  }, [initialVideoUrl]);
 
   const startGeneration = async () => {
     setStatus('processing');
@@ -25,6 +35,7 @@ export default function VideoSummaryPlayer({ textContent }: VideoSummaryPlayerPr
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           text: textContent,
+          node_id: nodeId,
           session_id: "web-session-" + Math.random().toString(36).substring(7)
         }),
       });
