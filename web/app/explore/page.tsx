@@ -73,6 +73,7 @@ const FloatingBubble = ({ text, size, top, left, delay, onClick, colorScheme }: 
 
 export default function ExplorePage() {
   const router = useRouter();
+  const { currentLanguage, translateText } = useSkillLanguage();
 
   // --- Recommendations state ---
   const [rawBubbles, setRawBubbles] = useState<any[]>([]);
@@ -169,13 +170,24 @@ export default function ExplorePage() {
   };
 
   const fetchSuggestions = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch('/api/skills/recommendations');
       if (!response.ok) throw new Error("API Failed");
-      const dynamicBubbles = await response.json();
+      let dynamicBubbles = await response.json();
+      
+      // Batch translate if needed
+      if (currentLanguage !== 'en' && dynamicBubbles.length > 0) {
+        const texts = dynamicBubbles.map((b: any) => b.text);
+        const translatedTexts = await translateText(texts, currentLanguage);
+        dynamicBubbles = dynamicBubbles.map((b: any, i: number) => ({ ...b, text: translatedTexts[i] || b.text }));
+      }
+      
       setRawBubbles(dynamicBubbles);
     } catch (error) {
       console.error("Error loading bubbles:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -205,15 +217,26 @@ export default function ExplorePage() {
   }, [rawBubbles]);
 
   const fetchRandomSkills = async () => {
+    setIsRandomLoading(true);
     try {
       const response = await fetch('/api/skills/random', { method: 'POST' });
       if (!response.ok) throw new Error("Random API Failed");
-      const rawBubbles = await response.json();
+      let rawBubbles = await response.json();
+      
+      // Batch translate if needed
+      if (currentLanguage !== 'en' && rawBubbles.length > 0) {
+        const texts = rawBubbles.map((b: any) => b.text);
+        const translatedTexts = await translateText(texts, currentLanguage);
+        rawBubbles = rawBubbles.map((b: any, i: number) => ({ ...b, text: translatedTexts[i] || b.text }));
+      }
+      
       // Store raw bubbles — positioning happens in the useEffect below
       // once the container is painted and has real dimensions
       setRawRandomBubbles(rawBubbles);
     } catch (error) {
       console.error("Error loading random bubbles:", error);
+    } finally {
+      setIsRandomLoading(false);
     }
   };
 
@@ -244,13 +267,9 @@ export default function ExplorePage() {
   }, [rawRandomBubbles]);
 
   useEffect(() => {
-    const init = async () => {
-      await Promise.all([fetchSuggestions(), fetchRandomSkills()]);
-      setIsLoading(false);
-      setIsRandomLoading(false);
-    };
-    init();
-  }, []);
+    fetchSuggestions();
+    fetchRandomSkills();
+  }, [currentLanguage]);
 
   const handleRefresh = async () => {
     setIsRefreshing(true);

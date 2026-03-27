@@ -73,11 +73,22 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
       }
 
       const data = await response.json();
+      let newContent = data.updatedContent;
+
+      // Ensure the refined content is also translated if we are in another language
+      if (currentLanguage !== 'en') {
+        newContent = await translateText(newContent, currentLanguage);
+      }
       
       // Update the UI state with the rewritten content without refreshing the page
       setMicroTopics(prev => prev.map((t, idx) => 
-        idx === activeIndex ? { ...t, theory_explanation: data.updatedContent } : t
+        idx === activeIndex ? { ...t, theory_explanation: newContent } : t
       ));
+      
+      const successMsg = currentLanguage === 'en' 
+        ? "Thank you for your feedback! We will use this to improve the content."
+        : await translateText("Thank you for your feedback! We will use this to improve the content.", currentLanguage);
+      alert(successMsg);
       
     } catch (e) {
       console.error("Failed to submit feedback", e);
@@ -85,8 +96,6 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
       setIsSubmittingFeedback(false);
       setShowFeedbackModal(false);
       setFeedbackText("");
-      // Alert can optionally be replaced by a toast in future
-      alert("Thank you for your feedback! We will use this to improve the content.");
     }
   };
 
@@ -127,20 +136,28 @@ export default function MaterialsPage({ params }: { params: Promise<{ id: string
           }).filter(Boolean); // Drop failed parses
 
           if (currentLanguage !== 'en') {
-             for (let i = 0; i < parsedTopics.length; i++) {
-                if (parsedTopics[i].topic_title) {
-                   parsedTopics[i].topic_title = await translateText(parsedTopics[i].topic_title, currentLanguage);
-                }
-                if (parsedTopics[i].theory_explanation) {
-                   parsedTopics[i].theory_explanation = await translateText(parsedTopics[i].theory_explanation, currentLanguage);
-                }
-                if (parsedTopics[i].resources) {
-                   for (let j = 0; j < parsedTopics[i].resources.length; j++) {
-                      if (parsedTopics[i].resources[j].title) {
-                         parsedTopics[i].resources[j].title = await translateText(parsedTopics[i].resources[j].title, currentLanguage);
-                      }
-                   }
-                }
+             // 1. Collect all strings (First topic only)
+             const stringsToTranslate: string[] = [];
+             const topic = parsedTopics[0]; // Assuming at least one topic exists based on check above
+             if (topic.topic_title) stringsToTranslate.push(topic.topic_title);
+             if (topic.theory_explanation) stringsToTranslate.push(topic.theory_explanation);
+             if (topic.resources) {
+                topic.resources.forEach((res: any) => {
+                   if (res.title) stringsToTranslate.push(res.title);
+                });
+             }
+
+             // 2. Translate in one batch
+             const translatedStrings = await translateText(stringsToTranslate, currentLanguage);
+
+             // 3. Re-assign
+             let ptr = 0;
+             if (topic.topic_title) topic.topic_title = translatedStrings[ptr++];
+             if (topic.theory_explanation) topic.theory_explanation = translatedStrings[ptr++];
+             if (topic.resources) {
+                topic.resources.forEach((res: any) => {
+                   if (res.title) res.title = translatedStrings[ptr++];
+                });
              }
           }
 

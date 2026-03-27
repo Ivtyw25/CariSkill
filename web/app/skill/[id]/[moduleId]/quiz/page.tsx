@@ -145,33 +145,42 @@ function QuizContent({ id, moduleId }: { id: string; moduleId: string }) {
           return;
         }
 
-        // Optionally translate
-        if (currentLanguage === 'en') {
-          setQuestions(data.quiz.questions);
-        } else {
-          const translated: Question[] = [];
-          for (const q of data.quiz.questions as Question[]) {
+        // Optionally translate in one batch for performance
+        if (currentLanguage !== 'en') {
+          const stringsToTranslate: string[] = [];
+          
+          // 1. Collect all strings
+          data.quiz.questions.forEach((q: any) => {
+            stringsToTranslate.push(q.question);
+            stringsToTranslate.push(q.hint || "");
             if (q.type === 'open-ended') {
-              translated.push({
-                ...q,
-                question: await translateText(q.question, currentLanguage),
-                modelAnswer: await translateText(q.modelAnswer, currentLanguage),
-                hint: await translateText(q.hint, currentLanguage),
-              });
+              stringsToTranslate.push(q.modelAnswer || "");
             } else {
-              const translatedOptions = await Promise.all(
-                (q as MCQQuestion).options.map((o: string) => translateText(o, currentLanguage))
-              );
-              translated.push({
-                ...q,
-                question: await translateText(q.question, currentLanguage),
-                options: translatedOptions,
-                explanation: await translateText((q as MCQQuestion).explanation, currentLanguage),
-                hint: await translateText(q.hint, currentLanguage),
-              });
+              stringsToTranslate.push(q.explanation || "");
+              (q.options || []).forEach((opt: string) => stringsToTranslate.push(opt));
             }
-          }
-          setQuestions(translated);
+          });
+
+          // 2. Batch translate
+          const translatedStrings = await translateText(stringsToTranslate, currentLanguage);
+          
+          // 3. Reassemble questions
+          let sIdx = 0;
+          const translatedQuestions = data.quiz.questions.map((q: any) => {
+            const newQ = { ...q };
+            newQ.question = translatedStrings[sIdx++];
+            newQ.hint = translatedStrings[sIdx++];
+            if (q.type === 'open-ended') {
+              newQ.modelAnswer = translatedStrings[sIdx++];
+            } else {
+              newQ.explanation = translatedStrings[sIdx++];
+              newQ.options = q.options.map(() => translatedStrings[sIdx++]);
+            }
+            return newQ;
+          });
+          setQuestions(translatedQuestions);
+        } else {
+          setQuestions(data.quiz.questions);
         }
       } catch (err) {
         setError('Failed to load quiz.');
@@ -287,9 +296,9 @@ function QuizContent({ id, moduleId }: { id: string; moduleId: string }) {
       
       setScore(finalScore);
 
-      // Save to Supabase with full questions data
+      // Save to Supabase with full questions data and get ID for redirection
       if (user) {
-        await supabase.from('quiz_results').insert({
+        const { data: insertedRec, error: insertError } = await supabase.from('quiz_results').insert({
           user_id: user.id,
           roadmap_id: roadmapId,
           node_id: moduleId,
@@ -301,12 +310,21 @@ function QuizContent({ id, moduleId }: { id: string; moduleId: string }) {
           questions,
           answers: allAnswers,
           analysis: analysisData,
-        });
-        setLastResult({ score: finalScore, total: finalTotal });
+        }).select('id').single();
+
+        if (insertError) {
+           console.error('Insert error:', insertError.message);
+           setAnalysisLoading(false);
+           return;
+        }
+
+        if (insertedRec) {
+          router.push(`/skill/${id}/${moduleId}/quiz/results/${insertedRec.id}`);
+          return;
+        }
       }
     } catch (err) {
       console.error('Finish quiz error:', err);
-    } finally {
       setAnalysisLoading(false);
     }
   };
@@ -389,112 +407,15 @@ function QuizContent({ id, moduleId }: { id: string; moduleId: string }) {
           </div>
         )}
 
-        {/* ═══ QUIZ FINISHED ═══ */}
-        {quizFinished && !generating && (
+        {/* ═══ QUIZ FINISHED LOADING ═══ */}
+        {quizFinished && !generating && analysisLoading && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-3xl">
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden mb-6">
-              <div className="bg-gradient-to-r from-[#FFD700] to-[#E6C200] px-8 py-6 flex items-center justify-between">
-                <div>
-                  <p className="text-gray-900/70 font-medium text-sm uppercase tracking-wide">Quiz Complete!</p>
-                  <h2 className="font-display text-4xl font-bold text-gray-900 mt-1">
-                    {analysisLoading ? "Calculating..." : `${score} / ${totalQuestions}`}
-                  </h2>
-                  <p className="text-gray-900/80 font-medium mt-1">
-                    {analysisLoading ? "AI is marking your open-ended answers..." : (score >= totalQuestions ? '🎉 Perfect!' : score >= totalQuestions * 0.7 ? '👏 Great job!' : score >= totalQuestions * 0.5 ? '💪 Keep it up!' : '📖 Time to review!')}
-                  </p>
-                </div>
-                {analysisLoading ? (
-                  <Loader2 className="w-16 h-16 text-gray-900/20 animate-spin" />
-                ) : (
-                  <Trophy className="w-16 h-16 text-gray-900/20" />
-                )}
-              </div>
-
-              {analysisLoading && (
-                <div className="p-8 flex flex-col items-center gap-4 text-gray-400">
-                  <div className="flex gap-1.5">
-                    <span className="w-3 h-3 bg-[#FFD700] rounded-full animate-bounce" style={{ animationDelay: '0s' }} />
-                    <span className="w-3 h-3 bg-[#FFD700] rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                    <span className="w-3 h-3 bg-[#FFD700] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                  </div>
-                  <p className="font-medium">AI is mark-checking your performance...</p>
-                </div>
-              )}
-
-              {analysis && !analysisLoading && (
-                <div className="p-8 space-y-6">
-                  <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-2xl border border-blue-100">
-                    <ThumbsUp className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
-                    <p className="text-blue-800 font-medium text-sm leading-relaxed">{analysis.overallFeedback}</p>
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <CheckCircle2 className="w-5 h-5 text-green-500" />
-                      <h3 className="font-bold text-gray-900">Strengths</h3>
-                    </div>
-                    <p className="text-gray-600 text-sm leading-relaxed pl-7">{analysis.strengths}</p>
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <AlertTriangle className="w-5 h-5 text-amber-500" />
-                      <h3 className="font-bold text-gray-900">Areas to Improve</h3>
-                    </div>
-                    <p className="text-gray-600 text-sm leading-relaxed pl-7">{analysis.weaknesses}</p>
-                  </div>
-                  {analysis.subtopicsToRevise?.length > 0 && (
-                    <div>
-                      <div className="flex items-center gap-2 mb-3">
-                        <BookOpen className="w-5 h-5 text-purple-500" />
-                        <h3 className="font-bold text-gray-900">Topics to Revise</h3>
-                      </div>
-                      <div className="space-y-2 pl-7">
-                        {analysis.subtopicsToRevise.map((topic: any, idx: number) => (
-                          <div key={idx} className="flex items-center justify-between gap-3 p-3 bg-purple-50 rounded-xl border border-purple-100 group">
-                            <div className="flex-1 min-w-0">
-                              <p className="font-bold text-purple-900 text-sm">{topic.title}</p>
-                              <p className="text-purple-700/70 text-xs mt-0.5 leading-relaxed">{topic.reason}</p>
-                            </div>
-                            <button
-                              onClick={() => router.push(`/skill/${id}/${moduleId}/materials`)}
-                              className="flex-shrink-0 w-9 h-9 flex items-center justify-center bg-purple-500 hover:bg-purple-600 text-white rounded-full transition-all active:scale-95"
-                              title="Go to materials"
-                            >
-                              <ArrowRight className="w-4 h-4" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-
-            <div className="flex flex-wrap gap-3 justify-center">
-              <motion.button
-                whileHover={{ y: -4, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => router.push(`/skill/${id}/${moduleId}/quiz/setup`)}
-                className="flex items-center gap-2 px-6 py-3 bg-white border-2 border-gray-200 text-gray-700 rounded-full font-bold shadow-sm hover:border-gray-300 transition-all"
-              >
-                <RotateCcw className="w-4 h-4" /> Try Again
-              </motion.button>
-              <motion.button
-                whileHover={{ y: -4, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => router.push(`/skill/${id}/${moduleId}/quiz/history`)}
-                className="flex items-center gap-2 px-6 py-3 bg-white border-2 border-yellow-300 text-yellow-700 rounded-full font-bold shadow-sm hover:bg-yellow-50 transition-all"
-              >
-                View History
-              </motion.button>
-              <motion.button
-                whileHover={{ y: -4, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => router.push(`/skill/${id}/${moduleId}/summary`)}
-                className="flex items-center gap-2 px-8 py-3.5 bg-[#FFD700] hover:bg-[#E6C200] text-gray-900 rounded-full font-bold shadow-lg transition-all"
-              >
-                View Summary <ChevronRight className="w-5 h-5" />
-              </motion.button>
+            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden mb-6 p-12 flex flex-col items-center justify-center gap-6">
+               <Loader2 className="w-16 h-16 text-[#FFD700] animate-spin" />
+               <div className="text-center">
+                  <h2 className="font-display text-2xl font-bold text-gray-900">Calculating Results...</h2>
+                  <p className="text-gray-500 mt-2">AI is analyzing your performance and marking open-ended responses.</p>
+               </div>
             </div>
           </motion.div>
         )}

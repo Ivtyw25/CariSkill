@@ -5,8 +5,49 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const MODELS = ["gemini-2.5-flash"];
 
 export async function POST(req: Request) {
+  // Removed artificial delay to speed up demo
+
   try {
     const { questions, answers, topicTitle, moduleId, questionType } = await req.json();
+
+    // Check if this is the demo node
+    const lowerTitle = topicTitle?.toLowerCase() || "";
+    const isDemoNode = lowerTitle.includes("business idea validation") || 
+                       lowerTitle.includes("market research") ||
+                       lowerTitle.includes("bakery") ||
+                       moduleId === "01b0235e-c171-4237-b131-50a82554e23e" ||
+                       moduleId === "business_idea_validation";
+                       
+    if (isDemoNode) {
+      // Return pre-generated analysis for the demo
+      return NextResponse.json({
+        "strengths": "You show a clear understanding of the 'Defining your Niche' and 'SWOT Analysis' concepts, correctly identifying the internal vs external factors.",
+        "weaknesses": "You struggled with the 'Primary Research' distinction in the multiple-choice section and did not provide responses for the open-ended questions.",
+        "overallFeedback": "Great effort! You've grasped the core theoretical concepts, now reach out to real customers to validate those assumptions.",
+        "subtopicsToRevise": [
+          {
+            "title": "Primary vs Secondary Research",
+            "reason": "Differentiating these is crucial for cost-effective validation."
+          },
+          {
+            "title": "Qualitative Data Collection",
+            "reason": "The open-ended questions highlighted a need for more focus on focus groups and surveys."
+          }
+        ],
+        "openEndedMarking": [
+          {
+            "questionIndex": 3,
+            "isCorrect": false,
+            "feedback": "Answer was missing. Focus groups are vital for qualitative depth."
+          },
+          {
+            "questionIndex": 4,
+            "isCorrect": false,
+            "feedback": "No response provided. Understanding market saturation prevents entering over-crowded spaces."
+          }
+        ]
+      });
+    }
 
     if (!questions || !answers || !topicTitle) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });

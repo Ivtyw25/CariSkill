@@ -63,59 +63,35 @@ const SIZES = ['sm', 'md', 'lg'];
 
 export async function POST(req: Request) {
   try {
-    // ==========================================
-    // 🌟 HACKATHON GOD MODE: INSTANT CACHE 🌟
-    // ==========================================
-
-    // Hardcode the exact same bubbles we used in the Resume Analyzer
-    // This guarantees "Bakery" is always front and center instantly
-    const demoBubbles = [
-      { id: "dyn-bubble-0", text: "Google Cloud Platform", size: "lg" },
-      { id: "dyn-bubble-1", text: "Advanced RAG Systems", size: "md" },
-      { id: "dyn-bubble-2", text: "Distributed Tracing", size: "md" },
-      { id: "dyn-bubble-3", text: "WebRTC", size: "sm" },
-      { id: "dyn-bubble-4", text: "Docker", size: "sm" },
-      { id: "dyn-bubble-5", text: "GraphQL", size: "sm" }
+    // Diverse skills for the demo "Discover" section
+    const randomSkills = [
+      { text: "Sustainable Architecture", size: "lg" },
+      { text: "Quantum Computing", size: "md" },
+      { text: "Urban Beekeeping", size: "sm" },
+      { text: "Digital Illustration", size: "lg" },
+      { text: "Public Speaking", size: "md" },
+      { text: "Sourdough Fermentation", size: "sm" },
+      { text: "Astrophotography", size: "md" },
+      { text: "Game Theory", size: "sm" },
+      { text: "Pottery & Ceramics", size: "sm" },
+      { text: "Financial Literacy", size: "md" }
     ];
 
-    // Return instantly with a Cache-Control header to make the browser remember it
-    return NextResponse.json(demoBubbles, {
+    const withIds = randomSkills.map((item, index) => ({
+      id: `random-bubble-${index}-${Date.now()}`,
+      text: item.text,
+      size: item.size,
+    }));
+
+    return NextResponse.json(withIds, {
       status: 200,
       headers: {
         'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=30',
       },
     });
 
-    /* --- ORIGINAL LOGIC (Commented out for the demo) ---
-    const supabase = await createClient();
-    // Replaced getSession() with getUser() to fix your console warning!
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    
-    if (authError || !user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const { data: currentRecs } = await supabase
-      .from("user_skills")
-      .select("title, category")
-      .eq("user_id", user.id)
-      .eq("status", "Recommended");
-    
-    if (!currentRecs || currentRecs.length === 0) {
-      return NextResponse.json([]);
-    }
-
-    const formattedBubbles = currentRecs.map((item: any, index: number) => ({
-      id: `dyn-bubble-${index}`,
-      text: item.title,
-      size: item.category || 'md',
-    }));
-
-    return NextResponse.json(formattedBubbles);
-    -------------------------------------------------- */
-
   } catch (error: any) {
-    console.error("Recommendations API Error:", error);
-    return NextResponse.json({ error: "Failed to fetch recommendations" }, { status: 500 });
+    console.error("Random Skills API Error:", error);
+    return NextResponse.json({ error: "Failed to fetch random skills" }, { status: 500 });
   }
 }

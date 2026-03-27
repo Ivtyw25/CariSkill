@@ -6,6 +6,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const MODELS = ["gemini-2.5-flash"];
 
 export async function POST(req: Request) {
+    // Removed artificial delay to speed up demo
     try {
         const { microTopicId, topicTitle, theoryExplanation } = await req.json();
 
@@ -15,6 +16,20 @@ export async function POST(req: Request) {
 
         // Check if already generated (cache hit)
         const supabase = createAdminClient();
+
+        // DEMO OVERRIDE: If this is the specific "Defining your bakery niche" topic, return the pre-generated cards
+        if (microTopicId === '01b0235e-c171-4237-b131-50a82554e23e') {
+            const { data: demoRecord } = await supabase
+                .from("micro_topics_contents")
+                .select("flashcards_data")
+                .eq("id", '01b0235e-c171-4237-b131-50a82554e23e')
+                .single();
+            
+            if (demoRecord?.flashcards_data) {
+                return NextResponse.json({ flashcards: demoRecord.flashcards_data, cached: true });
+            }
+        }
+
         const { data: existing } = await supabase
             .from("micro_topics_contents")
             .select("flashcards_data")

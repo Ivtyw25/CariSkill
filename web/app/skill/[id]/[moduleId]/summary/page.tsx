@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Bookmark, Download, Sparkles, CheckCircle2, Play, Loader2
+  Bookmark, Download, Sparkles, CheckCircle2, Play, Loader2, ChevronLeft
 } from 'lucide-react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -28,6 +28,48 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [microTopics, setMicroTopics] = useState<any[]>([]);
   const [topicIndex, setTopicIndex] = useState(0);
+
+  // Demo Translation State
+  const [demoSummary, setDemoSummary] = useState<any>({
+    title: 'Comprehensive Module Summary',
+    badge: 'Module Master',
+    coreConceptTitle: 'Core Concept: Market Research & Validation',
+    coreConceptText: 'Validating your bakery idea is about reducing risk. Before spending thousands on a lease, you must prove that people actually want to buy what you bake.',
+    audienceTitle: '1. The Target Audience',
+    audienceText: 'Identify demographics (age, location) and psychographics (lifestyles, values). Are they busy professionals seeking convenience or foodies seeking artisanal quality?',
+    edgeTitle: '2. Competitive Edge',
+    edgeText: 'Find your "Blue Ocean." If every bakery nearby does mass-produced cakes, your edge might be slow-fermented organic sourdough or vegan pastries.',
+    mvpTitle: 'The MVP (Minimum Viable Product)',
+    mvpText: 'Test your market with the smallest possible version of your business:',
+    popupLabel: 'Pop-up Stalls:',
+    popupText: 'Rent a table at a local farmers\' market for one day.',
+    preorderLabel: 'Pre-order Batches:',
+    preorderText: 'Use social media to take orders before you bake.',
+    bakesaleLabel: 'Bake Sales:',
+    bakesaleText: 'Gauge which flavors sell out first.',
+    successTitle: 'Success Criteria',
+    successText: 'Validation is success when you have a <strong>Repeat Purchase Rate</strong>. If customers come back for a second time, you\'ve found product-market fit.'
+  });
+
+  useEffect(() => {
+    const translateDemo = async () => {
+      if (currentLanguage === 'en') return;
+      
+      const keys = Object.keys(demoSummary);
+      const values = Object.values(demoSummary);
+      const translated = await translateText(values, currentLanguage);
+      
+      const newSummary = { ...demoSummary };
+      keys.forEach((key, i) => {
+        newSummary[key] = translated[i];
+      });
+      setDemoSummary(newSummary);
+    };
+
+    if (moduleId === 'business_idea_validation') {
+      translateDemo();
+    }
+  }, [currentLanguage, moduleId]);
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -55,6 +97,33 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
         }
       } catch (err) {
         console.error("Error in fetchTopics:", err);
+      } finally {
+        // Fetch micro-topics content
+        try {
+          const supabase = createClient();
+          const { data: topicsData } = await supabase
+            .from('micro_topics_contents')
+            .select('id, content')
+            .eq('macro_node_id', moduleId)
+            .order('id', { ascending: true });
+
+          if (topicsData && topicsData.length > 0) {
+            const parsed = topicsData.map(t => {
+              const content = typeof t.content === 'string' ? JSON.parse(t.content) : t.content;
+              if (!content) return null;
+              return {
+                id: t.id,
+                ...content,
+              };
+            }).filter(Boolean);
+            
+            setMicroTopics(parsed);
+          }
+        } catch (err) {
+          console.error("Error fetching micro topics:", err);
+        } finally {
+          setLoading(false);
+        }
       }
     };
 
@@ -126,7 +195,7 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
                 </span>
               </div>
               <h1 className="font-display text-3xl md:text-4xl font-bold text-gray-900 capitalize">
-                {currentTopic?.topic_title || moduleTitle}
+                {moduleTitle}
               </h1>
             </div>
 
@@ -155,10 +224,8 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
                 </AnimatePresence>
               </button>
             </div>
-          </div>
-
-          {/* Sub-topic tabs */}
-          {microTopics.length > 1 && (
+          </div>          {/* Sub-topic tabs - Hidden for Demo Module */}
+          {microTopics.length > 1 && moduleId !== 'business_idea_validation' && (
             <div className="flex flex-wrap gap-2 mb-6" data-html2canvas-ignore="true">
               {microTopics.map((t, idx) => (
                 <button key={idx} onClick={() => setTopicIndex(idx)}
@@ -170,7 +237,60 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
           )}
 
           {/* Main Content Card */}
-          {currentTopic ? (
+          {moduleId === 'business_idea_validation' ? (
+             <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden mb-10">
+                <div className="bg-[#F9FAFB] border-b border-gray-100 px-8 py-4 flex items-center justify-between">
+                   <div className="flex items-center gap-2 text-[#A16207] font-bold uppercase tracking-wide text-sm">
+                      <Sparkles className="w-4 h-4" />
+                      {demoSummary.title}
+                   </div>
+                   <div className="text-xs px-2 py-1 rounded font-bold bg-green-100 text-green-700">
+                      {demoSummary.badge}
+                   </div>
+                </div>
+                <div className="p-8 md:p-12 space-y-10 bg-white">
+                   <section>
+                      <SectionHeader title={demoSummary.coreConceptTitle} />
+                      <div className="mt-6 text-gray-700 leading-relaxed text-[17px] space-y-6">
+                         <p>
+                            {demoSummary.coreConceptText}
+                         </p>
+                         
+                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                            <div className="p-5 rounded-2xl bg-amber-50 border border-amber-100">
+                               <h4 className="font-bold text-amber-900 mb-2">{demoSummary.audienceTitle}</h4>
+                               <p className="text-sm text-amber-800">{demoSummary.audienceText}</p>
+                            </div>
+                            <div className="p-5 rounded-2xl bg-blue-50 border border-blue-100">
+                               <h4 className="font-bold text-blue-900 mb-2">{demoSummary.edgeTitle}</h4>
+                               <p className="text-sm text-blue-800">{demoSummary.edgeText}</p>
+                            </div>
+                         </div>
+ 
+                         <div className="mt-8 space-y-6">
+                            <div>
+                               <h4 className="font-bold text-gray-900 text-lg mb-2">{demoSummary.mvpTitle}</h4>
+                               <p className="text-gray-700">{demoSummary.mvpText}</p>
+                               <ul className="list-disc pl-5 mt-2 space-y-2 text-gray-600">
+                                  <li><strong>{demoSummary.popupLabel}</strong> {demoSummary.popupText}</li>
+                                  <li><strong>{demoSummary.preorderLabel}</strong> {demoSummary.preorderText}</li>
+                                  <li><strong>{demoSummary.bakesaleLabel}</strong> {demoSummary.bakesaleText}</li>
+                                </ul>
+                            </div>
+ 
+                            <div className="p-6 rounded-2xl bg-green-50 border border-green-100 flex items-start gap-4">
+                               <CheckCircle2 className="w-6 h-6 text-green-600 shrink-0 mt-1" />
+                               <div>
+                                  <h4 className="font-bold text-green-900">{demoSummary.successTitle}</h4>
+                                  <p className="text-sm text-green-800" dangerouslySetInnerHTML={{ __html: demoSummary.successText }} />
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </section>
+                </div>
+             </div>
+          ) : currentTopic ? (
             <>
               {currentTopic.theory_explanation && (
                 <div data-html2canvas-ignore="true" className="mb-8">
@@ -237,12 +357,23 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
                   )}
                 </div>
               </div>
-            </>) : (
+            </>
+          ) : (
             <div className="text-center py-16">
               <p className="text-gray-500">No topics found for this module.</p>
               <button onClick={() => router.push(`/skill/${id}`)} className="mt-4 px-6 py-2 bg-[#FFD700] rounded-xl font-bold">Return to Roadmap</button>
             </div>
           )}
+
+          {/* Back to Roadmap Button */}
+          <div className="flex justify-center mt-4 mb-10" data-html2canvas-ignore="true">
+            <button
+              onClick={() => router.push(`/skill/${id}`)}
+              className="flex items-center gap-2 px-8 py-3.5 bg-gray-900 hover:bg-gray-800 text-white rounded-full font-bold shadow-lg transition-all active:scale-95"
+            >
+              <ChevronLeft className="w-5 h-5" /> Back to Roadmap
+            </button>
+          </div>
         </div>
       </main>
       <Footer />

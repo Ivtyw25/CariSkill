@@ -125,8 +125,8 @@ export async function POST(req: Request) {
 
     // const { resume, recommendations } = parsedData;
 
-    // Simulate a brief, realistic "processing" time so the UI loading state looks authentic
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // Removed artificial delay to speed up demo
+    // await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // Hardcoded perfect response
     const parsedData = {

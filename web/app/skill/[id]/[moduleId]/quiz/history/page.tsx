@@ -11,6 +11,8 @@ import {
   XCircle, RotateCcw
 } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
+import { useSkillLanguage } from '@/components/SkillLanguageProvider';
+import { useMemo } from 'react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface QuizResult {
@@ -46,9 +48,87 @@ const labels = ['A', 'B', 'C', 'D'];
 // ─── Review Modal ─────────────────────────────────────────────────────────────
 function ReviewModal({ result, onClose, id, moduleId }: { result: QuizResult; onClose: () => void; id: string; moduleId: string }) {
   const router = useRouter();
+  const { currentLanguage, translateText } = useSkillLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const questions: any[] = result.questions || [];
-  const answers = result.answers || [];
+  const [translatedResult, setTranslatedResult] = useState<QuizResult>(result);
+  const [isTranslating, setIsTranslating] = useState(false);
+
+  const [uiLabels, setUiLabels] = useState<any>({
+    aiAnalysis: 'AI Analysis',
+    strengths: 'Strengths',
+    improve: 'Areas to Improve',
+    revise: 'Topics to Revise',
+    mcq: 'Multiple Choice',
+    openEnded: 'Open-Ended',
+    questions: 'Questions'
+  });
+
+  useEffect(() => {
+    const performTranslation = async () => {
+      if (currentLanguage === 'en') return;
+      setIsTranslating(true);
+      try {
+        // Translate Labels
+        const labelsToTranslate = Object.values(uiLabels) as string[];
+        const tLabels = await translateText(labelsToTranslate, currentLanguage);
+        const newLabels = { ...uiLabels };
+        Object.keys(uiLabels).forEach((key, i) => { newLabels[key] = tLabels[i]; });
+        setUiLabels(newLabels);
+
+        // Translate Result Analysis & Questions
+        const analysis = result.analysis;
+        const questions = result.questions;
+        
+        const textToTranslate = [
+          analysis?.overallFeedback,
+          analysis?.strengths,
+          analysis?.weaknesses,
+          ...(analysis?.subtopicsToRevise?.map((st: any) => st.title) || []),
+          ...(analysis?.subtopicsToRevise?.map((st: any) => st.reason) || []),
+          ...(questions?.map((q: any) => q.question) || []),
+          ...(questions?.map((q: any) => q.explanation) || []),
+          ...(questions?.map((q: any) => q.modelAnswer) || []),
+          ...((questions?.flatMap((q: any) => q.options)) || [])
+        ].filter(Boolean);
+
+        const tText = await translateText(textToTranslate, currentLanguage);
+        
+        let ptr = 0;
+        const newResult = JSON.parse(JSON.stringify(result));
+        
+        if (newResult.analysis) {
+          newResult.analysis.overallFeedback = tText[ptr++];
+          newResult.analysis.strengths = tText[ptr++];
+          newResult.analysis.weaknesses = tText[ptr++];
+          
+          if (newResult.analysis.subtopicsToRevise) {
+             newResult.analysis.subtopicsToRevise.forEach((st: any) => { st.title = tText[ptr++]; });
+             newResult.analysis.subtopicsToRevise.forEach((st: any) => { st.reason = tText[ptr++]; });
+          }
+        }
+        
+        if (newResult.questions) {
+           newResult.questions.forEach((q: any) => { q.question = tText[ptr++]; });
+           newResult.questions.forEach((q: any) => { if(q.explanation) q.explanation = tText[ptr++]; });
+           newResult.questions.forEach((q: any) => { if(q.modelAnswer) q.modelAnswer = tText[ptr++]; });
+           newResult.questions.forEach((q: any) => { 
+             if(q.options) {
+               q.options = q.options.map(() => tText[ptr++]);
+             }
+           });
+        }
+        setTranslatedResult(newResult);
+      } catch (err) {
+        console.error("Review translation failed:", err);
+      } finally {
+        setIsTranslating(false);
+      }
+    };
+    performTranslation();
+  }, [result, currentLanguage]);
+
+  const questions = translatedResult.questions || [];
+  const answers = translatedResult.answers || [];
   const currentQ = questions[currentIndex] as any;
   const isMCQ = currentQ?.type !== 'open-ended';
 
@@ -64,9 +144,9 @@ function ReviewModal({ result, onClose, id, moduleId }: { result: QuizResult; on
         <div className="sticky top-0 z-10 bg-[#FFFDF6] border-b border-gray-100 px-6 py-4 flex items-center justify-between rounded-t-3xl">
           <div>
             <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">
-              {formatDate(result.created_at)} · {result.question_type === 'multiple-choice' ? 'MCQ' : result.question_type === 'open-ended' ? 'Open-Ended' : 'Mixed'}
+              {formatDate(result.created_at)} · {result.question_type === 'multiple-choice' ? uiLabels.mcq : result.question_type === 'open-ended' ? uiLabels.openEnded : 'Mixed'}
             </p>
-            <h2 className="font-bold text-gray-900 text-lg mt-0.5">{result.node_title || 'Quiz Review'}</h2>
+            <h2 className="font-bold text-gray-900 text-lg mt-0.5">{translatedResult.node_title || 'Quiz Review'}</h2>
           </div>
           <div className="flex items-center gap-3">
             <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold border ${scoreColor(result.score, result.total)}`}>
@@ -82,48 +162,48 @@ function ReviewModal({ result, onClose, id, moduleId }: { result: QuizResult; on
 
         <div className="p-6 space-y-6">
           {/* AI Analysis */}
-          {result.analysis && (
+          {translatedResult.analysis && (
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
               <div className="bg-gradient-to-r from-[#FFD700]/20 to-[#E6C200]/10 px-5 py-3 border-b border-gray-100">
                 <h3 className="font-bold text-gray-900 text-sm flex items-center gap-2">
-                  <ThumbsUp className="w-4 h-4 text-[#CA8A04]" /> AI Analysis
+                  <ThumbsUp className="w-4 h-4 text-[#CA8A04]" /> {uiLabels.aiAnalysis}
                 </h3>
               </div>
               <div className="p-5 space-y-4">
-                {result.analysis.overallFeedback && (
+                {translatedResult.analysis.overallFeedback && (
                   <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-xl border border-blue-100">
-                    <p className="text-blue-800 text-sm leading-relaxed">{result.analysis.overallFeedback}</p>
+                    <p className="text-blue-800 text-sm leading-relaxed">{translatedResult.analysis.overallFeedback}</p>
                   </div>
                 )}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {result.analysis.strengths && (
+                  {translatedResult.analysis.strengths && (
                     <div>
                       <div className="flex items-center gap-1.5 mb-2">
                         <CheckCircle2 className="w-4 h-4 text-green-500" />
-                        <p className="font-bold text-gray-800 text-sm">Strengths</p>
+                        <p className="font-bold text-gray-800 text-sm">{uiLabels.strengths}</p>
                       </div>
-                      <p className="text-gray-600 text-xs leading-relaxed">{result.analysis.strengths}</p>
+                      <p className="text-gray-600 text-xs leading-relaxed">{translatedResult.analysis.strengths}</p>
                     </div>
                   )}
-                  {result.analysis.weaknesses && (
+                  {translatedResult.analysis.weaknesses && (
                     <div>
                       <div className="flex items-center gap-1.5 mb-2">
                         <AlertTriangle className="w-4 h-4 text-amber-500" />
-                        <p className="font-bold text-gray-800 text-sm">Areas to Improve</p>
+                        <p className="font-bold text-gray-800 text-sm">{uiLabels.improve}</p>
                       </div>
-                      <p className="text-gray-600 text-xs leading-relaxed">{result.analysis.weaknesses}</p>
+                      <p className="text-gray-600 text-xs leading-relaxed">{translatedResult.analysis.weaknesses}</p>
                     </div>
                   )}
                 </div>
 
-                {result.analysis.subtopicsToRevise?.length > 0 && (
+                {translatedResult.analysis.subtopicsToRevise?.length > 0 && (
                   <div>
                     <div className="flex items-center gap-1.5 mb-2">
                       <BookOpen className="w-4 h-4 text-purple-500" />
-                      <p className="font-bold text-gray-800 text-sm">Topics to Revise</p>
+                      <p className="font-bold text-gray-800 text-sm">{uiLabels.revise}</p>
                     </div>
                     <div className="space-y-1.5">
-                      {result.analysis.subtopicsToRevise.map((t: any, i: number) => (
+                      {translatedResult.analysis.subtopicsToRevise.map((t: any, i: number) => (
                         <div key={i} className="flex items-center justify-between gap-2 p-2.5 bg-purple-50 rounded-xl border border-purple-100">
                           <div>
                             <p className="font-bold text-purple-900 text-xs">{t.title}</p>
@@ -148,7 +228,7 @@ function ReviewModal({ result, onClose, id, moduleId }: { result: QuizResult; on
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
               <div className="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
                 <h3 className="font-bold text-gray-900 text-sm">
-                  Questions ({currentIndex + 1}/{questions.length})
+                  {uiLabels.questions} ({currentIndex + 1}/{questions.length})
                 </h3>
                 <div className="flex gap-2">
                   <button onClick={() => setCurrentIndex(i => Math.max(0, i - 1))} disabled={currentIndex === 0}
@@ -328,9 +408,9 @@ function HistoryContent({ id, moduleId }: { id: string; moduleId: string }) {
 
       <div className="w-full max-w-3xl z-10">
         {/* Back button */}
-        <button onClick={() => router.push(`/skill/${id}/${moduleId}/quiz/setup`)}
+        <button onClick={() => router.back()}
           className="flex items-center gap-2 text-gray-500 hover:text-gray-900 font-medium mb-6 transition-colors">
-          <ArrowLeft className="w-4 h-4" /> Back to Setup
+          <ArrowLeft className="w-4 h-4" /> Back
         </button>
 
         {/* Header */}
