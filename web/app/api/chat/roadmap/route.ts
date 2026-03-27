@@ -4,7 +4,7 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 import { getRoadmapPrompt, roadmapResponseSchema } from "./prompt";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"];
+const MODELS = ["gemini-2.5-flash"];
 
 interface MessageRecord {
     role: 'user' | 'ai';
