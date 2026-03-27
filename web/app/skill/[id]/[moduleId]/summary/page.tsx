@@ -33,6 +33,8 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
     const fetchTopics = async () => {
       try {
         const supabase = createClient();
+        
+        // 1. Fetch Node Info (Title, Video)
         const { data: nodeData } = await supabase
           .from('roadmap_nodes')
           .select('title, video_url')
@@ -40,26 +42,64 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
           .limit(1);
 
         if (nodeData && nodeData.length > 0) {
-          // Handle Translation logic
           const rawTitle = nodeData[0].title;
           const translatedTitle = currentLanguage === 'en'
             ? rawTitle
             : await translateText(rawTitle, currentLanguage);
 
           setModuleTitle(translatedTitle);
-
-          // Handle Video URL
           if (nodeData[0].video_url) {
             setVideoUrl(nodeData[0].video_url);
           }
         }
+
+        // 2. Fetch Micro Topics Content
+        const { data: topicsData } = await supabase
+          .from('micro_topics_contents')
+          .select('*')
+          .eq('macro_node_id', moduleId)
+          .order('id', { ascending: true });
+
+        if (topicsData && topicsData.length > 0) {
+          const parsedTopics = topicsData.map(topic => {
+            try {
+              return typeof topic.content === 'string' ? JSON.parse(topic.content) : topic.content;
+            } catch (e) {
+              console.error("Failed to parse micro-topic JSON", e);
+              return null;
+            }
+          }).filter(Boolean);
+
+          // Handle Translation for parsed topics
+          if (currentLanguage !== 'en') {
+            for (let i = 0; i < parsedTopics.length; i++) {
+              if (parsedTopics[i].topic_title) {
+                parsedTopics[i].topic_title = await translateText(parsedTopics[i].topic_title, currentLanguage);
+              }
+              if (parsedTopics[i].theory_explanation) {
+                parsedTopics[i].theory_explanation = await translateText(parsedTopics[i].theory_explanation, currentLanguage);
+              }
+              if (parsedTopics[i].resources) {
+                for (let j = 0; j < parsedTopics[i].resources.length; j++) {
+                  if (parsedTopics[i].resources[j].title) {
+                    parsedTopics[i].resources[j].title = await translateText(parsedTopics[i].resources[j].title, currentLanguage);
+                  }
+                }
+              }
+            }
+          }
+
+          setMicroTopics(parsedTopics);
+        }
       } catch (err) {
         console.error("Error in fetchTopics:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchTopics();
-  }, [moduleId, currentLanguage]); // 🚨 IMPORTANT: Add these dependencies!
+  }, [moduleId, currentLanguage]);
 
   const handleDownload = async () => {
     if (!pdfRef.current) return;
