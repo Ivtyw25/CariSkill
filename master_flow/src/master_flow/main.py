@@ -16,7 +16,8 @@ from master_flow.model.system_state import SystemState
 
 # Import the crews
 from master_flow.crews.macro_planning_crew.macro_crew import MacroPlanningCrew
-from master_flow.crews.micro_learning_crew.micro_crew import MicroLearningCrew
+# from master_flow.crews.micro_learning_crew.micro_crew import MicroLearningCrew
+from master_flow.crews.micro_learning_crew.micro_generator import generate_micro_theory_single_shot
 
 @persist()
 class MasterFlow(Flow[SystemState]):
@@ -99,24 +100,41 @@ class MasterFlow(Flow[SystemState]):
         blueprint_data = self.state.blueprint # This is the dict saved from Macro Crew
         pending_nodes = blueprint_data.get("nodes", [])
 
+        # async def process_single_node(node):
+        #     print(f"--- GENERATING CONTENT FOR (ASYNC): {node['title']} ---")
+        #     inputs = {
+        #         "macro_title": node['title'],
+        #         "node_id": node['node_id'],
+        #         "micro_topics_list": ", ".join(node['suggested_micro_topics']),
+        #         "experience": self.state.experience,
+        #         "goal": self.state.goal
+        #     }
+        #     try:
+        #         result = await MicroLearningCrew().crew().akickoff(inputs=inputs)
+        #         if result.pydantic:
+        #             return result.pydantic.model_dump()
+        #         elif result.json_dict:
+        #             return result.json_dict
+        #         else:
+        #             print(f"Warning: No valid pydantic output from Micro Crew for {node['title']}")
+        #             return None
+        #     except Exception as e:
+        #         print(f"Error processing node {node['title']}: {e}")
+        #         return None
         async def process_single_node(node):
-            print(f"--- GENERATING CONTENT FOR (ASYNC): {node['title']} ---")
-            inputs = {
-                "macro_title": node['title'],
-                "node_id": node['node_id'],
-                "micro_topics_list": ", ".join(node['suggested_micro_topics']),
-                "experience": self.state.experience,
-                "goal": self.state.goal
-            }
+            print(f"--- GENERATING CONTENT FOR (ASYNC SCoT): {node['title']} ---")
+            
             try:
-                result = await MicroLearningCrew().crew().akickoff(inputs=inputs)
-                if result.pydantic:
-                    return result.pydantic.model_dump()
-                elif result.json_dict:
-                    return result.json_dict
-                else:
-                    print(f"Warning: No valid pydantic output from Micro Crew for {node['title']}")
-                    return None
+                # Call our lightning-fast single-shot controller instead of CrewAI
+                pydantic_result = await generate_micro_theory_single_shot(
+                    node_id=node['node_id'],
+                    module_title=node['title'],
+                    suggested_micro_topics=node['suggested_micro_topics']
+                )
+                
+                # Convert the Pydantic object back to a standard dictionary for the UI
+                return pydantic_result.model_dump()
+                
             except Exception as e:
                 print(f"Error processing node {node['title']}: {e}")
                 return None

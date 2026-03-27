@@ -1,5 +1,9 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional
+import asyncio
+import os
+from google import genai
+from google.genai import types
 
 class ScrapeResult(BaseModel):
     micro_topic: str = Field(..., description="The specific sub-topic title.")
@@ -29,3 +33,22 @@ class MacroNodeContent(BaseModel):
     node_id: str = Field(..., description="The ID of the macro node this content belongs to.")
     micro_topics: List[MicroTopicContent] = Field(..., description="The generated content for each micro-topic.")
     node_total_time_minutes: int = Field(..., description="Sum of all micro-topic times.")
+
+# --- 2. THE SCoT WRAPPER SCHEMA ---
+class SCoTSynthesizerResponse(BaseModel):
+    """
+    This wrapper forces the LLM to 'think' and grade itself BEFORE generating the final payload.
+    Because LLMs generate tokens sequentially, putting the critique first improves the data quality.
+    """
+    internal_critique: str = Field(
+        ..., 
+        description="Critique the search data against the required micro-topics. What is missing? What is strong?"
+    )
+    confidence_score: float = Field(
+        ..., 
+        description="Score from 0.0 to 1.0 based strictly on the rubric."
+    )
+    final_payload: MacroNodeContent = Field(
+        ..., 
+        description="The final, perfectly formatted curriculum data."
+    )
