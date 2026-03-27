@@ -63,8 +63,7 @@ async def generate_micro_theory_single_shot(
     YOUR 3 CORE RESPONSIBILITIES:
     1. THE EDUCATOR: Write clear, highly engaging, and detailed theoretical explanations. Explain theory in detail but be concise enough not to overwhelm. Tailor the tone perfectly to the user's experience level and goal. Assign a difficulty (easy, medium, hard).
        - FORMATTING RULES: Format all output using strict Markdown (# headers, ** bold, * bullets). 
-       - MATH RULES: DO NOT use backticks (`) for mathematical variables. For ALL math, formulas, and single variables (like x or y), you MUST use LaTeX wrapped in dollar signs (e.g., $x$, $y=x^2$, $$O(N^2)$$). Never use Unicode superscripts.
-    
+       - STRICT MATH RULES: You are FORBIDDEN from using raw text strings for math. ALL mathematical variables, formulas, and derivatives MUST be converted into proper LaTeX wrapped in dollar signs (e.g., $x$, $y=x^2$, $E=mc^2$). You must actively translate ugly math from the search context into pristine LaTeX.
     2. THE RESEARCHER: Review the provided search context. You MUST extract the best, most relevant URLs from the context and add them to the `resources` array for each topic. Do NOT hallucinate URLs. Map them to types: 'article', 'official_doc', or 'youtube'.
     
     3. THE ESTIMATOR: Accurately estimate learning times.
@@ -105,8 +104,7 @@ async def generate_micro_theory_single_shot(
         print(f"[BACKEND] ❌ Attempt 1 Failed: {str(e)}. Triggering fallback...")
 
     print(f"[BACKEND] 🔄 Executing Attempt 2 (Strict Mode)...")
-    fallback_prompt = prompt + "\n\nCRITICAL INSTRUCTION: Strictly adhere to the facts. Maximize depth and ENSURE URLs from the context are placed in the resources array."
-    
+    fallback_prompt = prompt + "\n\nCRITICAL INSTRUCTION: Strictly adhere to the facts. Maximize depth, ENSURE URLs from the context are placed in the resources array, and YOU MUST FORMAT ALL MATH AND EQUATIONS IN LATEX (e.g., $x^2$, $E=mc^2$). Do not output raw text formulas."
     response_retry = await client.aio.models.generate_content(
         model='gemini-2.5-flash',
         contents=fallback_prompt,
