@@ -1,10 +1,8 @@
-```
 import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/utils/supabase/admin";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-const model: "gemini-2.5-flash"; // This line was added/modified based on the instruction.
 const MODELS = ["gemini-2.5-flash"];
 
 export async function POST(req: Request) {
@@ -24,18 +22,18 @@ export async function POST(req: Request) {
     }
 
     const supabase = createAdminClient();
-    
+
     // DEMO OVERRIDE: If this is the bakery validation topic, always return the pre-generated quiz
     const isDemoTopic = topicTitle?.toLowerCase().includes("business idea validation") && topicTitle?.toLowerCase().includes("market research");
     const isBakery = theoryExplanation?.toLowerCase().includes("bakery");
-    
+
     if (isDemoTopic || (isBakery && microTopicId === '01b0235e-c171-4237-b131-50a82554e23e')) {
       const { data: demoRecord } = await supabase
         .from("micro_topics_contents")
         .select("quiz_data")
         .eq("id", '01b0235e-c171-4237-b131-50a82554e23e')
         .single();
-      
+
       if (demoRecord?.quiz_data) {
         return NextResponse.json({ quiz: demoRecord.quiz_data, cached: true });
       }
@@ -47,7 +45,7 @@ export async function POST(req: Request) {
         .select("quiz_data")
         .eq("id", microTopicId)
         .single();
-// ...
+      // ...
 
       if (existing?.quiz_data?.questions) {
         // If the number of questions matches what was requested, or if it's the demo node, return it
@@ -64,7 +62,7 @@ export async function POST(req: Request) {
     let prompt = "";
 
     if (questionType === 'multiple-choice') {
-      prompt = `You are a quiz generator. Generate exactly ${n} multiple-choice questions for the topic: "${topicTitle}".
+      prompt = `You are a quiz generator.Generate exactly ${n} multiple - choice questions for the topic: "${topicTitle}".
       
 Study material context:
 ${theorySnippet}
@@ -87,11 +85,11 @@ Return a JSON object:
 
 Rules:
 - Exactly ${n} questions, 4 options each
-- correctAnswerIndex is 0-based
-- sourceMaterial: Identify the specific concept or subtopic name from the context
-- Return only valid JSON, no markdown`;
+  - correctAnswerIndex is 0 - based
+    - sourceMaterial: Identify the specific concept or subtopic name from the context
+      - Return only valid JSON, no markdown`;
     } else if (questionType === 'open-ended') {
-      prompt = `You are a quiz generator. Generate exactly ${n} open-ended questions for: "${topicTitle}".
+      prompt = `You are a quiz generator.Generate exactly ${n} open - ended questions for: "${topicTitle}".
 
 Study material context:
 ${theorySnippet}
@@ -113,14 +111,14 @@ Return a JSON object:
 
 Rules:
 - Exactly ${n} questions
-- keyPoints: 2-4 points
-- sourceMaterial: Identify the specific concept or subtopic name from the context
-- Return only valid JSON, no markdown`;
+  - keyPoints: 2 - 4 points
+    - sourceMaterial: Identify the specific concept or subtopic name from the context
+      - Return only valid JSON, no markdown`;
     } else {
       // mixed: roughly half/half
       const mcqCount = Math.ceil(n / 2);
       const oeCount = n - mcqCount;
-      prompt = `You are a quiz generator. Generate exactly ${n} questions (${mcqCount} multiple-choice + ${oeCount} open-ended) for: "${topicTitle}".
+      prompt = `You are a quiz generator.Generate exactly ${n} questions(${mcqCount} multiple - choice + ${oeCount} open - ended) for: "${topicTitle}".
 
 Study material context:
 ${theorySnippet}
@@ -151,10 +149,10 @@ Return a JSON object:
 }
 
 Rules:
-- Exactly ${mcqCount} MCQ then ${oeCount} open-ended
-- MCQ: 4 options, 0-based correctAnswerIndex
-- sourceMaterial: Identify the subtopic title for every question
-- Return only valid JSON, no markdown`;
+- Exactly ${mcqCount} MCQ then ${oeCount} open - ended
+  - MCQ: 4 options, 0 - based correctAnswerIndex
+    - sourceMaterial: Identify the subtopic title for every question
+      - Return only valid JSON, no markdown`;
     }
 
     let lastError: any;
@@ -182,7 +180,7 @@ Rules:
 
         return NextResponse.json({ quiz: parsed, cached: false });
       } catch (e: any) {
-        console.warn(`[Generate Quiz] Model ${modelName} failed: ${e.message}`);
+        console.warn(`[Generate Quiz] Model ${modelName} failed: ${e.message} `);
         lastError = e;
       }
     }

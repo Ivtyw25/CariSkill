@@ -11,6 +11,7 @@ import {
 import Link from 'next/link';
 
 import { useRouter } from 'next/navigation';
+import { useSkillLanguage } from '@/components/SkillLanguageProvider';
 
 const containerVariants = {
   hidden: { opacity: 0 },
