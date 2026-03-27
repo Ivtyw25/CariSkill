@@ -33,58 +33,33 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
     const fetchTopics = async () => {
       try {
         const supabase = createClient();
-        const { data: nodeData } = await supabase.from('roadmap_nodes').select('title, video_url').eq('node_id', moduleId).limit(1);
+        const { data: nodeData } = await supabase
+          .from('roadmap_nodes')
+          .select('title, video_url')
+          .eq('node_id', moduleId)
+          .limit(1);
+
         if (nodeData && nodeData.length > 0) {
-          {
-          const t = currentLanguage === 'en' ? nodeData[0].title : await translateText(nodeData[0].title, currentLanguage);
-          setModuleTitle(t);
-        }
-          if (nodeData[0].video_url) setVideoUrl(nodeData[0].video_url);
-        }
+          // Handle Translation logic
+          const rawTitle = nodeData[0].title;
+          const translatedTitle = currentLanguage === 'en'
+            ? rawTitle
+            : await translateText(rawTitle, currentLanguage);
 
-        const { data: topicsData, error: topicsError } = await supabase
-          .from('micro_topics_contents')
-          .select('id, content')
-          .eq('macro_node_id', moduleId)
-          .order('id', { ascending: true });
+          setModuleTitle(translatedTitle);
 
-        console.log("Supabase Topics Data:", topicsData);
-        if (topicsError) console.error("Supabase Topics Error:", topicsError);
-
-        if (topicsData && topicsData.length > 0) {
-          const parsed = topicsData.map(t => ({
-            rowId: t.id,
-            ...(typeof t.content === 'string' ? JSON.parse(t.content) : t.content),
-          })).filter(Boolean);
-
-          if (currentLanguage !== 'en') {
-             for (let i = 0; i < parsed.length; i++) {
-                if (parsed[i].topic_title) {
-                   parsed[i].topic_title = await translateText(parsed[i].topic_title, currentLanguage);
-                }
-                if (parsed[i].theory_explanation) {
-                   parsed[i].theory_explanation = await translateText(parsed[i].theory_explanation, currentLanguage);
-                }
-                if (parsed[i].resources) {
-                   for (let j = 0; j < parsed[i].resources.length; j++) {
-                      if (parsed[i].resources[j].title) {
-                         parsed[i].resources[j].title = await translateText(parsed[i].resources[j].title, currentLanguage);
-                      }
-                   }
-                }
-             }
+          // Handle Video URL
+          if (nodeData[0].video_url) {
+            setVideoUrl(nodeData[0].video_url);
           }
-
-          setMicroTopics(parsed);
         }
       } catch (err) {
-        console.error('Error fetching summary topics:', err);
-      } finally {
-        setLoading(false);
+        console.error("Error in fetchTopics:", err);
       }
     };
+
     fetchTopics();
-  }, [moduleId, currentLanguage]);
+  }, [moduleId, currentLanguage]); // 🚨 IMPORTANT: Add these dependencies!
 
   const handleDownload = async () => {
     if (!pdfRef.current) return;
@@ -202,67 +177,67 @@ export default function SummaryPage({ params }: { params: Promise<{ id: string, 
                   <VideoSummaryPlayer textContent={currentTopic.theory_explanation} nodeId={moduleId} initialVideoUrl={videoUrl} />
                 </div>
               )}
-              
+
               <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden mb-10">
-              <div className="bg-[#F9FAFB] border-b border-gray-100 px-8 py-4 flex items-center justify-between">
-                <div className="flex items-center gap-2 text-[#A16207] font-bold uppercase tracking-wide text-sm">
-                  <Sparkles className="w-4 h-4" />
-                  AI-Generated Summary Notes
+                <div className="bg-[#F9FAFB] border-b border-gray-100 px-8 py-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-[#A16207] font-bold uppercase tracking-wide text-sm">
+                    <Sparkles className="w-4 h-4" />
+                    AI-Generated Summary Notes
+                  </div>
+                  <div className={`text-xs px-2 py-1 rounded font-bold ${currentTopic.difficulty === 'hard' ? 'bg-red-100 text-red-700' : currentTopic.difficulty === 'medium' ? 'bg-orange-100 text-orange-700' : 'bg-green-100 text-green-700'}`}>
+                    {currentTopic.difficulty || 'Study'}
+                  </div>
                 </div>
-                <div className={`text-xs px-2 py-1 rounded font-bold ${currentTopic.difficulty === 'hard' ? 'bg-red-100 text-red-700' : currentTopic.difficulty === 'medium' ? 'bg-orange-100 text-orange-700' : 'bg-green-100 text-green-700'}`}>
-                  {currentTopic.difficulty || 'Study'}
-                </div>
-              </div>
 
-              <div className="p-8 md:p-12 space-y-12 bg-white">
-                {currentTopic.theory_explanation ? (
-                  <>
-                    <section>
-                      <SectionHeader title="Theory & Explanation" />
-                      <div className="mt-6 text-gray-700 leading-relaxed text-[17px] space-y-4">
-                        {currentTopic.theory_explanation.split('\n').map((line: string, i: number) => {
-                          if (!line.trim()) return null;
-                          const formattedLine = line
-                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                            .replace(/`([^`]+)`/g, '<code style="background-color: rgba(243, 244, 246, 0.5); color: #db2777; padding: 2px 6px; border-radius: 4px; font-size: 14px;">$1</code>')
-                            .replace(/\*   /g, '• ');
-                          return <p key={i} dangerouslySetInnerHTML={{ __html: formattedLine }} />;
-                        })}
-                      </div>
-                    </section>
-
-                    {currentTopic.resources && currentTopic.resources.length > 0 && (
+                <div className="p-8 md:p-12 space-y-12 bg-white">
+                  {currentTopic.theory_explanation ? (
+                    <>
                       <section>
-                        <SectionHeader title="Learning Resources" />
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                          {currentTopic.resources.map((res: any, i: number) => (
-                            <a key={i} href={res.url} target="_blank" rel="noopener noreferrer"
-                              className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100 bg-[#FAFAFA] hover:bg-white hover:shadow-md hover:border-[#FFD700] transition-all group">
-                              <div className="w-12 h-12 shrink-0 rounded-xl bg-[#FEF9C3] text-[#CA8A04] flex items-center justify-center">
-                                {res.type === 'youtube' ? <Play className="w-6 h-6 ml-0.5" /> : <Bookmark className="w-6 h-6" />}
-                              </div>
-                              <div>
-                                <h4 className="font-bold text-gray-900 group-hover:text-[#CA8A04] transition-colors mb-1 line-clamp-2">{res.title}</h4>
-                                <div className="flex items-center gap-2 text-sm text-gray-500 font-medium">
-                                  <span className="capitalize">{res.type}</span>
-                                  {res.estimated_time_minutes && <><span>•</span><span>{res.estimated_time_minutes} mins</span></>}
-                                </div>
-                              </div>
-                            </a>
-                          ))}
+                        <SectionHeader title="Theory & Explanation" />
+                        <div className="mt-6 text-gray-700 leading-relaxed text-[17px] space-y-4">
+                          {currentTopic.theory_explanation.split('\n').map((line: string, i: number) => {
+                            if (!line.trim()) return null;
+                            const formattedLine = line
+                              .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                              .replace(/`([^`]+)`/g, '<code style="background-color: rgba(243, 244, 246, 0.5); color: #db2777; padding: 2px 6px; border-radius: 4px; font-size: 14px;">$1</code>')
+                              .replace(/\*   /g, '• ');
+                            return <p key={i} dangerouslySetInnerHTML={{ __html: formattedLine }} />;
+                          })}
                         </div>
                       </section>
-                    )}
-                  </>
-                ) : (
-                  <div className="text-center py-12 text-gray-400">
-                    <CheckCircle2 className="w-12 h-12 mx-auto mb-4 text-gray-200" />
-                    <p>No summary content available for this sub-topic.</p>
-                  </div>
-                )}
+
+                      {currentTopic.resources && currentTopic.resources.length > 0 && (
+                        <section>
+                          <SectionHeader title="Learning Resources" />
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                            {currentTopic.resources.map((res: any, i: number) => (
+                              <a key={i} href={res.url} target="_blank" rel="noopener noreferrer"
+                                className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100 bg-[#FAFAFA] hover:bg-white hover:shadow-md hover:border-[#FFD700] transition-all group">
+                                <div className="w-12 h-12 shrink-0 rounded-xl bg-[#FEF9C3] text-[#CA8A04] flex items-center justify-center">
+                                  {res.type === 'youtube' ? <Play className="w-6 h-6 ml-0.5" /> : <Bookmark className="w-6 h-6" />}
+                                </div>
+                                <div>
+                                  <h4 className="font-bold text-gray-900 group-hover:text-[#CA8A04] transition-colors mb-1 line-clamp-2">{res.title}</h4>
+                                  <div className="flex items-center gap-2 text-sm text-gray-500 font-medium">
+                                    <span className="capitalize">{res.type}</span>
+                                    {res.estimated_time_minutes && <><span>•</span><span>{res.estimated_time_minutes} mins</span></>}
+                                  </div>
+                                </div>
+                              </a>
+                            ))}
+                          </div>
+                        </section>
+                      )}
+                    </>
+                  ) : (
+                    <div className="text-center py-12 text-gray-400">
+                      <CheckCircle2 className="w-12 h-12 mx-auto mb-4 text-gray-200" />
+                      <p>No summary content available for this sub-topic.</p>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          </>) : (
+            </>) : (
             <div className="text-center py-16">
               <p className="text-gray-500">No topics found for this module.</p>
               <button onClick={() => router.push(`/skill/${id}`)} className="mt-4 px-6 py-2 bg-[#FFD700] rounded-xl font-bold">Return to Roadmap</button>

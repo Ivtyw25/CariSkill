@@ -116,17 +116,17 @@ export default function RoadmapsPage() {
   };
 
   const priorityConfig = {
-    3: { 
-      label: 'Vital Skill', color: 'text-red-500', bg: 'bg-red-50', border: 'border-red-100', dot: 'bg-red-500', 
+    3: {
+      label: 'Vital Skill', color: 'text-red-500', bg: 'bg-red-50', border: 'border-red-100', dot: 'bg-red-500',
       glow: 'hover:shadow-[0_0_20px_rgba(239,68,68,0.2)] hover:border-red-300',
       line: 'bg-red-200'
     },
-    2: { 
+    2: {
       label: 'Building Block', color: 'text-yellow-600', bg: 'bg-yellow-50', border: 'border-yellow-100', dot: 'bg-yellow-500',
       glow: 'hover:shadow-[0_0_20px_rgba(234,179,8,0.2)] hover:border-yellow-300',
       line: 'bg-yellow-200'
     },
-    1: { 
+    1: {
       label: 'Curiosity', color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-100', dot: 'bg-green-500',
       glow: 'hover:shadow-[0_0_20px_rgba(34,197,94,0.2)] hover:border-green-300',
       line: 'bg-green-200'
@@ -217,29 +217,36 @@ export default function RoadmapsPage() {
                     <h2 className={`text-2xl font-bold tracking-tight ${section.color}`}>{section.label}</h2>
                     <span className="text-gray-300 text-lg font-medium">/ {list.length}</span>
                   </div>
-                  
+
                   {/* Horizontal Timeline Container */}
                   <div className="relative group mt-4">
                     {/* Decorative Timeline Line (at the bottom, aligned with nodes) */}
                     <div className={`absolute bottom-[52px] left-0 right-0 h-1 ${section.line} rounded-full z-0 opacity-70 shadow-sm`} />
-                    
+
                     <div className="flex overflow-x-auto gap-10 pb-20 pt-12 px-4 no-scrollbar snap-x snap-mandatory">
-                      {list.map((rm, idx) => {
+
+                      {/* 🌟 THE DEMO HACK INJECTED HERE 🌟 */}
+                      {list.filter((rm) => {
+                        const topicName = (rm.topic || '').toLowerCase();
+                        const isBakery = topicName.includes('baking') || topicName.includes('bakery');
+                        return isBakery ? rm.id === '26e45a75-3a48-4b35-b460-7a4827232497' : true;
+                      }).map((rm, idx) => {
+
                         const phases = getPhaseCount(rm.content);
                         const config = priorityConfig[(rm.priority || 1) as keyof typeof priorityConfig];
                         const dateFormatted = new Date(rm.created_at).toLocaleDateString('en-MY', { day: 'numeric', month: 'short' });
-                        
+
                         return (
                           <motion.div
                             key={rm.id}
                             initial={{ opacity: 0, y: -20 }}
                             animate={{ opacity: 1, y: 0 }}
                             whileHover={{ y: -16, scale: 1.05 }}
-                            transition={{ 
-                              delay: idx * 0.1, 
-                              type: 'spring', 
-                              stiffness: 400, 
-                              damping: 25 
+                            transition={{
+                              delay: idx * 0.1,
+                              type: 'spring',
+                              stiffness: 400,
+                              damping: 25
                             }}
                             layout
                             className="flex-shrink-0 w-[300px] snap-center relative z-10"
@@ -256,7 +263,7 @@ export default function RoadmapsPage() {
                                     <Map className={`w-6 h-6 ${config.color}`} />
                                   )}
                                 </div>
-                                
+
                                 <div className="flex items-center gap-2">
                                   <button
                                     onClick={(e) => handleTogglePriority(e, rm.id, rm.priority || 1, !!rm.isSaved)}
@@ -268,7 +275,7 @@ export default function RoadmapsPage() {
                                   </button>
                                 </div>
                               </div>
-                              
+
                               <h3 className="font-bold text-gray-900 text-lg leading-snug mb-3 group-hover:text-yellow-700 transition-colors line-clamp-2 min-h-[3.5rem]">
                                 {rm.topic}
                               </h3>
@@ -291,10 +298,10 @@ export default function RoadmapsPage() {
                             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center">
                               {/* Vertical Line Connector (adjusted to hit the bottom line) */}
                               <div className={`w-0.5 h-16 ${section.line} opacity-70 mb-0`} />
-                              
+
                               {/* Node Circle (aligned with the h-1 line) */}
                               <div className={`w-4 h-4 rounded-full border-4 border-white shadow-md z-20 ${config.dot} -mt-2`} />
-                              
+
                               {/* Date Label Below Node */}
                               <div className="mt-3 text-[10px] font-bold tracking-tighter text-gray-400 bg-white px-2 py-0.5 rounded-full shadow-sm border border-gray-100 whitespace-nowrap">
                                 {dateFormatted}
@@ -303,7 +310,7 @@ export default function RoadmapsPage() {
                           </motion.div>
                         );
                       })}
-                      
+
                       {/* Spacer for scroll end */}
                       <div className="flex-shrink-0 w-48" />
                     </div>
