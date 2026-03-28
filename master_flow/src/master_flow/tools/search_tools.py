@@ -3,7 +3,6 @@ from crewai.tools import tool
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
 from tavily import TavilyClient
-from ddgs import DDGS
 
 # We use a getter for clients to avoid crushing the process if env vars are missing at startup
 _qdrant_client = None
@@ -67,8 +66,7 @@ def web_syllabus_search(skill: str) -> str:
         )
         
         results = response.get("results", [])
-        if not results:
-            return f"No web results found for {skill_query}."
+        if not results: return f"No web results found for {skill_query}."
             
         formatted_results = [f"Found {len(results)} relevant articles. Use this information to construct a standard learning curriculum for {skill_query}:"]
         

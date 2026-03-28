@@ -240,7 +240,6 @@ async def start_macro_endpoint(req: StartMacroRequest):
     
     # If a previous state exists, completely hydrate our newly instantiated flow
     if previous_state:
-        print(f"Resuming existing flow. Hydrating {req.session_id}...")
         for key, value in previous_state.items():
             if hasattr(flow.state, key):
                 setattr(flow.state, key, value)
@@ -292,7 +291,6 @@ async def start_macro_endpoint(req: StartMacroRequest):
             print(f"Error during CrewAI execution: {str(e)}")
             active_flows[req.session_id] = {"status": "error", "message": str(e)}
 
-    # Dispatch to background task to prevent browser HTTP timeout
     asyncio.create_task(execute_flow())
         
     return {"status": "processing", "session_id": req.session_id}

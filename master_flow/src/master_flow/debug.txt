@@ -1,0 +1,16 @@
+ import os
+    #     debug_info = {
+    #         "pydantic_output": result.pydantic.model_dump() if hasattr(result, "pydantic") and result.pydantic else None,
+    #         "json_dict_output": result.json_dict if hasattr(result, "json_dict") else None,
+    #         "raw_output": result.raw if hasattr(result, "raw") else None,
+    #         "tasks_output": [
+    #             {
+    #                 "raw": t.raw if hasattr(t, "raw") else None,
+    #                 "json_dict": t.json_dict if hasattr(t, "json_dict") else None,
+    #                 "pydantic": t.pydantic.model_dump() if hasattr(t, "pydantic") and t.pydantic else None
+    #             } for t in (result.tasks_output if hasattr(result, "tasks_output") else [])
+    #         ]
+    #     }
+        
+    #     # Save trace to help debug empty arrays
+    #     debug_path = os.path.join(os.path.dirname(__file__), "../../api/temp_macro_crew_debug.json")

@@ -2,13 +2,9 @@ import os
 from crewai import Agent, Crew, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from master_flow.model.micro_models import MacroNodeContent, FullScrapeResult
-
-# 1. Import your new high-speed async tool
 from master_flow.tools.custom_tools import AsyncDeepSearchTool
 
 os.environ["OPENAI_API_KEY"] = "sk-dummy-key-to-bypass-pydantic-bug"
-
-# 2. Initialize the Deep Search Tool
 deep_search_tool = AsyncDeepSearchTool()
 
 @CrewBase

@@ -3,10 +3,10 @@ scrape_task:
     We are building content for the Macro Node: "{macro_title}".
     The specific sub-topics to research are: {micro_topics_list}.
     
-    Your job is to perform a deep research dive using the `AsyncDeepSearchTool`.
+    Your job is to perform a deep research dive using the `DeepSearchTool`.
     
     For EACH sub-topic:
-    1. SEARCH: Fire a query into the `AsyncDeepSearchTool` to find documentation and video links.
+    1. SEARCH: Fire a query into the `DeepSearchTool` to find documentation and video links.
     2. ANALYZE: Review the extracted markdown content provided by the tool. Identify high-signal facts, 
        technical architectures, and specific code examples that are relevant to the user's experience level ({experience}) and goal ({goal}).
     3. COMPILE: Gather the best URLs and their titles, ensuring you prioritize sources that returned clean, readable markdown content.

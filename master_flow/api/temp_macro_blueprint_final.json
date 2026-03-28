@@ -1,0 +1,156 @@
+{
+  "nodes": [
+    {
+      "node_id": "c_foundations",
+      "title": "C Programming Foundations (Review)",
+      "rationale": "Even with intermediate experience, a quick review of core C concepts ensures a solid base for a complex project like Minishell. This focuses on areas critical for system-level programming.",
+      "prerequisites": [],
+      "suggested_micro_topics": [
+        "Data Types and Variables",
+        "Operators and Expressions",
+        "Control Flow (if/else, switch, loops)",
+        "Functions and Function Pointers",
+        "Pointers and Memory Addressing",
+        "Arrays and Strings"
+      ]
+    },
+    {
+      "node_id": "memory_management",
+      "title": "Advanced Memory Management in C",
+      "rationale": "Minishell will involve dynamic allocation and deallocation for commands, arguments, and environment variables. A deep understanding of heap vs. stack and potential pitfalls is crucial.",
+      "prerequisites": [
+        "c_foundations"
+      ],
+      "suggested_micro_topics": [
+        "malloc, calloc, realloc, free",
+        "Stack vs. Heap",
+        "Memory Leaks and Dangling Pointers",
+        "Memory Allocation Strategies",
+        "Pointer Arithmetic"
+      ]
+    },
+    {
+      "node_id": "file_io",
+      "title": "File I/O and System Calls",
+      "rationale": "A shell interacts heavily with the file system for command execution, redirection, and environment variables. Understanding low-level file operations is essential.",
+      "prerequisites": [
+        "c_foundations"
+      ],
+      "suggested_micro_topics": [
+        "open, close, read, write",
+        "access, stat, lstat, fstat",
+        "dup, dup2 (file descriptor duplication)",
+        "File Permissions",
+        "Error Handling (perror, strerror)"
+      ]
+    },
+    {
+      "node_id": "process_management",
+      "title": "Process Management and Execution",
+      "rationale": "The core function of a shell is to launch and manage other processes. This module covers the fundamental system calls for process creation, execution, and termination.",
+      "prerequisites": [
+        "c_foundations",
+        "memory_management"
+      ],
+      "suggested_micro_topics": [
+        "fork (process creation)",
+        "execve (program execution)",
+        "wait, waitpid (process synchronization)",
+        "Zombie Processes and Orphan Processes",
+        "Environment Variables (getenv)"
+      ]
+    },
+    {
+      "node_id": "interprocess_communication",
+      "title": "Interprocess Communication (IPC)",
+      "rationale": "Pipes are a fundamental feature of any shell, allowing communication between different commands. This module focuses on implementing this crucial IPC mechanism.",
+      "prerequisites": [
+        "process_management",
+        "file_io"
+      ],
+      "suggested_micro_topics": [
+        "pipe (creating pipes)",
+        "Redirection (input/output)",
+        "Chaining commands with pipes",
+        "File Descriptors and their role in IPC"
+      ]
+    },
+    {
+      "node_id": "signal_handling",
+      "title": "Signal Handling",
+      "rationale": "A robust shell needs to gracefully handle various signals (e.g., Ctrl+C, Ctrl+\\). This module covers how to intercept and respond to these system events.",
+      "prerequisites": [
+        "process_management"
+      ],
+      "suggested_micro_topics": [
+        "signal, sigaction",
+        "SIGINT, SIGQUIT",
+        "Signal Masks",
+        "Non-local jumps (setjmp/longjmp) in signal handlers"
+      ]
+    },
+    {
+      "node_id": "input_parsing_and_lexing",
+      "title": "Input Parsing and Lexing",
+      "rationale": "Before executing commands, the shell must parse the user's input. This involves breaking the input string into meaningful tokens.",
+      "prerequisites": [
+        "c_foundations",
+        "memory_management"
+      ],
+      "suggested_micro_topics": [
+        "String Tokenization (strtok, custom tokenizers)",
+        "Handling Quotes and Escaping",
+        "Identifying Operators (pipes, redirections)",
+        "Abstract Syntax Trees (basic concepts)"
+      ]
+    },
+    {
+      "node_id": "command_execution_logic",
+      "title": "Command Execution Logic",
+      "rationale": "This module brings together parsing, process management, and IPC to implement the core command execution loop of the shell.",
+      "prerequisites": [
+        "input_parsing_and_lexing",
+        "process_management",
+        "interprocess_communication",
+        "signal_handling"
+      ],
+      "suggested_micro_topics": [
+        "Built-in Commands vs. External Commands",
+        "Path Resolution (PATH environment variable)",
+        "Error Handling in Command Execution",
+        "Implementing Redirections"
+      ]
+    },
+    {
+      "node_id": "readline_and_history",
+      "title": "Readline and History Management",
+      "rationale": "For a user-friendly shell, features like command-line editing and history are crucial. The `readline` library provides this functionality.",
+      "prerequisites": [
+        "c_foundations",
+        "memory_management"
+      ],
+      "suggested_micro_topics": [
+        "Using the readline library",
+        "Command History (add_history)",
+        "Customizing readline behavior",
+        "Terminal I/O (tcsetattr, tcgetattr)"
+      ]
+    },
+    {
+      "node_id": "project_integration_and_testing",
+      "title": "Project Integration and Testing",
+      "rationale": "This final stage involves assembling all the components, thorough testing, and debugging to ensure a functional and robust Minishell.",
+      "prerequisites": [
+        "command_execution_logic",
+        "readline_and_history"
+      ],
+      "suggested_micro_topics": [
+        "Unit Testing",
+        "Integration Testing",
+        "Debugging Techniques (GDB)",
+        "Edge Case Handling",
+        "Code Refactoring and Optimization"
+      ]
+    }
+  ]
+}
