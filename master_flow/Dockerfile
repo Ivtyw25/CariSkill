@@ -2,8 +2,8 @@
 FROM python:3.11-slim
 
 # Allow statements and log messages to immediately appear in the Knative logs
-ENV PYTHONUNBUFFERED True
-ENV PORT 8080
+ENV PYTHONUNBUFFERED=True
+ENV PORT=8080
 
 # Set the working directory to the project root
 WORKDIR /app

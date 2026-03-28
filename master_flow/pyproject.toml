@@ -11,8 +11,13 @@ dependencies = [
     "qdrant-client",
     "sentence-transformers",
     "ddgs",
+    "duckduckgo-search",
     "python-dotenv",
-    "supabase"
+    "supabase",
+    "google-genai",
+    "edge-tts",
+    "tavily-python",
+    "aiohttp"
 ]
 
 [project.scripts]

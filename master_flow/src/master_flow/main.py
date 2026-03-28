@@ -163,8 +163,8 @@ class MasterFlow(Flow[SystemState]):
                     node_id=node['node_id'],
                     module_title=node['title'],
                     suggested_micro_topics=node['suggested_micro_topics'],
-                    experience=self.state.experience,  # <-- ADD THIS
-                    goal=self.state.goal               # <-- ADD THIS
+                    experience=self.state.experience,  
+                    goal=self.state.goal           
                 )
                 
                 # Convert the Pydantic object back to a standard dictionary for the UI
