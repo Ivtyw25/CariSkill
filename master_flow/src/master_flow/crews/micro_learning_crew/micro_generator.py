@@ -22,9 +22,9 @@ async def fetch_tavily_context_parallel(topic_title: str, micro_topics: List[str
     print(f"[BACKEND] 🔍 Firing 3 parallel Tavily searches for: {topic_title}...")
     
     results = await asyncio.gather(
-        client.search(query=queries[0], search_depth="basic", max_results=3),
-        client.search(query=queries[1], search_depth="basic", max_results=2),
-        client.search(query=queries[2], search_depth="basic", max_results=2),
+        client.search(query=queries[0], search_depth="basic", max_results=3, include_images=True),
+        client.search(query=queries[1], search_depth="basic", max_results=2, include_images=True),
+        client.search(query=queries[2], search_depth="basic", max_results=2, include_images=True),
         return_exceptions=True
     )
     
@@ -32,12 +32,15 @@ async def fetch_tavily_context_parallel(topic_title: str, micro_topics: List[str
     for idx, res in enumerate(results):
         if isinstance(res, dict) and "results" in res:
             for item in res["results"]:
-                # WE MUST GRAB THE URL AND TITLE NOW!
                 title = item.get('title', 'Untitled Resource')
                 url = item.get('url', '')
                 content = item.get('content', '')
-                # Pass it to the AI as a formatted citation
                 combined_context += f"Source Title: {title}\nURL: {url}\nContent: {content}\n\n"
+            
+            # EXTRACT IMAGES AND ADD TO CONTEXT
+            images = res.get("images", [])
+            if images:
+                combined_context += "Available Images for this section:\n" + "\n".join(images) + "\n\n"
                 
     return combined_context
 
@@ -64,6 +67,10 @@ async def generate_micro_theory_single_shot(
     1. THE EDUCATOR: Write clear, highly engaging, and detailed theoretical explanations. Explain theory in detail but be concise enough not to overwhelm. Tailor the tone perfectly to the user's experience level and goal. Assign a difficulty (easy, medium, hard).
        - FORMATTING RULES: Format all output using strict Markdown (# headers, ** bold, * bullets). 
        - STRICT MATH RULES: You are FORBIDDEN from using raw text strings for math. ALL mathematical variables, formulas, and derivatives MUST be converted into proper LaTeX wrapped in dollar signs (e.g., $x$, $y=x^2$, $E=mc^2$). You must actively translate ugly math from the search context into pristine LaTeX.
+       - VISUAL INTEGRATION: You MUST embed contextually relevant images inline between your text paragraphs using Markdown format: `![Descriptive Alt Text](image_url)`. 
+         * ONLY use URLs provided in the 'Available Images' list from the context.
+         * Select a maximum of 1 or 2 images per micro-topic.
+         * Analyze the image URLs: prioritize URLs that contain words like 'diagram', 'chart', 'graph', 'example', or specific concept names. Ignore generic URLs.
     2. THE RESEARCHER: Review the provided search context. You MUST extract the best, most relevant URLs from the context and add them to the `resources` array for each topic. Do NOT hallucinate URLs. Map them to types: 'article', 'official_doc', or 'youtube'.
     
     3. THE ESTIMATOR: Accurately estimate learning times.
