@@ -71,8 +71,10 @@ async def generate_micro_theory_single_shot(
          * ONLY use URLs provided in the 'Available Images' list from the context.
          * Select a maximum of 1 or 2 images per micro-topic.
          * Analyze the image URLs: prioritize URLs that contain words like 'diagram', 'chart', 'graph', 'example', or specific concept names. Ignore generic URLs.
-    2. THE RESEARCHER: Review the provided search context. You MUST extract the best, most relevant URLs from the context and add them to the `resources` array for each topic. Do NOT hallucinate URLs. Map them to types: 'article', 'official_doc', or 'youtube'.
-    
+    2. THE RESEARCHER: Review the provided search context. You MUST extract the best, most relevant URLs from the context and add them to the `resources` array for each topic. 
+       - CRITICAL RULE: EVERY single micro-topic MUST have at least ONE (1) valid resource attached to it. NO EMPTY RESOURCE ARRAYS.
+       - If a perfectly specific URL isn't available for a micro-topic, you MUST assign the best general resource from the context. 
+       - Do NOT hallucinate URLs. Map them to types: 'article', 'official_doc', or 'youtube'.
     3. THE ESTIMATOR: Accurately estimate learning times.
        - Reading theory: ~250 words per minute.
        - External Article/Doc: ~5 mins.
@@ -111,7 +113,7 @@ async def generate_micro_theory_single_shot(
         print(f"[BACKEND] ❌ Attempt 1 Failed: {str(e)}. Triggering fallback...")
 
     print(f"[BACKEND] 🔄 Executing Attempt 2 (Strict Mode)...")
-    fallback_prompt = prompt + "\n\nCRITICAL INSTRUCTION: Strictly adhere to the facts. Maximize depth, ENSURE URLs from the context are placed in the resources array, and YOU MUST FORMAT ALL MATH AND EQUATIONS IN LATEX (e.g., $x^2$, $E=mc^2$). Do not output raw text formulas."
+    fallback_prompt = prompt + "\n\nCRITICAL INSTRUCTION: Strictly adhere to the facts. Maximize depth, YOU MUST FORMAT ALL MATH AND EQUATIONS IN LATEX (e.g., $x^2$, $E=mc^2$). Furthermore, EVERY SINGLE MICRO-TOPIC MUST HAVE AT LEAST ONE URL IN ITS `resources` ARRAY. If a specific URL is missing, reuse a general URL from the context. Do not leave any resources array empty."
     response_retry = await client.aio.models.generate_content(
         model='gemini-2.5-flash',
         contents=fallback_prompt,
