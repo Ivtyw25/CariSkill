@@ -50,28 +50,35 @@ class AsyncDeepSearchTool(BaseTool):
         try:
             # Initialize the Async Tavily Client
             client = AsyncTavilyClient(api_key=os.environ.get("TAVILY_API_KEY"))
-            
-            # search_depth="advanced" forces deep scraping of the sources
             response = await client.search(
                 query=query, 
                 search_depth="advanced", 
-                max_results=4
+                max_results=3,
+                include_images=True
             )
             
             results = response.get("results", [])
+            images = response.get("images", [])
+            
             if not results:
                 return "No search results found for this query."
             
             successful_contents = []
             for item in results:
+                title = item.get("title", "Untitled Resource")
                 url = item.get("url", "Unknown URL")
                 content = item.get("content", "")
                 
                 # Clean up content whitespace
                 cleaned_content = " ".join(content.split())
-                successful_contents.append(f"SOURCE [{url}]:\n{cleaned_content}")
+                successful_contents.append(f"Source Title: {title}\nURL: {url}\nContent: {cleaned_content}")
                 
-            return "\n\n---\n\n".join(successful_contents)
+            combined_context = "\n\n---\n\n".join(successful_contents)
+            
+            if images:
+                combined_context += "\n\nAvailable Images for this section:\n" + "\n".join(images) + "\n\n"
+                
+            return combined_context
             
         except Exception as e:
             return f"Tavily deep search failed: {str(e)}"

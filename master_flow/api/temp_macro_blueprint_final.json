@@ -1,155 +1,113 @@
 {
   "nodes": [
     {
-      "node_id": "c_foundations",
-      "title": "C Programming Foundations (Review)",
-      "rationale": "Even with intermediate experience, a quick review of core C concepts ensures a solid base for a complex project like Minishell. This focuses on areas critical for system-level programming.",
+      "node_id": "foundations_nervous_system",
+      "title": "Foundations of the Nervous System",
+      "rationale": "To understand how the brain works, it's essential to grasp the basic components and organization of the nervous system. This module sets the stage for all subsequent learning.",
       "prerequisites": [],
       "suggested_micro_topics": [
-        "Data Types and Variables",
-        "Operators and Expressions",
-        "Control Flow (if/else, switch, loops)",
-        "Functions and Function Pointers",
-        "Pointers and Memory Addressing",
-        "Arrays and Strings"
+        "What is Neuroscience?",
+        "Central Nervous System (CNS) overview",
+        "Peripheral Nervous System (PNS) overview",
+        "Basic functions of the nervous system",
+        "Historical context of neuroscience"
       ]
     },
     {
-      "node_id": "memory_management",
-      "title": "Advanced Memory Management in C",
-      "rationale": "Minishell will involve dynamic allocation and deallocation for commands, arguments, and environment variables. A deep understanding of heap vs. stack and potential pitfalls is crucial.",
+      "node_id": "the_neuron",
+      "title": "The Neuron: The Brain's Communicator",
+      "rationale": "Neurons are the fundamental units of information processing in the brain. Understanding their structure and how they communicate is crucial for comprehending all brain functions.",
       "prerequisites": [
-        "c_foundations"
+        "foundations_nervous_system"
       ],
       "suggested_micro_topics": [
-        "malloc, calloc, realloc, free",
-        "Stack vs. Heap",
-        "Memory Leaks and Dangling Pointers",
-        "Memory Allocation Strategies",
-        "Pointer Arithmetic"
+        "Neuron structure (dendrites, axon, soma)",
+        "Electrical signaling (action potentials)",
+        "Synaptic transmission",
+        "Neurotransmitters and their roles",
+        "Basic neural circuits"
       ]
     },
     {
-      "node_id": "file_io",
-      "title": "File I/O and System Calls",
-      "rationale": "A shell interacts heavily with the file system for command execution, redirection, and environment variables. Understanding low-level file operations is essential.",
+      "node_id": "neuroanatomy_mapping",
+      "title": "Neuroanatomy: Mapping the Brain's Landscape",
+      "rationale": "Knowing the physical organization of the brain helps in understanding where different functions are located and how various parts interact to produce behavior.",
       "prerequisites": [
-        "c_foundations"
+        "foundations_nervous_system"
       ],
       "suggested_micro_topics": [
-        "open, close, read, write",
-        "access, stat, lstat, fstat",
-        "dup, dup2 (file descriptor duplication)",
-        "File Permissions",
-        "Error Handling (perror, strerror)"
+        "Major brain regions (forebrain, midbrain, hindbrain)",
+        "Cerebral cortex lobes and their general functions",
+        "Spinal cord structure and function",
+        "Basic brain development",
+        "Ventricular system"
       ]
     },
     {
-      "node_id": "process_management",
-      "title": "Process Management and Execution",
-      "rationale": "The core function of a shell is to launch and manage other processes. This module covers the fundamental system calls for process creation, execution, and termination.",
+      "node_id": "sensing_the_world",
+      "title": "Sensing the World: Perception and Sensory Systems",
+      "rationale": "Our perception of the world is entirely dependent on how our brain interprets sensory input. This module explores how we see, hear, touch, taste, and smell.",
       "prerequisites": [
-        "c_foundations",
-        "memory_management"
+        "the_neuron",
+        "neuroanatomy_mapping"
       ],
       "suggested_micro_topics": [
-        "fork (process creation)",
-        "execve (program execution)",
-        "wait, waitpid (process synchronization)",
-        "Zombie Processes and Orphan Processes",
-        "Environment Variables (getenv)"
+        "General principles of sensory processing",
+        "Vision: how eyes and brain work together",
+        "Hearing: sound transduction and interpretation",
+        "Somatic sensation (touch, pain, temperature)",
+        "Taste and smell (chemical senses)",
+        "Vestibular sense (balance and spatial orientation)"
       ]
     },
     {
-      "node_id": "interprocess_communication",
-      "title": "Interprocess Communication (IPC)",
-      "rationale": "Pipes are a fundamental feature of any shell, allowing communication between different commands. This module focuses on implementing this crucial IPC mechanism.",
+      "node_id": "moving_through_world",
+      "title": "Moving Through the World: Motor Control",
+      "rationale": "Understanding how the brain initiates and coordinates movement is key to appreciating our physical interactions with the environment, from simple reflexes to complex actions.",
       "prerequisites": [
-        "process_management",
-        "file_io"
+        "the_neuron",
+        "neuroanatomy_mapping"
       ],
       "suggested_micro_topics": [
-        "pipe (creating pipes)",
-        "Redirection (input/output)",
-        "Chaining commands with pipes",
-        "File Descriptors and their role in IPC"
+        "Voluntary vs. involuntary movements",
+        "Motor pathways from brain to muscle",
+        "Role of the cerebellum in coordination",
+        "Basal ganglia and movement initiation",
+        "Reflexes and spinal cord involvement",
+        "Visceral motor system (autonomic functions)"
       ]
     },
     {
-      "node_id": "signal_handling",
-      "title": "Signal Handling",
-      "rationale": "A robust shell needs to gracefully handle various signals (e.g., Ctrl+C, Ctrl+\\). This module covers how to intercept and respond to these system events.",
+      "node_id": "thinking_brain_cognition_emotion",
+      "title": "The Thinking Brain: Cognition and Emotion",
+      "rationale": "This module delves into the fascinating higher-level functions of the brain, explaining how we learn, remember, pay attention, use language, and experience emotions.",
       "prerequisites": [
-        "process_management"
+        "sensing_the_world",
+        "moving_through_world"
       ],
       "suggested_micro_topics": [
-        "signal, sigaction",
-        "SIGINT, SIGQUIT",
-        "Signal Masks",
-        "Non-local jumps (setjmp/longjmp) in signal handlers"
+        "Memory formation and types",
+        "Attention and focus",
+        "Language processing",
+        "Emotion and the limbic system",
+        "Decision-making (basic)",
+        "Executive functions (basic)"
       ]
     },
     {
-      "node_id": "input_parsing_and_lexing",
-      "title": "Input Parsing and Lexing",
-      "rationale": "Before executing commands, the shell must parse the user's input. This involves breaking the input string into meaningful tokens.",
+      "node_id": "brain_health_everyday",
+      "title": "Brain Health and Everyday Phenomena",
+      "rationale": "To connect neuroscience to daily life, this module explores how the brain maintains internal balance, its rhythms (like sleep), and how basic brain principles manifest in common experiences.",
       "prerequisites": [
-        "c_foundations",
-        "memory_management"
+        "thinking_brain_cognition_emotion"
       ],
       "suggested_micro_topics": [
-        "String Tokenization (strtok, custom tokenizers)",
-        "Handling Quotes and Escaping",
-        "Identifying Operators (pipes, redirections)",
-        "Abstract Syntax Trees (basic concepts)"
-      ]
-    },
-    {
-      "node_id": "command_execution_logic",
-      "title": "Command Execution Logic",
-      "rationale": "This module brings together parsing, process management, and IPC to implement the core command execution loop of the shell.",
-      "prerequisites": [
-        "input_parsing_and_lexing",
-        "process_management",
-        "interprocess_communication",
-        "signal_handling"
-      ],
-      "suggested_micro_topics": [
-        "Built-in Commands vs. External Commands",
-        "Path Resolution (PATH environment variable)",
-        "Error Handling in Command Execution",
-        "Implementing Redirections"
-      ]
-    },
-    {
-      "node_id": "readline_and_history",
-      "title": "Readline and History Management",
-      "rationale": "For a user-friendly shell, features like command-line editing and history are crucial. The `readline` library provides this functionality.",
-      "prerequisites": [
-        "c_foundations",
-        "memory_management"
-      ],
-      "suggested_micro_topics": [
-        "Using the readline library",
-        "Command History (add_history)",
-        "Customizing readline behavior",
-        "Terminal I/O (tcsetattr, tcgetattr)"
-      ]
-    },
-    {
-      "node_id": "project_integration_and_testing",
-      "title": "Project Integration and Testing",
-      "rationale": "This final stage involves assembling all the components, thorough testing, and debugging to ensure a functional and robust Minishell.",
-      "prerequisites": [
-        "command_execution_logic",
-        "readline_and_history"
-      ],
-      "suggested_micro_topics": [
-        "Unit Testing",
-        "Integration Testing",
-        "Debugging Techniques (GDB)",
-        "Edge Case Handling",
-        "Code Refactoring and Optimization"
+        "Homeostasis: maintaining internal balance",
+        "The neuroscience of sleep and dreams",
+        "Stress response and the brain",
+        "Basic concepts of neuroplasticity",
+        "Brain-body connection (e.g., gut-brain axis)",
+        "Common neurological phenomena (e.g., optical illusions, d\u00e9j\u00e0 vu)"
       ]
     }
   ]

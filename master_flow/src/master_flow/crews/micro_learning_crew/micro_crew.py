@@ -52,7 +52,7 @@ class MicroLearningCrew():
     def scrape_task(self) -> Task:
         return Task(
             config=self.tasks_config['scrape_task'],
-            output_pydantic=FullScrapeResult
+            output_pydantic=FullScrapeResult,
         )
 
     @task
@@ -73,5 +73,6 @@ class MicroLearningCrew():
             tasks=[self.scrape_task(), self.educate_task(), self.estimate_and_compile_task()],
             verbose=True,
             output_log_file="micro_learning.log",
-            max_rpm=15
+            max_rpm=15,
+            async_execution=True
         )

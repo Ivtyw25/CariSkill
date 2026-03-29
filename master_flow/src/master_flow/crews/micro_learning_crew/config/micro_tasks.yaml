@@ -28,6 +28,9 @@ educate_task:
     Use the extracted facts and code snippets from the Researcher's report to make your theory 100% accurate and practical.
     Keep the user's experience level ({experience}) and goal ({goal}) in mind.
     Make the theory highly engaging. explain theory in details but being concise with words that won't overwhelm the reader.
+    You MUST embed contextually relevant images inline between your text paragraphs using Markdown format: `![Descriptive Alt Text](image_url)`. 
+    * ONLY use URLs provided in the 'Available Images' list from the context.
+    * Analyze the image URLs: prioritize URLs that contain words like 'diagram', 'chart', 'graph', 'example', or specific concept names. Ignore generic URLs.  
     You must also evaluate and assign a difficulty rating ("easy", "medium", or "hard") for each topic.
   expected_output: >
     A comprehensive document containing the written theory and difficulty rating for every requested micro-topic.
